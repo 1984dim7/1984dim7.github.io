@@ -1,0 +1,17 @@
+.glass-element {
+  /* 背景色に透明度を指定 */
+  background: rgba(255, 255, 255, 0.2);
+
+  /* 背景の要素をぼかす */
+  -webkit-backdrop-filter: blur(10px); /* Safari向け */
+  backdrop-filter: blur(10px);
+
+  /* 境界線を少しだけ白くして光の反射を表現 */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  /* 角を丸める */
+  border-radius: 12px;
+
+  /* 要素に影を落として奥行きを出す */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
