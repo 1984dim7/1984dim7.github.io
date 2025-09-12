@@ -3,33 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dim7.jp</title>
+    <title>dim7.jp - Frutiger Aero Style</title>
     <style>
+        /* Google Fontsから可読性の高いフォントをインポート */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
         body {
-            background-color: #000000; /* 背景を黒に */
-            color: #00FF00; /* 文字を緑に */
-            font-family: 'MS PGothic', sans-serif; 
-            text-align: center; 
+            /* Frutiger Aeroの基本となる、明るく開放的な背景 */
+            background: linear-gradient(135deg, #72c6ef, #a8e0ff); /* 明るい青空のようなグラデーション */
+            /* もしくは、自然の画像を設定するのもおすすめです */
+            /* background-image: url('https://example.com/frutiger-aero-background.jpg'); */
+            /* background-size: cover; */
+            /* background-attachment: fixed; */
+
+            color: #1a3a5a; /* 文字を濃い青色に */
+            font-family: 'Roboto', 'Segoe UI', 'Helvetica Neue', sans-serif; /* 可読性の高いモダンなフォント */
             padding-top: 50px;
+            padding-bottom: 50px;
+            line-height: 1.6;
         }
-        h1 {
-            font-size: 2em;
-            text-shadow: 2px 2px #FF0000; /* 文字に赤い影をつける */
-        }
+
         .container {
             width: 80%;
+            max-width: 700px;
             margin: 0 auto;
-            border: 3px double #00FF00; /* 二重線で囲む */
-            padding: 20px;
+
+            /* これが「グラスモーフィズム（ガラス効果）」の核です */
+            background: rgba(255, 255, 255, 0.4); /* 半透明の白 */
+            backdrop-filter: blur(15px); /* 背景をぼかす */
+            -webkit-backdrop-filter: blur(15px); /* Safari向け */
+            
+            border-radius: 16px; /* 角を丸くする */
+            border: 1px solid rgba(255, 255, 255, 0.5); /* ガラスのフチのような境界線 */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); /* 柔らかい影 */
+            
+            padding: 30px;
+            text-align: center;
         }
+
+        h1, h2 {
+            color: #0b4c8a; /* 見出しの色を少し濃く */
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.7); /* 白いハイライトで立体感を出す */
+        }
+
+        h1 {
+            font-size: 2.5em;
+        }
+
+        ul {
+            list-style: none; /* リストの黒点を消す */
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        ul li {
+            margin-bottom: 10px; /* 各リンクの間隔を調整 */
+        }
+
         a {
-            color: #FFFF00; /* リンクの色を黄色に */
-            text-decoration: none; /* 下線を消す */
+            color: #0077cc; /* リンクの色を鮮やかな青に */
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
         }
+
         a:hover {
-            color: #FF00FF; /* マウスを乗せた時の色 */
+            color: #00aaff;
             text-decoration: underline;
         }
+
+        hr {
+            border: none;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3); /* ガラスに引かれた細い線のように */
+            margin: 30px 0;
+        }
+
+        /* アクセスカウンターの見た目を少し調整 */
+        .access-counter-wrapper {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -43,37 +100,17 @@
         <h2>コンテンツ (Links)</h2>
         <ul>
             <li><a href="/clock/">Clock Synthesizer</a></li>
-
-            
-            <li><a href="/digital/">Digital Harmonic Clock</a></li>
-
-            
+            <li><a href="/Digital/">Digital Harmonic Clock</a></li>
             <li><a href="/c5vis/">Circle Of Fifths Visualizer</a></li>
-
-            
             <li><a href="/coming soon/">Coming Soon...</a></li>
-
-
-
-            
-            </ul>
+        </ul>
 
         <hr>
 
-        <h2>アクセスカウンター</h2>
-        <p>あなたは <!--カウンタータグここから--><table border="0" cellpadding="0" cellspacing="1" style="border:#CCCCCC 1px dotted;"><tr><td><table border="0" cellspacing="1" cellpadding="0">
-            　<tr><td align="center"><img src="http://smart-counter.net/images/todayt.gif" alt=""></td></tr>
-            <tr><td align="center"><a href="http://smart-counter.net/">
-                <img src="http://smart-counter.net/tday-d65-f5-186/68c3f9bf12803/" alt="アクセスカウンター" border="0"></a></td></tr><tr><td align="center">
-                    <img src="http://smart-counter.net/images/yesterdayt.gif" alt=""></td></tr><tr><td align="center"><a href="http://smart-counter.net/">
-                        <img src="http://smart-counter.net/yday-d65-f5-186/68c3f9bf12803/" alt="アクセスカウンター" border="0"></a></td></tr><tr><td align="center">
-                            <img src="http://smart-counter.net/images/totalt.gif" alt=""></td></tr><tr><td align="center"><a href="http://smart-counter.net/">
-                                <img src="http://smart-counter.net/total-d65-f6-186/68c3f9bf12803/" alt="アクセスカウンター" border="0"></a></td></tr></table>
-            <table border="0" align="center" cellpadding="0" cellspacing="0"><tr><td><a href="" target="_blank"><img src="http://smart-counter.net/images/cnt_01.gif" alt="" border="0"></a></td>
-                <td><img src="http://smart-counter.net/images/cnt_02.gif" alt="" border="0"></td><td><img src="http://smart-counter.net/images/cnt_03.gif" alt="" border="0"></td><td><img src="http://smart-counter.net/images/cnt_04.gif" alt="" border="0"></td>
-                <td><img src="http://smart-counter.net/images/cnt_05.gif" alt="" border="0"></td><td><img src="http://smart-counter.net/images/cnt_06.gif" alt="" border="0"></td><td><img src="http://smart-counter.net/images/cnt_07.gif" alt="" border="0"></td><td>
-                    <img src="http://smart-counter.net/images/cnt_08.gif" alt="" border="0"></td><td><img src="http://smart-counter.net/images/cnt_09.gif" alt="" border="0"></td></tr></table></td></tr></table><!--カウンタータグここまで--> 番目のお客様です。</p>
-
+        <div class="access-counter-wrapper">
+            <h2>アクセスカウンター</h2>
+            <p>あなたは ...番目のお客様です。</p>
+        </div>
     </div>
 
 </body>
