@@ -20,8 +20,6 @@
         justify-content: center;
         align-items: center;
         color: white;
-        padding: 20px 0;
-        /* 画面サイズに応じてpaddingを動的に */
         padding: clamp(10px, 5vh, 50px) 10px;
         box-sizing: border-box;
     }
@@ -45,7 +43,6 @@
     }
 
     .welcome-panel h1 {
-        /* clamp(最小, 推奨, 最大) で滑らかにサイズ変更 */
         font-size: clamp(2.5rem, 10vw, 4rem);
         font-weight: normal;
         margin: 0;
@@ -91,15 +88,18 @@
         border: 2px solid white;
         object-fit: cover;
         background-color: #fff;
-        flex-shrink: 0; /* アバターが縮まないように */
+        flex-shrink: 0;
     }
 
     .user-info .username {
         font-size: clamp(1.2rem, 4vw, 1.5rem);
     }
 
+    /* ▼▼▼ フッターのCSSを修正 ▼▼▼ */
     .footer {
-        /* フッターはページの最後に表示されるように変更 */
+        position: absolute; /* PCでは画面下に固定 */
+        bottom: 0;
+        left: 0;
         width: 100%;
         background: #163666;
         display: flex;
@@ -108,10 +108,15 @@
         padding: 10px 20px;
         font-size: 0.9em;
         box-sizing: border-box;
-        margin-top: auto; /* コンテンツが少ない場合も一番下に */
+    }
+
+    /* フッター内の要素を中央揃えにするためのスタイル */
+    .footer-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
     
-    /* (中略: .password-form などのスタイルは変更なし) */
     .password-form {
         margin-top: 20px;
         display: flex;
@@ -131,7 +136,7 @@
         font-size: clamp(1rem, 3.5vw, 1.2rem);
         pointer-events: none;
         transition: opacity 0.2s ease;
-        white-space: nowrap; /* 折り返しを防ぐ */
+        white-space: nowrap;
     }
 
     .password-input:not(:placeholder-shown) + .fake-placeholder {
@@ -144,7 +149,7 @@
         padding: 8px;
         font-size: 1.2em;
         font-family: 'MS UI Gothic', sans-serif;
-        width: clamp(200px, 50vw, 250px); /* 入力欄も可変に */
+        width: clamp(200px, 50vw, 250px);
     }
 
     .submit-arrow {
@@ -158,20 +163,17 @@
         flex-shrink: 0;
     }
 
-    /* ▼▼▼ スマホ対応CSS（768px以下）▼▼▼ */
     @media (max-width: 768px) {
         body {
             height: auto; 
-            min-height: 100vh; /* 最低でも画面の高さいっぱいに */
-            flex-direction: column; /* body自体を縦並びのコンテナに */
-            align-items: center;
-            justify-content: flex-start;
+            min-height: 100vh;
+            justify-content: flex-start; /* 上から表示 */
         }
         
         .login-container {
             flex-direction: column; 
             gap: 40px;
-            padding-top: 5vh; /* 画面高さに応じて余白を調整 */
+            padding-top: 5vh;
         }
 
         .welcome-panel {
@@ -181,6 +183,7 @@
 
         .user-list {
             width: 90%;
+            margin-bottom: 100px; /* フッターとの間隔を確保 */
         }
 
         .user-account {
@@ -188,31 +191,32 @@
         }
 
         .footer {
+            position: static; /* スマホでは固定を解除 */
             flex-direction: column;
-            gap: 5px;
+            gap: 10px; /* 要素の間隔を広げる */
             font-size: 0.8em;
             text-align: center;
+            padding-bottom: 20px;
         }
     }
 
-
     @media (max-width: 400px) {
         .login-container {
-            gap: 30px; /* 全体の間隔をさらに詰める */
+            gap: 30px;
         }
         
         .user-account {
-            padding: 8px; /* ボタンの余白を少し詰める */
+            padding: 8px;
         }
 
         .avatar {
-            width: 40px; /* アバターを少し小さく */
+            width: 40px;
             height: 40px;
             margin-right: 10px;
         }
         
         .footer {
-            font-size: 0.7em; /* フッターの文字をさらに小さく */
+            font-size: 0.7em;
         }
     }
 </style>
@@ -220,7 +224,8 @@
 <body>
     <div class="login-container">
         <div class="welcome-panel">
-            <h1>ようこそ</h1> <p>開始するにはコンテンツ名をクリックしてください。</p>
+            <h1>ようこそ</h1>
+            <p>開始するにはコンテンツ名をクリックしてください。</p>
             
             <form id="redirect-form" class="password-form">
                 <div class="input-wrapper">
@@ -266,17 +271,18 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 
     <div class="footer">
-        <span>Instagram: @1984dim7
-         <!--タグはここから--><table border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><a href="http://www.rays-counter.com/">
-             <img src="http://www.rays-counter.com/d1301_f8_010/68c480faa9c8d/" alt="アクセスカウンター" border="0"></a></td></tr>
-             <tr><td align="center"><img src="http://www.rays-counter.com/images/counter_01.gif" border="0"><img src="http://www.rays-counter.com/images/counter_02.gif" border="0">
-                 <img src="http://www.rays-counter.com/images/counter_03.gif" border="0"><img src="http://www.rays-counter.com/images/counter_04.gif" border="0" >
-                 <img src="http://www.rays-counter.com/images/counter_05.gif" border="0"></td></tr></table><!--ここまで-->
-</span>
-        <span>Since 2025.09.12</span>
+        <div class="footer-item">
+            <span>Instagram: @1984dim7</span>
+        </div>
+        <div class="footer-item">
+            <table border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><a href="http://www.rays-counter.com/"><img src="http://www.rays-counter.com/d1301_f8_010/68c480faa9c8d/" alt="アクセスカウンター" border="0"></a></td></tr><tr><td align="center"><img src="http://www.rays-counter.com/images/counter_01.gif" border="0"><img src="http://www.rays-counter.com/images/counter_02.gif" border="0"><img src="http://www.rays-counter.com/images/counter_03.gif" border="0"><img src="http://www.rays-counter.com/images/counter_04.gif" border="0" ><img src="http://www.rays-counter.com/images/counter_05.gif" border="0"></td></tr></table>
+        </div>
+        <div class="footer-item">
+            <span>Since 2025.09.12</span>
+        </div>
     </div>
     <script>
         const form = document.getElementById('redirect-form');
