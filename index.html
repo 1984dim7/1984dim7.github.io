@@ -10,8 +10,6 @@
     body, html {
         height: 100%;
         margin: 0;
-        /* スマホで縦に長くなるのでoverflow: hiddenは解除 */
-        /* overflow: hidden; */ 
         font-family: 'MS UI Gothic', 'Meiryo', sans-serif;
         -webkit-font-smoothing: antialiased;
     }
@@ -22,7 +20,10 @@
         justify-content: center;
         align-items: center;
         color: white;
-        padding: 20px 0; /* 上下に余白を追加 */
+        padding: 20px 0;
+        /* 画面サイズに応じてpaddingを動的に */
+        padding: clamp(10px, 5vh, 50px) 10px;
+        box-sizing: border-box;
     }
 
     a.user-link {
@@ -40,11 +41,12 @@
     }
 
     .welcome-panel {
-        text-align: left; /* PCでは左寄せ */
+        text-align: left;
     }
 
     .welcome-panel h1 {
-        font-size: 4em;
+        /* clamp(最小, 推奨, 最大) で滑らかにサイズ変更 */
+        font-size: clamp(2.5rem, 10vw, 4rem);
         font-weight: normal;
         margin: 0;
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
@@ -52,7 +54,7 @@
     }
 
     .welcome-panel p {
-        font-size: 1.1em;
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem);
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
     }
 
@@ -89,27 +91,27 @@
         border: 2px solid white;
         object-fit: cover;
         background-color: #fff;
+        flex-shrink: 0; /* アバターが縮まないように */
     }
 
     .user-info .username {
-        font-size: 1.5em;
+        font-size: clamp(1.2rem, 4vw, 1.5rem);
     }
 
     .footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
+        /* フッターはページの最後に表示されるように変更 */
         width: 100%;
-        height: 40px;
         background: #163666;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 20px;
+        padding: 10px 20px;
         font-size: 0.9em;
-        box-sizing: border-box; /* paddingを含めた幅計算に */
+        box-sizing: border-box;
+        margin-top: auto; /* コンテンツが少ない場合も一番下に */
     }
     
+    /* (中略: .password-form などのスタイルは変更なし) */
     .password-form {
         margin-top: 20px;
         display: flex;
@@ -126,9 +128,10 @@
         position: absolute;
         left: 9px;
         color: #555;
-        font-size: 1.2em;
+        font-size: clamp(1rem, 3.5vw, 1.2rem);
         pointer-events: none;
         transition: opacity 0.2s ease;
+        white-space: nowrap; /* 折り返しを防ぐ */
     }
 
     .password-input:not(:placeholder-shown) + .fake-placeholder {
@@ -141,7 +144,7 @@
         padding: 8px;
         font-size: 1.2em;
         font-family: 'MS UI Gothic', sans-serif;
-        width: 250px;
+        width: clamp(200px, 50vw, 250px); /* 入力欄も可変に */
     }
 
     .submit-arrow {
@@ -152,49 +155,64 @@
         background: url('images/arrow.png') center center / 100% no-repeat #4CAF50;
         cursor: pointer;
         margin-left: 10px;
+        flex-shrink: 0;
     }
 
-
-    /* ▼▼▼ スマホ対応CSS（メディアクエリ）▼▼▼ */
+    /* ▼▼▼ スマホ対応CSS（768px以下）▼▼▼ */
     @media (max-width: 768px) {
         body {
-            /* スクロールできるように高さを自動に */
             height: auto; 
-            align-items: flex-start; /* 上から表示 */
+            min-height: 100vh; /* 最低でも画面の高さいっぱいに */
+            flex-direction: column; /* body自体を縦並びのコンテナに */
+            align-items: center;
+            justify-content: flex-start;
         }
         
         .login-container {
-            /* 横並びから縦並びに変更 */
             flex-direction: column; 
             gap: 40px;
-            padding-top: 50px;
+            padding-top: 5vh; /* 画面高さに応じて余白を調整 */
         }
 
         .welcome-panel {
-            text-align: center; /* 中央揃えに */
-        }
-
-        .welcome-panel h1 {
-            font-size: 3em; /* 文字サイズを少し小さく */
+            text-align: center;
+            width: 90%;
         }
 
         .user-list {
-            width: 90%; /* 画面幅の90%に */
+            width: 90%;
         }
 
         .user-account {
-            width: 100%; /* 親要素(user-list)の幅に合わせる */
+            width: 100%;
         }
 
         .footer {
-            /* フッターを縦並びにして中央揃えに */
-            height: auto;
             flex-direction: column;
-            padding: 10px;
             gap: 5px;
-            font-size: 0.7em;
-            position: static; /* 位置固定を解除 */
-            margin-top: 40px;
+            font-size: 0.8em;
+            text-align: center;
+        }
+    }
+
+
+    @media (max-width: 400px) {
+        .login-container {
+            gap: 30px; /* 全体の間隔をさらに詰める */
+        }
+        
+        .user-account {
+            padding: 8px; /* ボタンの余白を少し詰める */
+        }
+
+        .avatar {
+            width: 40px; /* アバターを少し小さく */
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .footer {
+            font-size: 0.7em; /* フッターの文字をさらに小さく */
         }
     }
 </style>
@@ -251,8 +269,14 @@
         </div>
 
     <div class="footer">
-        <span>Instagram: @1984dim7</span>
-        <span>Since 2025.09.13</span>
+        <span>Instagram: @1984dim7
+         <!--タグはここから--><table border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><a href="http://www.rays-counter.com/">
+             <img src="http://www.rays-counter.com/d1301_f8_010/68c480faa9c8d/" alt="アクセスカウンター" border="0"></a></td></tr>
+             <tr><td align="center"><img src="http://www.rays-counter.com/images/counter_01.gif" border="0"><img src="http://www.rays-counter.com/images/counter_02.gif" border="0">
+                 <img src="http://www.rays-counter.com/images/counter_03.gif" border="0"><img src="http://www.rays-counter.com/images/counter_04.gif" border="0" >
+                 <img src="http://www.rays-counter.com/images/counter_05.gif" border="0"></td></tr></table><!--ここまで-->
+</span>
+        <span>Since 2025.09.12</span>
     </div>
     <script>
         const form = document.getElementById('redirect-form');
