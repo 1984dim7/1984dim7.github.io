@@ -6,153 +6,198 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ようこそ - dim7.jp</title>
-    <style>
-       
-        body, html {
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-            font-family: 'MS UI Gothic', 'Meiryo', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+  <style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        /* スマホで縦に長くなるのでoverflow: hiddenは解除 */
+        /* overflow: hidden; */ 
+        font-family: 'MS UI Gothic', 'Meiryo', sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
 
+    body {
+        background: radial-gradient(circle at 0% 0%, #3a7bd5, #004e92);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        padding: 20px 0; /* 上下に余白を追加 */
+    }
+
+    a.user-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .login-container {
+        display: flex;
+        align-items: center;
+        gap: 100px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .welcome-panel {
+        text-align: left; /* PCでは左寄せ */
+    }
+
+    .welcome-panel h1 {
+        font-size: 4em;
+        font-weight: normal;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        font-style: italic;
+    }
+
+    .welcome-panel p {
+        font-size: 1.1em;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    .user-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .user-account {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        width: 350px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+    
+    a.user-link:hover .user-account {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .user-account.no-link {
+        cursor: default;
+    }
+
+    .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 4px;
+        margin-right: 15px;
+        border: 2px solid white;
+        object-fit: cover;
+        background-color: #fff;
+    }
+
+    .user-info .username {
+        font-size: 1.5em;
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 40px;
+        background: #163666;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        font-size: 0.9em;
+        box-sizing: border-box; /* paddingを含めた幅計算に */
+    }
+    
+    .password-form {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    .fake-placeholder {
+        position: absolute;
+        left: 9px;
+        color: #555;
+        font-size: 1.2em;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+    }
+
+    .password-input:not(:placeholder-shown) + .fake-placeholder {
+        opacity: 0;
+    }
+    
+    .password-input {
+        border: 1px solid #7F9DB9;
+        border-radius: 3px;
+        padding: 8px;
+        font-size: 1.2em;
+        font-family: 'MS UI Gothic', sans-serif;
+        width: 250px;
+    }
+
+    .submit-arrow {
+        width: 36px;
+        height: 36px;
+        border: none;
+        border-radius: 50%;
+        background: url('https://i.imgur.com/u15k4uT.png') center center / 60% no-repeat #4CAF50;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+
+    /* ▼▼▼ スマホ対応CSS（メディアクエリ）▼▼▼ */
+    @media (max-width: 768px) {
         body {
-            background: radial-gradient(circle at 0% 0%, #3a7bd5, #004e92);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
+            /* スクロールできるように高さを自動に */
+            height: auto; 
+            align-items: flex-start; /* 上から表示 */
         }
-
-        a.user-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
+        
         .login-container {
-            display: flex;
-            align-items: center;
-            gap: 100px;
+            /* 横並びから縦並びに変更 */
+            flex-direction: column; 
+            gap: 40px;
+            padding-top: 50px;
+        }
+
+        .welcome-panel {
+            text-align: center; /* 中央揃えに */
         }
 
         .welcome-panel h1 {
-            font-size: 4em;
-            font-weight: normal;
-            margin: 0;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-            font-style: italic; /* ここを追加：「ようこそ」をイタリックに */
-        }
-
-        .welcome-panel p {
-            font-size: 1.1em;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+            font-size: 3em; /* 文字サイズを少し小さく */
         }
 
         .user-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+            width: 90%; /* 画面幅の90%に */
         }
 
         .user-account {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            width: 350px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.2s ease;
-        }
-        
-        a.user-link:hover .user-account {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        .user-account.no-link {
-            cursor: default;
-        }
-
-        .avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 4px;
-            margin-right: 15px;
-            border: 2px solid white;
-            object-fit: cover;
-            background-color: #fff;
-        }
-
-        .user-info .username {
-            font-size: 1.5em;
+            width: 100%; /* 親要素(user-list)の幅に合わせる */
         }
 
         .footer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40px;
-            background: #163666;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            font-size: 0.9em;
+            /* フッターを縦並びにして中央揃えに */
+            height: auto;
+            flex-direction: column;
+            padding: 10px;
+            gap: 5px;
+            font-size: 0.7em;
+            position: static; /* 位置固定を解除 */
+            margin-top: 40px;
         }
-        
-        /* 入力欄と偽プレースホルダーのスタイル */
-        .password-form {
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center; /* 中央寄せを追加 */
-        }
-        
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .fake-placeholder {
-            position: absolute;
-            left: 9px;
-            color: #555;
-            font-size: 1.2em;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-        }
-
-        /* 実際にinputに文字が入るとplaceholder-shownは適用されなくなる */
-        .password-input:not(:placeholder-shown) + .fake-placeholder {
-            opacity: 0;
-        }
-        
-        .password-input {
-            border: 1px solid #7F9DB9;
-            border-radius: 3px;
-            padding: 8px;
-            font-size: 1.2em;
-            font-family: 'MS UI Gothic', sans-serif;
-            width: 250px;
-         
-            
-        }
-
-        .submit-arrow {
-    width: 36px;
-    height: 36px;
-    border: none;
-    border-radius: 50%;
-   
-    background: url('images/arrow.png') center center / 100% no-repeat #4CAF50;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-    </style>
+    }
+</style>
 </head>
 <body>
     <div class="login-container">
