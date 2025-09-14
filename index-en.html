@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6469478872018956"
+     crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ようこそ - dim7.jp</title>
+  <style>
+    body, html {
+        height: 100%;
+        margin: 0;
+        font-family: 'MS UI Gothic', 'Meiryo', sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    /* ▼▼▼ bodyのレイアウト方法を変更 ▼▼▼ */
+    body {
+        background: radial-gradient(circle at 0% 0%, #3a7bd5, #004e92);
+        color: white;
+        box-sizing: border-box;
+        
+        /* ページ全体をFlexboxコンテナにする */
+        display: flex;
+        flex-direction: column; /* 縦方向に配置 */
+        min-height: 100vh; /* 画面の高さに合わせる */
+    }
+    a { color: white; }
+    a.user-link { text-decoration: none; color: inherit; display: block; }
+
+    /* ▼▼▼ メインコンテンツが余白を埋めるように変更 ▼▼▼ */
+    .login-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 100px;
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        flex-grow: 1; /* この要素が利用可能なスペースを全て埋める */
+    }
+
+    .welcome-panel {
+        text-align: left;
+    }
+    .welcome-panel h1 { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: normal; margin: 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); font-style: italic; }
+    .welcome-panel p { font-size: clamp(0.9rem, 2.5vw, 1.1rem); text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); }
+
+    .user-list { display: flex; flex-direction: column; gap: 10px; }
+    .user-account { display: flex; align-items: center; padding: 10px; width: 350px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; cursor: pointer; transition: background 0.2s ease; }
+    a.user-link:hover .user-account { background: rgba(255, 255, 255, 0.2); }
+    .user-account.no-link { cursor: default; }
+    .avatar { width: 50px; height: 50px; border-radius: 4px; margin-right: 15px; border: 2px solid white; object-fit: cover; background-color: #fff; flex-shrink: 0; }
+    .user-info .username { font-size: clamp(1.2rem, 4vw, 1.5rem); }
+
+    /* ▼▼▼ フッターのposition指定を削除 ▼▼▼ */
+    .footer {
+        width: 100%;
+        background: #163666;
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        gap: 15px;
+        padding: 10px 20px;
+        font-size: 0.7em;
+        box-sizing: border-box;
+        flex-shrink: 0; /* フッターが縮まないように */
+    }
+    .footer-item {
+        display: flex;
+        align-items: left;
+        gap: 15px;
+        justify-content: left;
+        
+    }
+    
+    .password-form { margin-top: 20px; display: flex; align-items: center; }
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+    .fake-placeholder { position: absolute; left: 9px; color: #555; font-size: clamp(1rem, 3.5vw, 1.2rem); pointer-events: none; transition: opacity 0.2s ease; white-space: nowrap; }
+    .password-input:not(:placeholder-shown) + .fake-placeholder { opacity: 0; }
+    .password-input { border: 1px solid #7F9DB9; border-radius: 3px; padding: 8px; font-size: 1.2em; font-family: 'MS UI Gothic', sans-serif; width: clamp(200px, 50vw, 250px); }
+    .submit-arrow { width: 36px; height: 36px; border: none; border-radius: 50%; background: url('images/arrow.png') center center / 100% no-repeat #4CAF50; cursor: pointer; margin-left: 10px; flex-shrink: 0; }
+    .hint-button { display: inline-flex; justify-content: center; align-items: center; width: 36px; height: 36px; background: linear-gradient(to bottom, #72aeee, #4a8fdf); border: 1px solid #2a58ad; border-radius: 4px; margin-left: 8px; color: white; font-family: 'Tahoma', sans-serif; font-size: 1.5em; font-weight: bold; text-decoration: none; cursor: pointer; transition: all 0.2s ease; }
+    .hint-button:hover { background: linear-gradient(to bottom, #82baff, #5a9fff); }
+
+    @media (max-width: 768px) {
+        .login-container { flex-direction: column; gap: 40px; }
+        .welcome-panel { text-align: center; width: 90%; }
+        .user-list { width: 90%; margin-bottom: 40px; } /* フッターとの間隔を調整 */
+        .user-account { width: 100%; }
+        .footer { flex-direction: column; gap: 12px; padding: 15px 10px; font-size: 0.8em; text-align: center; }
+        .footer-item { flex-direction: column; gap: 8px; width: 100%; }
+    }
+
+    @media (max-width: 400px) {
+        .login-container { gap: 30px; }
+        .user-account { padding: 8px; }
+        .avatar { width: 40px; height: 40px; margin-right: 10px; }
+        .footer { font-size: 0.7em; }
+    }
+</style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="welcome-panel">
+            <h1>Welcome</h1>
+            <p>To begin, click a content name.</p>
+            <form id="redirect-form" class="password-form">
+                <div class="input-wrapper">
+                    <input type="text" id="directory-input" class="password-input" placeholder=" ">
+                    <span class="fake-placeholder"> ...or enter <strong>Path</strong>word</span>
+                </div>
+                <button type="submit" class="submit-arrow"></button>
+                <a href="/hint/" class="hint-button">?</a>
+            </form>
+        </div>
+        <div class="user-list">
+            <a href="http://dim7.jp/clock/" class="user-link" target="_blank">
+                <div class="user-account">
+                    <img class="avatar" src="images/icon_clock.png" alt="Clock Harmonizer">
+                    <div class="user-info">
+                        <span class="username">Clock Harmonizer</span>
+                    </div>
+                </div>
+            </a>
+            <a href="http://dim7.jp/Digital/" class="user-link" target="_blank">
+                <div class="user-account">
+                    <img class="avatar" src="images/icon_digital.png" alt="Digital Clock Synthesizer">
+                    <div class="user-info">
+                        <span class="username">Digital Clock Synthesizer</span>
+                    </div>
+                </div>
+            </a>
+            <a href="http://dim7.jp/c5vis/" class="user-link" target="_blank">
+                <div class="user-account">
+                    <img class="avatar" src="images/icon_c5vis.png" alt="Circle of Fifths Visualizer">
+                    <div class="user-info">
+                        <span class="username">Circle of Fifths Visualizer</span>
+                    </div>
+                </div>
+            </a>
+           
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="footer">
+     
+     
+     
+            <a href="/about.html" target="_blank">about</a>
+            <a href="/contact.html" target="_blank">contact</a>
+            <a href="/privacy.html" target="_blank">privacy policy</a>
+   
+        </div>
+        
+    </div>
+
+    <script>
+        // (スクリプトは変更なし)
+        const form = document.getElementById('redirect-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            const input = document.getElementById('directory-input');
+            const directoryName = input.value.trim();
+            if (directoryName) {
+                const destinationUrl = window.location.origin + '/' + directoryName + '/';
+                window.location.href = destinationUrl;
+            }
+        });
+    </script>
+</body>
+</html>
