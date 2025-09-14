@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+
+
+
+
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6469478872018956"
      crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ようこそ - dim7.jp</title>
   <style>
-    /* (基本のCSSは変更ありません) */
     body, html {
         height: 100%;
         margin: 0;
@@ -15,21 +19,38 @@
         -webkit-font-smoothing: antialiased;
     }
 
+    /* ▼▼▼ bodyのレイアウト方法を変更 ▼▼▼ */
     body {
         background: radial-gradient(circle at 0% 0%, #3a7bd5, #004e92);
-        display: flex;
-        justify-content: center;
-        align-items: center;
         color: white;
-        padding: clamp(10px, 5vh, 50px) 10px;
         box-sizing: border-box;
+        
+        /* ページ全体をFlexboxコンテナにする */
+        display: flex;
+        flex-direction: column; /* 縦方向に配置 */
+        min-height: 100vh; /* 画面の高さに合わせる */
     }
     a { color: white; }
     a.user-link { text-decoration: none; color: inherit; display: block; }
-    .login-container { display: flex; align-items: center; gap: 100px; width: 100%; justify-content: center; }
-    .welcome-panel { text-align: left; }
+
+    /* ▼▼▼ メインコンテンツが余白を埋めるように変更 ▼▼▼ */
+    .login-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 100px;
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        flex-grow: 1; /* この要素が利用可能なスペースを全て埋める */
+    }
+
+    .welcome-panel {
+        text-align: left;
+    }
     .welcome-panel h1 { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: normal; margin: 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); font-style: italic; }
     .welcome-panel p { font-size: clamp(0.9rem, 2.5vw, 1.1rem); text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); }
+
     .user-list { display: flex; flex-direction: column; gap: 10px; }
     .user-account { display: flex; align-items: center; padding: 10px; width: 350px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; cursor: pointer; transition: background 0.2s ease; }
     a.user-link:hover .user-account { background: rgba(255, 255, 255, 0.2); }
@@ -37,24 +58,25 @@
     .avatar { width: 50px; height: 50px; border-radius: 4px; margin-right: 15px; border: 2px solid white; object-fit: cover; background-color: #fff; flex-shrink: 0; }
     .user-info .username { font-size: clamp(1.2rem, 4vw, 1.5rem); }
 
+    /* ▼▼▼ フッターのposition指定を削除 ▼▼▼ */
     .footer {
-        position: absolute;
-        bottom: 0;
-        left: 0;
         width: 100%;
         background: #163666;
         display: flex;
-        justify-content: space-between;
+        justify-content: right;
         align-items: center;
+        gap: 15px;
         padding: 10px 20px;
-        font-size: 0.9em;
+        font-size: 0.7em;
         box-sizing: border-box;
+        flex-shrink: 0; /* フッターが縮まないように */
     }
     .footer-item {
         display: flex;
-        align-items: center;
+        align-items: left;
         gap: 15px;
-        justify-content: center; /* 中央寄せを追加 */
+        justify-content: left;
+        
     }
     
     .password-form { margin-top: 20px; display: flex; align-items: center; }
@@ -66,28 +88,13 @@
     .hint-button { display: inline-flex; justify-content: center; align-items: center; width: 36px; height: 36px; background: linear-gradient(to bottom, #72aeee, #4a8fdf); border: 1px solid #2a58ad; border-radius: 4px; margin-left: 8px; color: white; font-family: 'Tahoma', sans-serif; font-size: 1.5em; font-weight: bold; text-decoration: none; cursor: pointer; transition: all 0.2s ease; }
     .hint-button:hover { background: linear-gradient(to bottom, #82baff, #5a9fff); }
 
-    /* ▼▼▼ スマホ表示のここを修正 ▼▼▼ */
     @media (max-width: 768px) {
-        body { height: auto; min-height: 100vh; justify-content: flex-start; }
-        .login-container { flex-direction: column; gap: 40px; padding-top: 5vh; }
+        .login-container { flex-direction: column; gap: 40px; }
         .welcome-panel { text-align: center; width: 90%; }
-        .user-list { width: 90%; margin-bottom: 100px; }
+        .user-list { width: 90%; margin-bottom: 40px; } /* フッターとの間隔を調整 */
         .user-account { width: 100%; }
-
-        .footer {
-            position: static;
-            flex-direction: column;
-            gap: 12px; /* 少し間隔を広げる */
-            font-size: 0.8em;
-            text-align: center;
-            padding: 15px 10px; /* パディングを調整 */
-        }
-        /* footer-itemのスタイルを調整 */
-        .footer-item {
-            flex-direction: column; /* リンクも縦に並べる */
-            gap: 8px;
-            width: 100%;
-        }
+        .footer { flex-direction: column; gap: 12px; padding: 15px 10px; font-size: 0.8em; text-align: center; }
+        .footer-item { flex-direction: column; gap: 8px; width: 100%; }
     }
 
     @media (max-width: 400px) {
@@ -103,7 +110,6 @@
         <div class="welcome-panel">
             <h1>ようこそ</h1>
             <p>開始するにはコンテンツ名をクリックしてください。</p>
-            
             <form id="redirect-form" class="password-form">
                 <div class="input-wrapper">
                     <input type="text" id="directory-input" class="password-input" placeholder=" ">
@@ -113,9 +119,8 @@
                 <a href="/hint/" class="hint-button">?</a>
             </form>
         </div>
-        
         <div class="user-list">
-             <a href="http://dim7.jp/clock/" class="user-link" target="_blank">
+            <a href="http://dim7.jp/clock/" class="user-link" target="_blank">
                 <div class="user-account">
                     <img class="avatar" src="images/icon_clock.png" alt="Clock Harmonizer">
                     <div class="user-info">
@@ -139,32 +144,30 @@
                     </div>
                 </div>
             </a>
-            <div class="user-account no-link">
-                <img class="avatar" src="https://i.imgur.com/gfg32aX.png" alt="工事中">
-                <div class="user-info">
-                    <span class="username">Coming Soon...</span>
+           
                 </div>
             </div>
         </div>
     </div>
 
+
+
+
+
     <div class="footer">
-        <div class="footer-item">
-            <span>Instagram: @1984dim7</span>
-        </div>
-        <div class="footer-item">
-            </div>
-        <div class="footer-item">
+     
+     
+     
             <a href="/about.html" target="_blank">このサイトについて</a>
             <a href="/contact.html" target="_blank">お問い合わせ</a>
             <a href="/privacy.html" target="_blank">プライバシーポリシー</a>
+   
         </div>
-        <div class="footer-item">
-            <span>Since 2025.09.12</span>
-        </div>
+        
     </div>
 
     <script>
+        // (スクリプトは変更なし)
         const form = document.getElementById('redirect-form');
         form.addEventListener('submit', function(event) {
             event.preventDefault(); 
