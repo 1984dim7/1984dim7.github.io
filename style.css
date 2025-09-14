@@ -15,3 +15,26 @@
   /* 要素に影を落として奥行きを出す */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
+
+/* 「?」ヒントボタンのスタイル */
+.hint-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(to bottom, #72aeee, #4a8fdf);
+    border: 1px solid #2a58ad;
+    border-radius: 4px;
+    margin-left: 8px;
+    color: white;
+    font-family: 'Tahoma', sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.hint-button:hover {
+    background: linear-gradient(to bottom, #82baff, #5a9fff);
+}
