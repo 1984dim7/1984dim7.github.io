@@ -4,6 +4,18 @@
 
 
 
+    <script>
+      (function() {
+        // 訪問者のブラウザ言語設定を取得 (例: 'en-us', 'ja')
+        const userLang = navigator.language || navigator.userLanguage; 
+
+        // 言語が日本語でない場合
+        if (!userLang.toLowerCase().startsWith('ja')) {
+          // 英語版のページへ移動させる
+          window.location.replace('/index-en.html');
+        }
+      })();
+    </script>
 
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6469478872018956"
