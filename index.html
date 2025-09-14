@@ -221,6 +221,21 @@
     }
 </style>
 </head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <body>
     <div class="login-container">
         <div class="welcome-panel">
@@ -230,11 +245,18 @@
             <form id="redirect-form" class="password-form">
                 <div class="input-wrapper">
                     <input type="text" id="directory-input" class="password-input" placeholder=" ">
-                    <span class="fake-placeholder">Enter <strong>Path</strong>word...</span>
+                    <span class="fake-placeholder"> ...or enter <strong>Path</strong>word</span>
                 </div>
                 <button type="submit" class="submit-arrow"></button>
+                <a href="/hint/" class="hint-button">?</a>
             </form>
         </div>
+        
+        
+        
+        
+        
+        
         
         <div class="user-list">
             <a href="http://dim7.jp/clock/" class="user-link" target="_blank">
@@ -263,17 +285,12 @@
                     </div>
                 </div>
             </a>
-
-            <div class="user-account no-link">
-                <img class="avatar" src="https://i.imgur.com/gfg32aX.png" alt="工事中">
-                <div class="user-info">
-                    <span class="username">Coming Soon...</span>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="footer">
+    
+     <div class="footer">
         <div class="footer-item">
             <span>Instagram: @1984dim7</span>
         </div>
@@ -284,17 +301,27 @@
             <span>Since 2025.09.12</span>
         </div>
     </div>
+    
+    
+    
+    
+
+    <div class="footer">
+      </div>
+
     <script>
-        const form = document.getElementById('redirect-form');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); 
-            const input = document.getElementById('directory-input');
-            const directoryName = input.value.trim();
-            if (directoryName) {
-                const destinationUrl = window.location.origin + '/' + directoryName + '/';
-                window.location.href = destinationUrl;
-            }
-        });
+      // ... (スクリプトは変更なし) ...
     </script>
 </body>
+
+
+
+
+
+
+
+
+
+
+
 </html>
