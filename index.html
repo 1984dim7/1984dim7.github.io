@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ようこそ - dim7.jp</title>
   <style>
+    /* (CSSに変更はありません) */
     body, html {
         height: 100%;
         margin: 0;
@@ -23,6 +24,8 @@
         padding: clamp(10px, 5vh, 50px) 10px;
         box-sizing: border-box;
     }
+
+    a { color: white; } /* フッターのリンク色 */
 
     a.user-link {
         text-decoration: none;
@@ -95,9 +98,8 @@
         font-size: clamp(1.2rem, 4vw, 1.5rem);
     }
 
-    /* ▼▼▼ フッターのCSSを修正 ▼▼▼ */
     .footer {
-        position: absolute; /* PCでは画面下に固定 */
+        position: absolute;
         bottom: 0;
         left: 0;
         width: 100%;
@@ -110,11 +112,10 @@
         box-sizing: border-box;
     }
 
-    /* フッター内の要素を中央揃えにするためのスタイル */
     .footer-item {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 15px;
     }
     
     .password-form {
@@ -163,11 +164,34 @@
         flex-shrink: 0;
     }
 
+    .hint-button {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(to bottom, #72aeee, #4a8fdf);
+        border: 1px solid #2a58ad;
+        border-radius: 4px;
+        margin-left: 8px;
+        color: white;
+        font-family: 'Tahoma', sans-serif;
+        font-size: 1.5em;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+    .hint-button:hover {
+        background: linear-gradient(to bottom, #82baff, #5a9fff);
+    }
+
+
     @media (max-width: 768px) {
         body {
             height: auto; 
             min-height: 100vh;
-            justify-content: flex-start; /* 上から表示 */
+            justify-content: flex-start;
         }
         
         .login-container {
@@ -183,7 +207,7 @@
 
         .user-list {
             width: 90%;
-            margin-bottom: 100px; /* フッターとの間隔を確保 */
+            margin-bottom: 100px;
         }
 
         .user-account {
@@ -191,9 +215,9 @@
         }
 
         .footer {
-            position: static; /* スマホでは固定を解除 */
+            position: static;
             flex-direction: column;
-            gap: 10px; /* 要素の間隔を広げる */
+            gap: 10px;
             font-size: 0.8em;
             text-align: center;
             padding-bottom: 20px;
@@ -221,21 +245,6 @@
     }
 </style>
 </head>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <body>
     <div class="login-container">
         <div class="welcome-panel">
@@ -251,12 +260,6 @@
                 <a href="/hint/" class="hint-button">?</a>
             </form>
         </div>
-        
-        
-        
-        
-        
-        
         
         <div class="user-list">
             <a href="http://dim7.jp/clock/" class="user-link" target="_blank">
@@ -285,43 +288,47 @@
                     </div>
                 </div>
             </a>
+
+            <div class="user-account no-link">
+                <img class="avatar" src="https://i.imgur.com/gfg32aX.png" alt="工事中">
+                <div class="user-info">
+                    <span class="username">Coming Soon...</span>
                 </div>
             </div>
         </div>
     </div>
-    
-     <div class="footer">
+
+    <div class="footer">
         <div class="footer-item">
             <span>Instagram: @1984dim7</span>
         </div>
         <div class="footer-item">
-            <table border="0" cellspacing="0" cellpadding="0"><tr><td align="center"><a href="http://www.rays-counter.com/"><img src="http://www.rays-counter.com/d1301_f8_010/68c480faa9c8d/" alt="アクセスカウンター" border="0"></a></td></tr><tr><td align="center"><img src="http://www.rays-counter.com/images/counter_01.gif" border="0"><img src="http://www.rays-counter.com/images/counter_02.gif" border="0"><img src="http://www.rays-counter.com/images/counter_03.gif" border="0"><img src="http://www.rays-counter.com/images/counter_04.gif" border="0" ><img src="http://www.rays-counter.com/images/counter_05.gif" border="0"></td></tr></table>
-        </div>
+            </div>
         <div class="footer-item">
-            <span>Since 2025.09.12</span>
+            <a href="/about.html" target="_blank">このサイトについて</a>
+            <a href="/contact.html" target="_blank">お問い合わせ</a>
+            <a href="/privacy.html" target="_blank">プライバシーポリシー</a>
         </div>
     </div>
-    
-    
-    
-    
-
-    <div class="footer">
-      </div>
 
     <script>
-      // ... (スクリプトは変更なし) ...
+        const form = document.getElementById('redirect-form');
+        form.addEventListener('submit', function(event) {
+            // フォームのデフォルトの送信動作（リロード）をキャンセル
+            event.preventDefault(); 
+            
+            const input = document.getElementById('directory-input');
+            const directoryName = input.value.trim();
+
+            // 入力欄が空でなければページを移動
+            if (directoryName) {
+                // URLを組み立てる (例: http://dim7.jp/pass/)
+                const destinationUrl = window.location.origin + '/' + directoryName + '/';
+                
+                // ページを移動
+                window.location.href = destinationUrl;
+            }
+        });
     </script>
 </body>
-
-
-
-
-
-
-
-
-
-
-
 </html>
