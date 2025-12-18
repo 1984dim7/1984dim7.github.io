@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-
-
-
     <script>
       (function() {
-        // 訪問者のブラウザ言語設定を取得 (例: 'en-us', 'ja')
         const userLang = navigator.language || navigator.userLanguage; 
-
-        // 言語が日本語でない場合
         if (!userLang.toLowerCase().startsWith('ja')) {
-          // 英語版のページへ移動させる
           window.location.replace('/index-en.html');
         }
       })();
     </script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6469478872018956"
      crossorigin="anonymous"></script>
@@ -24,32 +20,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ようこそ - dim7.jp</title>
     
-    
-    
-    
   <style>
     body, html {
         height: 100%;
         margin: 0;
-        font-family: 'MS UI Gothic', 'Meiryo', sans-serif;
-        -webkit-font-smoothing: antialiased;
+        /* ▼▼▼ フォント設定を修正 ▼▼▼ */
+        /* Mac/iOSではDotGothic16を、WindowsではMS UI Gothicを優先 */
+        font-family: 'DotGothic16', 'MS UI Gothic', 'Meiryo', sans-serif;
+        
+        /* ▼▼▼ 文字の滑らかさをオフにしてXPっぽくする（Mac用） ▼▼▼ */
+        -webkit-font-smoothing: none;
+        -moz-osx-font-smoothing: grayscale;
     }
 
-    /* ▼▼▼ bodyのレイアウト方法を変更 ▼▼▼ */
     body {
         background: radial-gradient(circle at 0% 0%, #3a7bd5, #004e92);
         color: white;
         box-sizing: border-box;
-        
-        /* ページ全体をFlexboxコンテナにする */
         display: flex;
-        flex-direction: column; /* 縦方向に配置 */
-        min-height: 100vh; /* 画面の高さに合わせる */
+        flex-direction: column; 
+        min-height: 100vh; 
     }
     a { color: white; }
     a.user-link { text-decoration: none; color: inherit; display: block; }
 
-    /* ▼▼▼ メインコンテンツが余白を埋めるように変更 ▼▼▼ */
     .login-container {
         display: flex;
         align-items: center;
@@ -58,23 +52,35 @@
         width: 100%;
         padding: 20px;
         box-sizing: border-box;
-        flex-grow: 1; /* この要素が利用可能なスペースを全て埋める */
+        flex-grow: 1; 
     }
 
     .welcome-panel {
         text-align: left;
     }
-    .welcome-panel h1 { font-size: clamp(2.5rem, 10vw, 4rem); font-weight: normal; margin: 0; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); font-style: italic; }
-    .welcome-panel p { font-size: clamp(0.9rem, 2.5vw, 1.1rem); text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); }
+    .welcome-panel h1 { 
+        font-size: clamp(2.5rem, 10vw, 4rem); 
+        font-weight: normal; 
+        margin: 0; 
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); 
+        font-style: italic; 
+        /* DotGothic16はイタリック体を持っていないため、CSSで無理やり斜体にする */
+        transform: skewX(-10deg);
+        display: inline-block;
+    }
+    .welcome-panel p { 
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem); 
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); 
+    }
 
     .user-list { display: flex; flex-direction: column; gap: 10px; }
     .user-account { display: flex; align-items: center; padding: 10px; width: 350px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; cursor: pointer; transition: background 0.2s ease; }
     a.user-link:hover .user-account { background: rgba(255, 255, 255, 0.2); }
     .user-account.no-link { cursor: default; }
     .avatar { width: 50px; height: 50px; border-radius: 4px; margin-right: 15px; border: 2px solid white; object-fit: cover; background-color: #fff; flex-shrink: 0; }
-    .user-info .username { font-size: clamp(1.2rem, 4vw, 1.5rem); }
+    /* フォント変更に伴いサイズ微調整 */
+    .user-info .username { font-size: clamp(1.1rem, 4vw, 1.4rem); letter-spacing: 1px;}
 
-    /* ▼▼▼ フッターのposition指定を削除 ▼▼▼ */
     .footer {
         width: 100%;
         background: #163666;
@@ -85,93 +91,75 @@
         padding: 10px 20px;
         font-size: 0.7em;
         box-sizing: border-box;
-        flex-shrink: 0; /* フッターが縮まないように */
+        flex-shrink: 0; 
     }
     .footer-item {
         display: flex;
         align-items: left;
         gap: 15px;
         justify-content: left;
-        
     }
     
     .password-form { margin-top: 20px; display: flex; align-items: center; }
     .input-wrapper { position: relative; display: flex; align-items: center; }
-    .fake-placeholder { position: absolute; left: 9px; color: #555; font-size: clamp(1rem, 3.5vw, 1.2rem); pointer-events: none; transition: opacity 0.2s ease; white-space: nowrap; }
+    /* プレースホルダーの位置微調整 */
+    .fake-placeholder { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: #555; font-size: clamp(1rem, 3.5vw, 1.2rem); pointer-events: none; transition: opacity 0.2s ease; white-space: nowrap; }
     .password-input:not(:placeholder-shown) + .fake-placeholder { opacity: 0; }
-    .password-input { border: 1px solid #7F9DB9; border-radius: 3px; padding: 8px; font-size: 1.2em; font-family: 'MS UI Gothic', sans-serif; width: clamp(200px, 50vw, 250px); }
+    .password-input { border: 1px solid #7F9DB9; border-radius: 3px; padding: 8px; font-size: 1.2em; font-family: 'DotGothic16', 'MS UI Gothic', sans-serif; width: clamp(200px, 50vw, 250px); }
     .submit-arrow { width: 36px; height: 36px; border: none; border-radius: 50%; background: url('images/arrow.png') center center / 100% no-repeat #4CAF50; cursor: pointer; margin-left: 10px; flex-shrink: 0; }
-    .hint-button { display: inline-flex; justify-content: center; align-items: center; width: 36px; height: 36px; background: linear-gradient(to bottom, #72aeee, #4a8fdf); border: 1px solid #2a58ad; border-radius: 4px; margin-left: 8px; color: white; font-family: 'Tahoma', sans-serif; font-size: 1.5em; font-weight: bold; text-decoration: none; cursor: pointer; transition: all 0.2s ease; }
+    .hint-button { display: inline-flex; justify-content: center; align-items: center; width: 36px; height: 36px; background: linear-gradient(to bottom, #72aeee, #4a8fdf); border: 1px solid #2a58ad; border-radius: 4px; margin-left: 8px; color: white; font-family: 'DotGothic16', sans-serif; font-size: 1.5em; font-weight: bold; text-decoration: none; cursor: pointer; transition: all 0.2s ease; }
     .hint-button:hover { background: linear-gradient(to bottom, #82baff, #5a9fff); }
     
-    
-    /* ▼▼▼ ツールチップ関連のCSSを追加 ▼▼▼ */
-.list-item-wrapper {
-    position: relative; /* アイコンとツールチップの位置の基準点 */
-}
+    .list-item-wrapper { position: relative; }
 
-.info-icon {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    width: 22px;
-    height: 22px;
-    background-color: #4a8fdf;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Tahoma', sans-serif;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    border: 2px solid white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-    z-index: 10;
-}
+    .info-icon {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        width: 22px;
+        height: 22px;
+        background-color: #4a8fdf;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'DotGothic16', sans-serif; /* ここもフォント変更 */
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+        border: 2px solid white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        z-index: 10;
+    }
 
-.tooltip-text {
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    background-color: rgba(30, 30, 30, 0.9);
-    color: #fff;
-    text-align: center;
-    padding: 8px 12px;
-    border-radius: 6px;
-    z-index: 5;
-    
-    /* 位置を親要素の上側に調整 */
-    bottom: calc(100% + 5px);
-    left: 50%;
-    transform: translateX(-50%);
-    
-    width: 220px;
-    font-size: 0.9em;
-    transition: opacity 0.3s, visibility 0.3s;
-    pointer-events: none; /* ツールチップ自体はクリックできないように */
-}
+    .tooltip-text {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        background-color: rgba(30, 30, 30, 0.9);
+        color: #fff;
+        text-align: center;
+        padding: 8px 12px;
+        border-radius: 6px;
+        z-index: 5;
+        bottom: calc(100% + 5px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 220px;
+        font-size: 0.9em;
+        transition: opacity 0.3s, visibility 0.3s;
+        pointer-events: none; 
+        font-family: 'Meiryo', sans-serif; /* ツールチップは読みやすくMeiryoのままにする */
+    }
 
-/* PCでホバーした時にツールチップ表示 */
-.list-item-wrapper:hover .tooltip-text {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* スマホ用にJSでクラスを付けた時にツールチップ表示 */
-.list-item-wrapper.tooltip-active .tooltip-text {
-    visibility: visible;
-    opacity: 1;
-}
-    
-    
-    
+    .list-item-wrapper:hover .tooltip-text { visibility: visible; opacity: 1; }
+    .list-item-wrapper.tooltip-active .tooltip-text { visibility: visible; opacity: 1; }
 
     @media (max-width: 768px) {
         .login-container { flex-direction: column; gap: 40px; }
         .welcome-panel { text-align: center; width: 90%; }
-        .user-list { width: 90%; margin-bottom: 40px; } /* フッターとの間隔を調整 */
+        .user-list { width: 90%; margin-bottom: 40px; } 
         .user-account { width: 100%; }
         .footer { flex-direction: column; gap: 12px; padding: 15px 10px; font-size: 0.8em; text-align: center; }
         .footer-item { flex-direction: column; gap: 8px; width: 100%; }
@@ -185,11 +173,6 @@
     }
 </style>
 </head>
-
-
-
-
-
 
 <body>
     <div class="login-container">
@@ -206,73 +189,55 @@
             </form>
         </div>
   
-        
-        
-        
         <div class="user-list">
-    <div class="list-item-wrapper">
-        <a href="http://dim7.jp/clock/" class="user-link" target="_blank">
-            <div class="user-account">
-                <img class="avatar" src="images/icon_clock.png" alt="Clock Harmonizer">
-                <div class="user-info">
-                    <span class="username">Clock Harmonizer</span>
-                </div>
+            <div class="list-item-wrapper">
+                <a href="http://dim7.jp/clock/" class="user-link" target="_blank">
+                    <div class="user-account">
+                        <img class="avatar" src="images/icon_clock.png" alt="Clock Harmonizer">
+                        <div class="user-info">
+                            <span class="username">Clock Harmonizer</span>
+                        </div>
+                    </div>
+                </a>
+                <span class="info-icon" role="button" tabindex="0">?</span>
+                <span class="tooltip-text">アナログ時計の文字盤に12音を対応させました。3本の針が連続的なハーモニーを奏でます。</span>
             </div>
-        </a>
-        <span class="info-icon" role="button" tabindex="0">?</span>
-        <span class="tooltip-text">アナログ時計の文字盤に12音を対応させました。3本の針が連続的なハーモニーを奏でます。</span>
-    </div>
 
-    <div class="list-item-wrapper">
-        <a href="http://dim7.jp/Digital/" class="user-link" target="_blank">
-            <div class="user-account">
-                <img class="avatar" src="images/icon_digital.png" alt="Digital Clock Synthesizer">
-                <div class="user-info">
-                    <span class="username">Digital Clock Synthesizer</span>
-                </div>
+            <div class="list-item-wrapper">
+                <a href="http://dim7.jp/Digital/" class="user-link" target="_blank">
+                    <div class="user-account">
+                        <img class="avatar" src="images/icon_digital.png" alt="Digital Clock Synthesizer">
+                        <div class="user-info">
+                            <span class="username">Digital Clock Synthesizer</span>
+                        </div>
+                    </div>
+                </a>
+                <span class="info-icon" role="button" tabindex="0">?</span>
+                <span class="tooltip-text">デジタル時計の hh:mm:ss 表示がそのまま整数比に変換され、Just Intonationを奏でるというシンセサイザーです。マイナス100倍速で再生するとファミコンみたいで面白いですよ。</span>
             </div>
-        </a>
-        <span class="info-icon" role="button" tabindex="0">?</span>
-        <span class="tooltip-text">デジタル時計の hh:mm:ss 表示がそのまま整数比に変換され、Just Intonationを奏でるというシンセサイザーです。マイナス100倍速で再生するとファミコンみたいで面白いですよ。</span>
-    </div>
 
-    <div class="list-item-wrapper">
-        <a href="http://dim7.jp/c5vis/" class="user-link" target="_blank">
-            <div class="user-account">
-                <img class="avatar" src="images/icon_c5vis.png" alt="Circle of Fifths Visualizer">
-                <div class="user-info">
-                    <span class="username">Circle of Fifths Visualizer</span>
-                </div>
-            </div>
-        </a>
-        <span class="info-icon" role="button" tabindex="0">?</span>
-        <span class="tooltip-text">音楽ファイルをアップロードすると、音の大きさに応じて五度圏が光ります。楽曲を入れると打楽器の倍音をたくさん拾って面白くないので、単旋律の音声などを入れてみると良いかもしれません。</span>
-    </div>
-
-  
+            <div class="list-item-wrapper">
+                <a href="http://dim7.jp/c5vis/" class="user-link" target="_blank">
+                    <div class="user-account">
+                        <img class="avatar" src="images/icon_c5vis.png" alt="Circle of Fifths Visualizer">
+                        <div class="user-info">
+                            <span class="username">Circle of Fifths Visualizer</span>
+                        </div>
+                    </div>
+                </a>
+                <span class="info-icon" role="button" tabindex="0">?</span>
+                <span class="tooltip-text">音楽ファイルをアップロードすると、音の大きさに応じて五度圏が光ります。楽曲を入れると打楽器の倍音をたくさん拾って面白くないので、単旋律の音声などを入れてみると良いかもしれません。</span>
             </div>
         </div>
-        </div>
-</div>
-        
-        
-        
-
+    </div>
 
     <div class="footer">
-     
-     
-     
             <a href="/about.html" target="_blank">このサイトについて</a>
             <a href="/contact.html" target="_blank">お問い合わせ</a>
             <a href="/privacy.html" target="_blank">プライバシーポリシー</a>
-   
-        </div>
-        
     </div>
-
+    
     <script>
-        // (スクリプトは変更なし)
         const form = document.getElementById('redirect-form');
         form.addEventListener('submit', function(event) {
             event.preventDefault(); 
@@ -282,6 +247,28 @@
                 const destinationUrl = window.location.origin + '/' + directoryName + '/';
                 window.location.href = destinationUrl;
             }
+        });
+
+        // スマホで?アイコンをタップした時の処理
+        document.querySelectorAll('.info-icon').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                // 親要素にクラスをトグル
+                const wrapper = this.closest('.list-item-wrapper');
+                // 他の開いているツールチップを閉じる
+                document.querySelectorAll('.list-item-wrapper').forEach(w => {
+                    if (w !== wrapper) w.classList.remove('tooltip-active');
+                });
+                wrapper.classList.toggle('tooltip-active');
+            });
+        });
+
+        // 画面のどこかをタップしたらツールチップを閉じる
+        document.addEventListener('click', function() {
+            document.querySelectorAll('.list-item-wrapper').forEach(w => {
+                w.classList.remove('tooltip-active');
+            });
         });
     </script>
 </body>
