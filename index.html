@@ -16,27 +16,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ようこそ - dim7.jp</title>
     
-  <style>
-    /* ▼▼▼ ステップ3：フォントの読み込み設定 ▼▼▼ */
+ <style>
+    /* ▼▼▼ フォントの読み込み設定（変更なし） ▼▼▼ */
     @font-face {
         font-family: 'PixelMplus12';
-        /* アップロードした場所に合わせてパスを指定 */
         src: url('fonts/PixelMplus12-Regular.ttf') format('truetype');
-        font-display: swap; /* 読み込み待ちの間は標準フォントを表示 */
+        font-display: swap;
     }
 
     body, html {
         height: 100%;
         margin: 0;
-        
-        /* ▼▼▼ フォント指定を変更 ▼▼▼ */
-        /* まずPixelMplus、無ければWindows標準、それもなければMeiryo */
+        /* 基本はドットフォント */
         font-family: 'PixelMplus12', 'MS UI Gothic', 'Meiryo', sans-serif;
         
-        /* Mac/iOSでもアンチエイリアス（ぼかし）を切ってカクカクさせる */
+        /* 基本はカクカク表示 */
         -webkit-font-smoothing: none;
         -moz-osx-font-smoothing: grayscale;
-        /* 一部のブラウザでレンダリングをドット絵最適化 */
         text-rendering: optimizeSpeed; 
     }
 
@@ -65,16 +61,37 @@
     .welcome-panel {
         text-align: left;
     }
+
+    /* ▼▼▼ ここを大幅修正：「ようこそ」を本物に寄せる ▼▼▼ */
     .welcome-panel h1 { 
+        /* ここだけメイリオを優先！Mac対策でヒラギノも指定 */
+        font-family: 'Meiryo', 'メイリオ', 'Hiragino Kaku Gothic ProN', sans-serif;
+        
         font-size: clamp(2.5rem, 10vw, 4rem); 
-        font-weight: normal; 
+        
+        /* 太字にする */
+        font-weight: bold; 
+        
         margin: 0; 
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); 
-        font-style: italic; 
-        /* PixelMplusは綺麗なドット文字なので、斜体もCSSで変形させると味が出ます */
-        transform: skewX(-10deg);
+        
+        /* 影を少し濃く、広くして立体感を出す */
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); 
+        
+        /* イタリック体を持たない日本語フォントを強制的に斜めにする */
+        font-style: normal; 
+        transform: skewX(-15deg); 
+        
         display: inline-block;
+        
+        /* 文字の間隔を詰める（ここがポイント） */
+        letter-spacing: -0.05em;
+        
+        /* タイトルだけは滑らかに表示する（アンチエイリアス有効） */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: auto;
     }
+
     .welcome-panel p { 
         font-size: clamp(0.9rem, 2.5vw, 1.1rem); 
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); 
@@ -86,10 +103,9 @@
     .user-account.no-link { cursor: default; }
     .avatar { width: 50px; height: 50px; border-radius: 4px; margin-right: 15px; border: 2px solid white; object-fit: cover; background-color: #fff; flex-shrink: 0; }
     
-    /* フォントサイズなどをPixelMplusに合わせて微調整 */
     .user-info .username { 
         font-size: clamp(1.1rem, 4vw, 1.4rem); 
-        letter-spacing: 0px; /* PixelMplusは詰まっている方がXPっぽい */
+        letter-spacing: 0px; 
     }
 
     .footer {
@@ -121,7 +137,6 @@
         border-radius: 3px; 
         padding: 8px; 
         font-size: 1.2em; 
-        /* 入力欄にもPixelMplusを適用 */
         font-family: 'PixelMplus12', 'MS UI Gothic', sans-serif; 
         width: clamp(200px, 50vw, 250px); 
     }
@@ -130,7 +145,6 @@
     
     .hint-button { 
         display: inline-flex; justify-content: center; align-items: center; width: 36px; height: 36px; background: linear-gradient(to bottom, #72aeee, #4a8fdf); border: 1px solid #2a58ad; border-radius: 4px; margin-left: 8px; color: white; 
-        /* ヒントボタンのフォントも合わせる */
         font-family: 'PixelMplus12', sans-serif; 
         font-size: 1.5em; font-weight: bold; text-decoration: none; cursor: pointer; transition: all 0.2s ease; 
     }
@@ -176,8 +190,7 @@
         font-size: 0.9em;
         transition: opacity 0.3s, visibility 0.3s;
         pointer-events: none; 
-        /* ツールチップは読みやすさ重視でMeiryoのままにするか、雰囲気重視でPixelMplusにするか */
-        /* ここでは読みやすさ優先でMeiryoにしていますが、変えたい場合は 'PixelMplus12' にしてください */
+        /* ツールチップは読みやすいMeiryoのまま */
         font-family: 'Meiryo', sans-serif; 
     }
 
@@ -200,6 +213,10 @@
         .footer { font-size: 0.7em; }
     }
 </style>
+
+
+
+    
 </head>
 
 <body>
