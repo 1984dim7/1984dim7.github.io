@@ -9,6 +9,9 @@
         }
       })();
     </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6469478872018956"
      crossorigin="anonymous"></script>
@@ -16,8 +19,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ようこそ - dim7.jp</title>
     
- <style>
-    /* ▼▼▼ フォントの読み込み設定（変更なし） ▼▼▼ */
+  <style>
     @font-face {
         font-family: 'PixelMplus12';
         src: url('fonts/PixelMplus12-Regular.ttf') format('truetype');
@@ -27,23 +29,37 @@
     body, html {
         height: 100%;
         margin: 0;
-        /* 基本はドットフォント */
         font-family: 'PixelMplus12', 'MS UI Gothic', 'Meiryo', sans-serif;
-        
-        /* 基本はカクカク表示 */
         -webkit-font-smoothing: none;
         -moz-osx-font-smoothing: grayscale;
         text-rendering: optimizeSpeed; 
     }
 
     body {
+        /* メインの背景グラデーション */
         background: radial-gradient(circle at 0% 0%, #3a7bd5, #004e92);
         color: white;
         box-sizing: border-box;
         display: flex;
         flex-direction: column; 
-        min-height: 100vh; 
+        min-height: 100vh;
+        position: relative; /* 擬似要素の基準点 */
     }
+    
+    /* ▼▼▼ ここを追加：左上の白い光のエフェクト ▼▼▼ */
+    body::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%; /* 画面全体を覆う */
+        height: 100%;
+        /* 左上から右下への白い放射状グラデーション */
+        background: radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
+        pointer-events: none; /* クリックを邪魔しないように */
+        z-index: 0; /* コンテンツの下に表示 */
+    }
+
     a { color: white; }
     a.user-link { text-decoration: none; color: inherit; display: block; }
 
@@ -56,42 +72,26 @@
         padding: 20px;
         box-sizing: border-box;
         flex-grow: 1; 
+        z-index: 1; /* 光の上に表示 */
     }
 
     .welcome-panel {
         text-align: left;
     }
-
-    /* ▼▼▼ ここを大幅修正：「ようこそ」を本物に寄せる ▼▼▼ */
     .welcome-panel h1 { 
-        /* ここだけメイリオを優先！Mac対策でヒラギノも指定 */
         font-family: 'Meiryo', 'メイリオ', 'Hiragino Kaku Gothic ProN', sans-serif;
-        
         font-size: clamp(2.5rem, 10vw, 4rem); 
-        
-        /* 太字にする */
         font-weight: bold; 
-        
         margin: 0; 
-        
-        /* 影を少し濃く、広くして立体感を出す */
         text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); 
-        
-        /* イタリック体を持たない日本語フォントを強制的に斜めにする */
         font-style: normal; 
         transform: skewX(-15deg); 
-        
         display: inline-block;
-        
-        /* 文字の間隔を詰める（ここがポイント） */
         letter-spacing: -0.05em;
-        
-        /* タイトルだけは滑らかに表示する（アンチエイリアス有効） */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-rendering: auto;
     }
-
     .welcome-panel p { 
         font-size: clamp(0.9rem, 2.5vw, 1.1rem); 
         text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); 
@@ -101,8 +101,8 @@
     .user-account { display: flex; align-items: center; padding: 10px; width: 350px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; cursor: pointer; transition: background 0.2s ease; }
     a.user-link:hover .user-account { background: rgba(255, 255, 255, 0.2); }
     .user-account.no-link { cursor: default; }
+    /* アバター画像がなければダミーを表示する設定（新規コンテンツ用） */
     .avatar { width: 50px; height: 50px; border-radius: 4px; margin-right: 15px; border: 2px solid white; object-fit: cover; background-color: #fff; flex-shrink: 0; }
-    
     .user-info .username { 
         font-size: clamp(1.1rem, 4vw, 1.4rem); 
         letter-spacing: 0px; 
@@ -119,6 +119,7 @@
         font-size: 0.7em;
         box-sizing: border-box;
         flex-shrink: 0; 
+        z-index: 1; /* 光の上に表示 */
     }
     .footer-item {
         display: flex;
@@ -131,7 +132,6 @@
     .input-wrapper { position: relative; display: flex; align-items: center; }
     .fake-placeholder { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: #555; font-size: clamp(1rem, 3.5vw, 1.2rem); pointer-events: none; transition: opacity 0.2s ease; white-space: nowrap; }
     .password-input:not(:placeholder-shown) + .fake-placeholder { opacity: 0; }
-    
     .password-input { 
         border: 1px solid #7F9DB9; 
         border-radius: 3px; 
@@ -140,9 +140,7 @@
         font-family: 'PixelMplus12', 'MS UI Gothic', sans-serif; 
         width: clamp(200px, 50vw, 250px); 
     }
-    
     .submit-arrow { width: 36px; height: 36px; border: none; border-radius: 50%; background: url('images/arrow.png') center center / 100% no-repeat #4CAF50; cursor: pointer; margin-left: 10px; flex-shrink: 0; }
-    
     .hint-button { 
         display: inline-flex; justify-content: center; align-items: center; width: 36px; height: 36px; background: linear-gradient(to bottom, #72aeee, #4a8fdf); border: 1px solid #2a58ad; border-radius: 4px; margin-left: 8px; color: white; 
         font-family: 'PixelMplus12', sans-serif; 
@@ -190,7 +188,6 @@
         font-size: 0.9em;
         transition: opacity 0.3s, visibility 0.3s;
         pointer-events: none; 
-        /* ツールチップは読みやすいMeiryoのまま */
         font-family: 'Meiryo', sans-serif; 
     }
 
@@ -200,7 +197,8 @@
     @media (max-width: 768px) {
         .login-container { flex-direction: column; gap: 40px; }
         .welcome-panel { text-align: center; width: 90%; }
-        .user-list { width: 90%; margin-bottom: 40px; } 
+        /* コンテンツが増えたので下部の余白を少し広げる */
+        .user-list { width: 90%; margin-bottom: 50px; } 
         .user-account { width: 100%; }
         .footer { flex-direction: column; gap: 12px; padding: 15px 10px; font-size: 0.8em; text-align: center; }
         .footer-item { flex-direction: column; gap: 8px; width: 100%; }
@@ -213,10 +211,6 @@
         .footer { font-size: 0.7em; }
     }
 </style>
-
-
-
-    
 </head>
 
 <body>
@@ -273,7 +267,20 @@
                 <span class="info-icon" role="button" tabindex="0">?</span>
                 <span class="tooltip-text">音楽ファイルをアップロードすると、音の大きさに応じて五度圏が光ります。楽曲を入れると打楽器の倍音をたくさん拾って面白くないので、単旋律の音声などを入れてみると良いかもしれません。</span>
             </div>
-        </div>
+
+            <div class="list-item-wrapper">
+                <a href="http://dim7.jp/owarai/" class="user-link" target="_blank">
+                    <div class="user-account">
+                        <img class="avatar" src="https://placehold.jp/50x50.png?text=診断" alt="ユーモア16タイプ診断">
+                        <div class="user-info">
+                            <span class="username">ユーモア16タイプ診断</span>
+                        </div>
+                    </div>
+                </a>
+                <span class="info-icon" role="button" tabindex="0">?</span>
+                <span class="tooltip-text">あなたの笑いのツボを16タイプで診断！友達と結果をシェアして盛り上がろう。</span>
+            </div>
+            </div>
     </div>
 
     <div class="footer">
