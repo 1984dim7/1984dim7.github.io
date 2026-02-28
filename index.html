@@ -18,7 +18,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ようこそ - dim7.jp</title>
-    
+    <meta name="description" content="dim7.jp - 音楽理論とWebテクノロジーの交差点で生まれる実験的コンテンツ。時計ハーモナイザー、デジタルクロックシンセサイザーなど。">
+    <meta property="og:title" content="dim7.jp - ようこそ">
+    <meta property="og:description" content="音楽理論とWebテクノロジーの交差点で生まれる実験的コンテンツ">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dim7.jp/">
+    <meta name="twitter:card" content="summary">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
   <style>
     @font-face {
         font-family: 'PixelMplus12';
@@ -77,6 +83,7 @@
 
     .welcome-panel {
         text-align: left;
+        animation: fadeInUp 0.6s ease-out both;
     }
     .welcome-panel h1 { 
         font-family: 'Meiryo', 'メイリオ', 'Hiragino Kaku Gothic ProN', sans-serif;
@@ -98,8 +105,19 @@
     }
 
     .user-list { display: flex; flex-direction: column; gap: 10px; }
-    .user-account { display: flex; align-items: center; padding: 10px; width: 350px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; cursor: pointer; transition: background 0.2s ease; }
-    a.user-link:hover .user-account { background: rgba(255, 255, 255, 0.2); }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .list-item-wrapper { animation: fadeInUp 0.5s ease-out both; }
+    .list-item-wrapper:nth-child(1) { animation-delay: 0.1s; }
+    .list-item-wrapper:nth-child(2) { animation-delay: 0.2s; }
+    .list-item-wrapper:nth-child(3) { animation-delay: 0.3s; }
+    .list-item-wrapper:nth-child(4) { animation-delay: 0.4s; }
+
+    .user-account { display: flex; align-items: center; padding: 10px; width: 350px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease; }
+    a.user-link:hover .user-account { background: rgba(255, 255, 255, 0.2); transform: translateX(5px); }
     .user-account.no-link { cursor: default; }
     /* アバター画像がなければダミーを表示する設定（新規コンテンツ用） */
     .avatar { width: 50px; height: 50px; border-radius: 4px; margin-right: 15px; border: 2px solid white; object-fit: cover; background-color: #fff; flex-shrink: 0; }
@@ -230,7 +248,7 @@
   
         <div class="user-list">
             <div class="list-item-wrapper">
-                <a href="http://dim7.jp/clock/" class="user-link" target="_blank">
+                <a href="https://dim7.jp/clock/" class="user-link" target="_blank" rel="noopener">
                     <div class="user-account">
                         <img class="avatar" src="images/icon_clock.png" alt="Clock Harmonizer">
                         <div class="user-info">
@@ -243,7 +261,7 @@
             </div>
 
             <div class="list-item-wrapper">
-                <a href="http://dim7.jp/Digital/" class="user-link" target="_blank">
+                <a href="https://dim7.jp/Digital/" class="user-link" target="_blank" rel="noopener">
                     <div class="user-account">
                         <img class="avatar" src="images/icon_digital.png" alt="Digital Clock Synthesizer">
                         <div class="user-info">
@@ -256,7 +274,7 @@
             </div>
 
             <div class="list-item-wrapper">
-                <a href="http://dim7.jp/c5vis/" class="user-link" target="_blank">
+                <a href="https://dim7.jp/c5vis/" class="user-link" target="_blank" rel="noopener">
                     <div class="user-account">
                         <img class="avatar" src="images/icon_c5vis.png" alt="Circle of Fifths Visualizer">
                         <div class="user-info">
@@ -269,7 +287,7 @@
             </div>
 
             <div class="list-item-wrapper">
-                <a href="http://dim7.jp/owarai/" class="user-link" target="_blank">
+                <a href="https://dim7.jp/owarai/" class="user-link" target="_blank" rel="noopener">
                     <div class="user-account">
                         <img class="avatar" src="https://placehold.jp/50x50.png?text=診断" alt="ユーモア16タイプ診断">
                         <div class="user-info">
