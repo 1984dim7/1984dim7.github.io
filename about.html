@@ -6,20 +6,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About This Site - dim7.jp</title>
-    <meta name="description" content="About dim7.jp - A digital playground for experiments in music, programming, and nostalgic UI design.">
+    <meta name="description" content="About dim7.jp — A creative lab exploring music theory and web technology. Learn about Clock Harmonizer, Digital Clock Synthesizer, Circle of Fifths Visualizer, and more.">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
     <style>
-        body, html { height: 100%; margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Meiryo', sans-serif; }
+        body, html { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Meiryo', sans-serif; }
         body {
             background: radial-gradient(circle at 0% 0%, #3a7bd5, #004e92);
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 40px 20px;
             box-sizing: border-box;
             position: relative;
+            display: flex;
+            justify-content: center;
         }
         body::after {
             content: '';
@@ -36,20 +35,42 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 16px;
             padding: 40px;
-            max-width: 600px;
+            max-width: 700px;
             width: 100%;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             position: relative;
             z-index: 1;
             animation: fadeIn 0.6s ease-out;
-            text-align: center;
         }
-        .icon { font-size: 50px; }
-        h1 { margin-top: 10px; font-size: 1.8em; }
-        h2 { border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 8px; margin-top: 30px; }
+        .icon { font-size: 50px; text-align: center; }
+        h1 { margin-top: 10px; font-size: 1.8em; text-align: center; }
+        h2 { border-bottom: 1px solid rgba(255,255,255,0.3); padding-bottom: 8px; margin-top: 36px; font-size: 1.25em; }
         p { line-height: 1.8; opacity: 0.9; }
+        ul { line-height: 2; opacity: 0.9; padding-left: 1.4em; }
         a { color: #a8d8ff; transition: color 0.2s; }
         a:hover { color: white; }
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0;
+        }
+        .tool-card {
+            background: rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 16px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .tool-card .tool-icon { font-size: 1.8rem; margin-bottom: 6px; }
+        .tool-card h3 { margin: 0 0 6px; font-size: 1em; }
+        .tool-card p { font-size: 0.88em; margin: 0; opacity: 0.85; line-height: 1.6; }
+        .lang-switch {
+            text-align: right;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+        .lang-switch a { color: #a8d8ff; }
         .back-link {
             display: inline-block;
             margin-top: 30px;
@@ -65,21 +86,82 @@
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @media (max-width: 520px) {
+            .container { padding: 24px 16px; }
+            .tool-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="lang-switch"><a href="/about-ja.html">🇯🇵 日本語版はこちら</a></div>
         <div class="icon">🎵</div>
-        <h1>About This Site</h1>
-        <p>"dim7.jp" is a digital playground for experiments in music, programming, and nostalgic UI design.</p>
-        <p>My goal is to create content that visitors can enjoy, while bringing my own ideas to life.</p>
-        
-        <h2>About the Creator</h2>
-        <p>1984dim7</p>
-        <p>I'm exploring interesting things at the intersection of music theory and web technology.</p>
-        
-        <h2>Contact</h2>
-        <p>For feedback and inquiries, please visit the <a href="./contact.html">Contact Page</a> or connect with me on <a href="https://www.instagram.com/1984dim7/" target="_blank" rel="noopener">Instagram</a>.</p>
+        <h1>About dim7.jp</h1>
+        <p>
+            <strong>dim7.jp</strong> is a creative lab built at the intersection of <em>music theory</em> and <em>web technology</em>.
+            Every experiment here starts with a simple question: <em>"What would it sound or look like if this everyday thing were mapped to music?"</em>
+        </p>
+        <p>
+            The name "dim7" is borrowed from the <strong>diminished seventh chord</strong> — a symmetrical, tension-filled harmony
+            that divides the octave into perfectly equal parts. It felt like the right metaphor for a site that tries to find
+            unexpected patterns and beauty in ordinary data.
+        </p>
+
+        <h2>🛠 Tools &amp; Experiments</h2>
+        <div class="tool-grid">
+            <div class="tool-card">
+                <div class="tool-icon">🕐</div>
+                <h3>Clock Harmonizer</h3>
+                <p>Each of the 12 positions on an analog clock face is mapped to one of the 12 chromatic pitches.
+                   The hour, minute, and second hands continuously trace three-note chords — harmony that evolves with time.</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">🎹</div>
+                <h3>Digital Clock Synthesizer</h3>
+                <p>The hh:mm:ss timestamp is read as integer ratios and converted into <em>Just Intonation</em> frequencies in real time.
+                   Try setting the speed to −100× for a retro game-console sound.</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">🎼</div>
+                <h3>Circle of Fifths Visualizer</h3>
+                <p>Upload an audio file and watch the circle of fifths light up in response to the frequency content.
+                   Best experienced with a single melodic line rather than a full mix.</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">😂</div>
+                <h3>ユーモア16タイプ診断</h3>
+                <p>A personality quiz that classifies your sense of humor into one of 16 types.
+                   Share your result with friends and compare — it often sparks surprisingly honest conversations.</p>
+            </div>
+        </div>
+
+        <h2>👤 About the Creator</h2>
+        <p>
+            I go by <strong>1984dim7</strong> online. I'm a hobbyist developer with a background in music who got fascinated by
+            the ways code can make abstract theory tangible and interactive.
+        </p>
+        <p>
+            My process usually begins with a musical concept — interval relationships, tuning systems, harmonic motion —
+            and ends with a browser-based tool that lets anyone explore it without needing any music theory background.
+            I want the experience to be playful first, educational second.
+        </p>
+
+        <h2>🌐 Technology</h2>
+        <p>
+            All tools on dim7.jp are built with plain HTML, CSS, and JavaScript — no frameworks, no build steps.
+            Audio is generated via the <strong>Web Audio API</strong>, which lets the browser synthesize sound entirely client-side.
+            Visualizations use the <strong>Canvas API</strong> and <strong>AnalyserNode</strong> for real-time frequency analysis.
+        </p>
+        <p>
+            The site is intentionally lightweight: fast to load, works offline after the first visit, and runs on any modern browser.
+        </p>
+
+        <h2>📬 Contact &amp; Feedback</h2>
+        <p>
+            Bug reports, suggestions, and general feedback are always welcome.
+            Visit the <a href="./contact.html">Contact Page</a> or reach out on
+            <a href="https://www.instagram.com/1984dim7/" target="_blank" rel="noopener">Instagram (@1984dim7)</a>.
+        </p>
 
         <a href="/" class="back-link">← Back to Home</a>
     </div>
