@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <script>
-      (function() {
-        const userLang = navigator.language || navigator.userLanguage; 
-        if (!userLang.toLowerCase().startsWith('ja')) {
-          window.location.replace('/index-en.html');
-        }
-      })();
+        (function () {
+            const userLang = navigator.language || navigator.userLanguage;
+            if (!userLang.toLowerCase().startsWith('ja')) {
+                window.location.replace('/index-en.html');
+            }
+        })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6469478872018956"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ようこそ - dim7.jp</title>
@@ -24,212 +25,428 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dim7.jp/">
     <meta name="twitter:card" content="summary">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
-  <style>
-    @font-face {
-        font-family: 'PixelMplus12';
-        src: url('fonts/PixelMplus12-Regular.ttf') format('truetype');
-        font-display: swap;
-    }
+    <link rel="icon" href="images/favicon_xp.png">
+    <style>
+        @font-face {
+            font-family: 'PixelMplus12';
+            src: url('fonts/PixelMplus12-Regular.ttf') format('truetype');
+            font-display: swap;
+        }
 
-    body, html {
-        height: 100%;
-        margin: 0;
-        font-family: 'PixelMplus12', 'MS UI Gothic', 'Meiryo', sans-serif;
-        -webkit-font-smoothing: none;
-        -moz-osx-font-smoothing: grayscale;
-        text-rendering: optimizeSpeed; 
-    }
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: 'PixelMplus12', 'MS UI Gothic', 'Meiryo', sans-serif;
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeSpeed;
+        }
 
-    body {
-        /* メインの背景グラデーション */
-        background: radial-gradient(circle at 0% 0%, #3a7bd5, #004e92);
-        color: white;
-        box-sizing: border-box;
-        display: flex;
-        flex-direction: column; 
-        min-height: 100vh;
-        position: relative; /* 擬似要素の基準点 */
-    }
-    
-    /* ▼▼▼ ここを追加：左上の白い光のエフェクト ▼▼▼ */
-    body::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%; /* 画面全体を覆う */
-        height: 100%;
-        /* 左上から右下への白い放射状グラデーション */
-        background: radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
-        pointer-events: none; /* クリックを邪魔しないように */
-        z-index: 0; /* コンテンツの下に表示 */
-    }
+        body {
+            /* メインの背景グラデーション */
+            background: radial-gradient(circle at 0% 0%, #3a7bd5, #004e92);
+            color: white;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+            /* 擬似要素の基準点 */
+        }
 
-    a { color: white; }
-    a.user-link { text-decoration: none; color: inherit; display: block; }
+        /* ▼▼▼ ここを追加：左上の白い光のエフェクト ▼▼▼ */
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            /* 画面全体を覆う */
+            height: 100%;
+            /* 左上から右下への白い放射状グラデーション */
+            background: radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
+            pointer-events: none;
+            /* クリックを邪魔しないように */
+            z-index: 0;
+            /* コンテンツの下に表示 */
+        }
 
-    .login-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 100px;
-        width: 100%;
-        padding: 20px;
-        box-sizing: border-box;
-        flex-grow: 1; 
-        z-index: 1; /* 光の上に表示 */
-    }
+        a {
+            color: white;
+        }
 
-    .welcome-panel {
-        text-align: left;
-        animation: fadeInUp 0.6s ease-out both;
-    }
-    .welcome-panel h1 { 
-        font-family: 'Meiryo', 'メイリオ', 'Hiragino Kaku Gothic ProN', sans-serif;
-        font-size: clamp(2.5rem, 10vw, 4rem); 
-        font-weight: bold; 
-        margin: 0; 
-        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); 
-        font-style: normal; 
-        transform: skewX(-15deg); 
-        display: inline-block;
-        letter-spacing: -0.05em;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        text-rendering: auto;
-    }
-    .welcome-panel p { 
-        font-size: clamp(0.9rem, 2.5vw, 1.1rem); 
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4); 
-    }
+        a.user-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
 
-    .user-list { display: flex; flex-direction: column; gap: 10px; }
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            flex-grow: 1;
+            z-index: 1;
+            /* 光の上に表示 */
+            position: relative;
+        }
 
-    @keyframes fadeInUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .list-item-wrapper { animation: fadeInUp 0.5s ease-out both; }
-    .list-item-wrapper:nth-child(1) { animation-delay: 0.1s; }
-    .list-item-wrapper:nth-child(2) { animation-delay: 0.2s; }
-    .list-item-wrapper:nth-child(3) { animation-delay: 0.3s; }
-    .list-item-wrapper:nth-child(4) { animation-delay: 0.4s; }
-    .list-item-wrapper:nth-child(5) { animation-delay: 0.5s; }
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            bottom: 20%;
+            left: 50%;
+            width: 1px;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
+            z-index: 0;
+        }
 
-    .user-account { display: flex; align-items: center; padding: 10px; width: 350px; background: rgba(255, 255, 255, 0.1); border-radius: 8px; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease; }
-    a.user-link:hover .user-account { background: rgba(255, 255, 255, 0.2); transform: translateX(5px); }
-    .user-account.no-link { cursor: default; }
-    /* アバター画像がなければダミーを表示する設定（新規コンテンツ用） */
-    .avatar { width: 50px; height: 50px; border-radius: 4px; margin-right: 15px; border: 2px solid white; object-fit: cover; background-color: #fff; flex-shrink: 0; }
-    .user-info .username { 
-        font-size: clamp(1.1rem, 4vw, 1.4rem); 
-        letter-spacing: 0px; 
-    }
+        .welcome-panel {
+            width: 45%;
+            text-align: right;
+            padding-right: 6%;
+            animation: fadeInUp 0.6s ease-out both;
+            position: relative;
+            z-index: 1;
+        }
 
-    .footer {
-        width: 100%;
-        background: #163666;
-        display: flex;
-        justify-content: right;
-        align-items: center;
-        gap: 15px;
-        padding: 10px 20px;
-        font-size: 0.7em;
-        box-sizing: border-box;
-        flex-shrink: 0; 
-        z-index: 1; /* 光の上に表示 */
-    }
-    .footer-item {
-        display: flex;
-        align-items: left;
-        gap: 15px;
-        justify-content: left;
-    }
-    
-    .password-form { margin-top: 20px; display: flex; align-items: center; }
-    .input-wrapper { position: relative; display: flex; align-items: center; }
-    .fake-placeholder { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); color: #555; font-size: clamp(1rem, 3.5vw, 1.2rem); pointer-events: none; transition: opacity 0.2s ease; white-space: nowrap; }
-    .password-input:not(:placeholder-shown) + .fake-placeholder { opacity: 0; }
-    .password-input { 
-        border: 1px solid #7F9DB9; 
-        border-radius: 3px; 
-        padding: 8px; 
-        font-size: 1.2em; 
-        font-family: 'PixelMplus12', 'MS UI Gothic', sans-serif; 
-        width: clamp(200px, 50vw, 250px); 
-    }
-    .submit-arrow { width: 36px; height: 36px; border: none; border-radius: 50%; background: url('images/arrow.png') center center / 100% no-repeat #4CAF50; cursor: pointer; margin-left: 10px; flex-shrink: 0; }
-    .hint-button { 
-        display: inline-flex; justify-content: center; align-items: center; width: 36px; height: 36px; background: linear-gradient(to bottom, #72aeee, #4a8fdf); border: 1px solid #2a58ad; border-radius: 4px; margin-left: 8px; color: white; 
-        font-family: 'PixelMplus12', sans-serif; 
-        font-size: 1.5em; font-weight: bold; text-decoration: none; cursor: pointer; transition: all 0.2s ease; 
-    }
-    .hint-button:hover { background: linear-gradient(to bottom, #82baff, #5a9fff); }
-    
-    .list-item-wrapper { position: relative; }
+        .welcome-panel h1 {
+            font-family: 'Meiryo', 'メイリオ', 'Hiragino Kaku Gothic ProN', sans-serif;
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            font-weight: bold;
+            margin: 0;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            font-style: normal;
+            transform: skewX(-15deg);
+            display: inline-block;
+            letter-spacing: -0.05em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: auto;
+        }
 
-    .info-icon {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        width: 22px;
-        height: 22px;
-        background-color: #4a8fdf;
-        color: white;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'PixelMplus12', sans-serif;
-        font-weight: bold;
-        font-size: 14px;
-        cursor: pointer;
-        border: 2px solid white;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        z-index: 10;
-    }
+        .welcome-panel p {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+        }
 
-    .tooltip-text {
-        visibility: hidden;
-        opacity: 0;
-        position: absolute;
-        background-color: rgba(30, 30, 30, 0.9);
-        color: #fff;
-        text-align: center;
-        padding: 8px 12px;
-        border-radius: 6px;
-        z-index: 5;
-        bottom: calc(100% + 5px);
-        left: 50%;
-        transform: translateX(-50%);
-        width: 220px;
-        font-size: 0.9em;
-        transition: opacity 0.3s, visibility 0.3s;
-        pointer-events: none; 
-        font-family: 'Meiryo', sans-serif; 
-    }
+        .user-list {
+            width: 45%;
+            padding-left: 6%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-start;
+            position: relative;
+            z-index: 1;
+        }
 
-    .list-item-wrapper:hover .tooltip-text { visibility: visible; opacity: 1; }
-    .list-item-wrapper.tooltip-active .tooltip-text { visibility: visible; opacity: 1; }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
 
-    @media (max-width: 768px) {
-        .login-container { flex-direction: column; gap: 40px; }
-        .welcome-panel { text-align: center; width: 90%; }
-        /* コンテンツが増えたので下部の余白を少し広げる */
-        .user-list { width: 90%; margin-bottom: 50px; } 
-        .user-account { width: 100%; }
-        .footer { flex-direction: column; gap: 12px; padding: 15px 10px; font-size: 0.8em; text-align: center; }
-        .footer-item { flex-direction: column; gap: 8px; width: 100%; }
-    }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-    @media (max-width: 400px) {
-        .login-container { gap: 30px; }
-        .user-account { padding: 8px; }
-        .avatar { width: 40px; height: 40px; margin-right: 10px; }
-        .footer { font-size: 0.7em; }
-    }
-</style>
+        .list-item-wrapper {
+            animation: fadeInUp 0.5s ease-out both;
+        }
+
+        .list-item-wrapper:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .list-item-wrapper:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .list-item-wrapper:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .list-item-wrapper:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .list-item-wrapper:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .user-account {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            width: 320px;
+            background: transparent;
+            border-radius: 4px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: background 0.1s ease;
+        }
+
+        a.user-link:hover .user-account {
+            background: #18529d;
+            border: 1px solid #73a6e6;
+        }
+
+        .user-account.no-link {
+            cursor: default;
+        }
+
+        /* アバター画像がなければダミーを表示する設定（新規コンテンツ用） */
+        .avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 6px;
+            margin-right: 15px;
+            border: 2px solid white;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+            object-fit: cover;
+            background-color: #fff;
+            flex-shrink: 0;
+        }
+
+        .user-info .username {
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            letter-spacing: 0px;
+            font-family: 'Meiryo', 'MS UI Gothic', sans-serif;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .footer-container {
+            width: 100%;
+            background: #163666;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        .footer-line-top {
+            height: 2px;
+            background: linear-gradient(to right, #e25822, #fad961, #e25822);
+            width: 100%;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 15px 40px;
+            font-size: 0.8em;
+            box-sizing: border-box;
+        }
+
+        .footer-right {
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .password-form {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .fake-placeholder {
+            position: absolute;
+            left: 9px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #555;
+            font-size: clamp(1rem, 3.5vw, 1.2rem);
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .password-input:not(:placeholder-shown)+.fake-placeholder {
+            opacity: 0;
+        }
+
+        .password-input {
+            border: 1px solid #7F9DB9;
+            border-radius: 3px;
+            padding: 8px;
+            font-size: 1.2em;
+            font-family: 'PixelMplus12', 'MS UI Gothic', sans-serif;
+            width: clamp(200px, 50vw, 250px);
+        }
+
+        .submit-arrow {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: url('images/arrow.png') center center / 100% no-repeat #4CAF50;
+            cursor: pointer;
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+
+        .hint-button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(to bottom, #72aeee, #4a8fdf);
+            border: 1px solid #2a58ad;
+            border-radius: 4px;
+            margin-left: 8px;
+            color: white;
+            font-family: 'PixelMplus12', sans-serif;
+            font-size: 1.5em;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .hint-button:hover {
+            background: linear-gradient(to bottom, #82baff, #5a9fff);
+        }
+
+        .list-item-wrapper {
+            position: relative;
+        }
+
+        .info-icon {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 22px;
+            height: 22px;
+            background-color: #4a8fdf;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'PixelMplus12', sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            background-color: rgba(30, 30, 30, 0.9);
+            color: #fff;
+            text-align: center;
+            padding: 8px 12px;
+            border-radius: 6px;
+            z-index: 5;
+            bottom: calc(100% + 5px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 220px;
+            font-size: 0.9em;
+            transition: opacity 0.3s, visibility 0.3s;
+            pointer-events: none;
+            font-family: 'Meiryo', sans-serif;
+        }
+
+        .list-item-wrapper:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .list-item-wrapper.tooltip-active .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .login-container::before {
+                display: none;
+            }
+
+            .welcome-panel {
+                text-align: center;
+                width: 90%;
+                padding-right: 0;
+            }
+
+            .password-form {
+                justify-content: center;
+            }
+
+            /* コンテンツが増えたので下部の余白を少し広げる */
+            .user-list {
+                width: 90%;
+                padding-left: 0;
+                margin-bottom: 50px;
+                align-items: center;
+            }
+
+            .user-account {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 20px;
+                padding: 15px 10px;
+                font-size: 0.8em;
+                text-align: center;
+            }
+
+            .footer-right {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .login-container {
+                gap: 30px;
+            }
+
+            .user-account {
+                padding: 8px;
+            }
+
+            .avatar {
+                width: 40px;
+                height: 40px;
+                margin-right: 10px;
+            }
+
+            .footer {
+                font-size: 0.7em;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -246,7 +463,7 @@
                 <a href="/hint/" class="hint-button">?</a>
             </form>
         </div>
-  
+
         <div class="user-list">
             <div class="list-item-wrapper">
                 <a href="https://dim7.jp/clock/" class="user-link" target="_blank" rel="noopener">
@@ -271,7 +488,8 @@
                     </div>
                 </a>
                 <span class="info-icon" role="button" tabindex="0">?</span>
-                <span class="tooltip-text">デジタル時計の hh:mm:ss 表示がそのまま整数比に変換され、Just Intonationを奏でるというシンセサイザーです。マイナス100倍速で再生するとファミコンみたいで面白いですよ。</span>
+                <span class="tooltip-text">デジタル時計の hh:mm:ss 表示がそのまま整数比に変換され、Just
+                    Intonationを奏でるというシンセサイザーです。マイナス100倍速で再生するとファミコンみたいで面白いですよ。</span>
             </div>
 
             <div class="list-item-wrapper">
@@ -284,13 +502,14 @@
                     </div>
                 </a>
                 <span class="info-icon" role="button" tabindex="0">?</span>
-                <span class="tooltip-text">音楽ファイルをアップロードすると、音の大きさに応じて五度圏が光ります。楽曲を入れると打楽器の倍音をたくさん拾って面白くないので、単旋律の音声などを入れてみると良いかもしれません。</span>
+                <span
+                    class="tooltip-text">音楽ファイルをアップロードすると、音の大きさに応じて五度圏が光ります。楽曲を入れると打楽器の倍音をたくさん拾って面白くないので、単旋律の音声などを入れてみると良いかもしれません。</span>
             </div>
 
             <div class="list-item-wrapper">
                 <a href="https://dim7.jp/owarai/" class="user-link" target="_blank" rel="noopener">
                     <div class="user-account">
-                        <img class="avatar" src="https://placehold.jp/50x50.png?text=診断" alt="ユーモア16タイプ診断">
+                        <img class="avatar" src="images/icon_humor.svg" alt="ユーモア16タイプ診断">
                         <div class="user-info">
                             <span class="username">ユーモア16タイプ診断</span>
                         </div>
@@ -303,7 +522,7 @@
             <div class="list-item-wrapper">
                 <a href="https://dim7.jp/key-image/" class="user-link" target="_blank" rel="noopener">
                     <div class="user-account">
-                        <img class="avatar" src="https://placehold.jp/50x50.png?text=考察" alt="考察：調とそれが持つイメージ">
+                        <img class="avatar" src="images/icon_theory.svg" alt="考察：調とそれが持つイメージ">
                         <div class="user-info">
                             <span class="username">考察：調とそれが持つイメージ</span>
                         </div>
@@ -312,23 +531,28 @@
                 <span class="info-icon" role="button" tabindex="0">?</span>
                 <span class="tooltip-text">長調・短調や各調性に対して抱かれやすい印象を、音楽理論と感覚の両面から考察する読み物です。</span>
             </div>
-            </div>
+        </div>
     </div>
 
-    <div class="footer">
-            <a href="/about-ja.html" target="_blank">このサイトについて</a>
-            <a href="/contact.html" target="_blank">お問い合わせ</a>
-            <a href="/privacy.html" target="_blank">プライバシーポリシー</a>
+    <div class="footer-container">
+        <div class="footer-line-top"></div>
+        <div class="footer">
+            <div class="footer-right">
+                <a href="/about-ja.html" target="_blank">このサイトについて</a>
+                <a href="/contact.html" target="_blank">お問い合わせ</a>
+                <a href="/privacy.html" target="_blank">プライバシーポリシー</a>
+            </div>
+        </div>
     </div>
-    
+
     <!-- admax -->
-<script src="https://adm.shinobi.jp/s/cd7ff93afa593e1456254f63c233fbfe"></script>
-<!-- admax -->
-    
+    <script src="https://adm.shinobi.jp/s/cd7ff93afa593e1456254f63c233fbfe"></script>
+    <!-- admax -->
+
     <script>
         const form = document.getElementById('redirect-form');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault(); 
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
             const input = document.getElementById('directory-input');
             const directoryName = input.value.trim();
             if (directoryName) {
@@ -338,7 +562,7 @@
         });
 
         document.querySelectorAll('.info-icon').forEach(icon => {
-            icon.addEventListener('click', function(e) {
+            icon.addEventListener('click', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 const wrapper = this.closest('.list-item-wrapper');
@@ -349,11 +573,12 @@
             });
         });
 
-        document.addEventListener('click', function() {
+        document.addEventListener('click', function () {
             document.querySelectorAll('.list-item-wrapper').forEach(w => {
                 w.classList.remove('tooltip-active');
             });
         });
     </script>
 </body>
+
 </html>
