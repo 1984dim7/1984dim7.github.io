@@ -12,537 +12,735 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6469478872018956"
         crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ようこそ - dim7.jp</title>
-    <meta name="description" content="dim7.jp - 音楽理論とWebテクノロジーの交差点で生まれる実験的コンテンツ。時計ハーモナイザー、デジタルクロックシンセサイザーなど。">
-    <meta property="og:title" content="dim7.jp - ようこそ">
-    <meta property="og:description" content="音楽理論とWebテクノロジーの交差点で生まれる実験的コンテンツ">
+    <title>dim7.jp - 音楽可視化インタラクティブ・ラボ</title>
+    <meta name="description" content="音楽理論とWebテクノロジーの交差点で生まれる実験的インタラクティブ・アート。Instagramで2万人がフォローする音楽可視化プロジェクト「1984dim7」の公式体験Webサイト。">
+    <meta property="og:title" content="dim7.jp - 音楽可視化インタラクティブ・ラボ">
+    <meta property="og:description" content="音楽理論とWebテクノロジーの交差点で生まれる実験的インタラクティブ・アート。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dim7.jp/">
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="images/favicon_xp.png">
     <style>
-        @font-face {
-            font-family: 'PixelMplus12';
-            src: url('fonts/PixelMplus12-Regular.ttf') format('truetype');
-            font-display: swap;
+        :root {
+            --bg-color: #080b11;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #4a8fdf;
+            --primary-glow: rgba(74, 143, 223, 0.2);
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --card-hover-bg: rgba(255, 255, 255, 0.06);
+            --card-hover-border: rgba(255, 255, 255, 0.15);
         }
 
-        body,
-        html {
-            height: 100%;
-            margin: 0;
-            font-family: 'PixelMplus12', 'MS UI Gothic', 'Meiryo', sans-serif;
-            -webkit-font-smoothing: none;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeSpeed;
-        }
-
-        body {
-            /* メインの背景グラデーション */
-            background: radial-gradient(circle at 0% 0%, #3a7bd5, #004e92);
-            color: white;
+        * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            min-height: 100vh;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
-            position: relative;
-            /* 擬似要素の基準点 */
         }
 
-        /* ▼▼▼ ここを追加：左上の白い光のエフェクト ▼▼▼ */
-        body::after {
-            content: '';
-            position: absolute;
+        /* 背景オーロラエフェクト */
+        .aurora-bg {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            /* 画面全体を覆う */
             height: 100%;
-            /* 左上から右下への白い放射状グラデーション */
-            background: radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 60%);
             pointer-events: none;
-            /* クリックを邪魔しないように */
             z-index: 0;
-            /* コンテンツの下に表示 */
+            overflow: hidden;
+        }
+
+        .aurora-1 {
+            position: absolute;
+            top: -10%;
+            left: -10%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(circle, rgba(58, 123, 213, 0.15) 0%, rgba(58, 123, 213, 0) 70%);
+            filter: blur(80px);
+        }
+
+        .aurora-2 {
+            position: absolute;
+            top: 40%;
+            right: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(94, 23, 235, 0.12) 0%, rgba(94, 23, 235, 0) 70%);
+            filter: blur(100px);
+        }
+
+        .aurora-3 {
+            position: absolute;
+            bottom: -10%;
+            left: 20%;
+            width: 50%;
+            height: 50%;
+            background: radial-gradient(circle, rgba(226, 88, 34, 0.06) 0%, rgba(226, 88, 34, 0) 70%);
+            filter: blur(80px);
         }
 
         a {
-            color: white;
-        }
-
-        a.user-link {
+            color: var(--text-color);
             text-decoration: none;
-            color: inherit;
-            display: block;
+            transition: all 0.2s ease;
         }
 
-        .login-container {
+        /* レイアウト */
+        header {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .lang-switch {
+            font-size: 0.85rem;
+            padding: 6px 16px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .lang-switch:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+            position: relative;
+            z-index: 10;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+        }
+
+        /* ヒーローセクション */
+        .hero {
+            text-align: center;
+            max-width: 750px;
+            margin: 40px auto 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #ffffff, #e2e8f0, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p.tagline {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        /* Instagramバナー */
+        .instagram-banner {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            margin-top: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .instagram-banner:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .instagram-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .instagram-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0;
-            width: 100%;
-            padding: 20px;
-            box-sizing: border-box;
-            flex-grow: 1;
-            z-index: 1;
-            /* 光の上に表示 */
-            position: relative;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(220, 39, 67, 0.3);
         }
 
-        .login-container::before {
+        .instagram-icon-wrapper svg {
+            width: 26px;
+            height: 26px;
+            fill: white;
+        }
+
+        .instagram-text h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .badge-follower {
+            font-size: 0.75rem;
+            background: rgba(230, 104, 60, 0.15);
+            color: #ff9e7d;
+            padding: 2px 10px;
+            border-radius: 12px;
+            border: 1px solid rgba(230, 104, 60, 0.3);
+            font-weight: 500;
+        }
+
+        .instagram-text p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .btn-instagram {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 24px;
+            background: white;
+            color: #0f172a;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-instagram:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
+            background: #f1f5f9;
+        }
+
+        /* ツールセクション */
+        .tools-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.9;
+        }
+
+        .tools-title::after {
             content: '';
-            position: absolute;
-            top: 20%;
-            bottom: 20%;
-            left: 50%;
-            width: 1px;
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0));
-            z-index: 0;
-        }
-
-        .welcome-panel {
-            width: 45%;
-            text-align: right;
-            padding-right: 6%;
-            animation: fadeInUp 0.6s ease-out both;
-            position: relative;
-            z-index: 1;
-        }
-
-        .welcome-panel h1 {
-            font-family: 'Meiryo', 'メイリオ', 'Hiragino Kaku Gothic ProN', sans-serif;
-            font-size: clamp(2.5rem, 10vw, 4rem);
-            font-weight: bold;
-            margin: 0;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-            font-style: normal;
-            transform: skewX(-15deg);
-            display: inline-block;
-            letter-spacing: -0.05em;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: auto;
-        }
-
-        .welcome-panel p {
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.1), transparent);
         }
 
         .user-list {
-            width: 45%;
-            padding-left: 6%;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            align-items: flex-start;
-            position: relative;
-            z-index: 1;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            width: 100%;
         }
 
         .list-item-wrapper {
-            animation: fadeInUp 0.5s ease-out both;
-        }
-
-        .list-item-wrapper:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .list-item-wrapper:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .list-item-wrapper:nth-child(3) {
-            animation-delay: 0.3s;
-        }
-
-        .list-item-wrapper:nth-child(4) {
-            animation-delay: 0.4s;
-        }
-
-        .list-item-wrapper:nth-child(5) {
-            animation-delay: 0.5s;
+            position: relative;
+            height: 100%;
         }
 
         .user-account {
             display: flex;
             align-items: center;
-            padding: 8px 12px;
-            width: 320px;
-            background: transparent;
-            border-radius: 4px;
-            border: 1px solid transparent;
+            gap: 16px;
+            padding: 20px;
+            height: 100%;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
             cursor: pointer;
-            transition: background 0.1s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        a.user-link:hover .user-account {
-            background: #18529d;
-            border: 1px solid #73a6e6;
+        .user-link:hover .user-account {
+            background: var(--card-hover-bg);
+            border-color: var(--card-hover-border);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 20px var(--primary-glow);
         }
 
-        .user-account.no-link {
-            cursor: default;
-        }
-
-        /* アバター画像がなければダミーを表示する設定（新規コンテンツ用） */
         .avatar {
-            width: 54px;
-            height: 54px;
-            border-radius: 6px;
-            margin-right: 15px;
-            border: 2px solid white;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+            width: 58px;
+            height: 58px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             object-fit: cover;
-            background-color: #fff;
             flex-shrink: 0;
+            transition: transform 0.3s ease;
         }
 
-        .user-info .username {
-            font-size: clamp(1.1rem, 4vw, 1.3rem);
-            letter-spacing: 0px;
-            font-family: 'Meiryo', 'MS UI Gothic', sans-serif;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+        .user-link:hover .avatar {
+            transform: scale(1.05);
         }
 
-        .footer-container {
-            width: 100%;
-            background: #163666;
-            z-index: 1;
-            flex-shrink: 0;
-        }
-
-        .footer-line-top {
-            height: 2px;
-            background: linear-gradient(to right, #e25822, #fad961, #e25822);
-            width: 100%;
-        }
-
-        .footer {
+        .user-info {
+            flex-grow: 1;
             display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 15px 40px;
-            font-size: 0.8em;
-            box-sizing: border-box;
+            flex-direction: column;
+            gap: 4px;
         }
 
-        .footer-right {
-            display: flex;
-            justify-content: right;
-            align-items: center;
-            gap: 15px;
+        .username {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-color);
         }
 
-        .password-form {
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
+        .user-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
         }
 
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .fake-placeholder {
+        /* ツールチップ/アコーディオン */
+        .info-icon {
             position: absolute;
-            left: 9px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #555;
-            font-size: clamp(1rem, 3.5vw, 1.2rem);
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .password-input:not(:placeholder-shown)+.fake-placeholder {
-            opacity: 0;
-        }
-
-        .password-input {
-            border: 1px solid #7F9DB9;
-            border-radius: 3px;
-            padding: 8px;
-            font-size: 1.2em;
-            font-family: 'PixelMplus12', 'MS UI Gothic', sans-serif;
-            width: clamp(200px, 50vw, 250px);
-        }
-
-        .submit-arrow {
-            width: 36px;
-            height: 36px;
-            border: none;
+            top: 14px;
+            right: 14px;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
             border-radius: 50%;
-            background: url('images/arrow.png') center center / 100% no-repeat #4CAF50;
-            cursor: pointer;
-            margin-left: 10px;
-            flex-shrink: 0;
-        }
-
-        .hint-button {
-            display: inline-flex;
-            justify-content: center;
+            display: flex;
             align-items: center;
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(to bottom, #72aeee, #4a8fdf);
-            border: 1px solid #2a58ad;
-            border-radius: 4px;
-            margin-left: 8px;
-            color: white;
-            font-family: 'PixelMplus12', sans-serif;
-            font-size: 1.5em;
-            font-weight: bold;
-            text-decoration: none;
+            justify-content: center;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 600;
             cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 12;
             transition: all 0.2s ease;
         }
 
-        .hint-button:hover {
-            background: linear-gradient(to bottom, #82baff, #5a9fff);
-        }
-
-        .list-item-wrapper {
-            position: relative;
-        }
-
-        .info-icon {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            width: 22px;
-            height: 22px;
-            background-color: #4a8fdf;
+        .info-icon:hover {
+            background-color: var(--primary);
             color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'PixelMplus12', sans-serif;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-            z-index: 10;
+            border-color: transparent;
         }
 
         .tooltip-text {
             visibility: hidden;
             opacity: 0;
             position: absolute;
-            background-color: rgba(30, 30, 30, 0.9);
-            color: #fff;
-            text-align: center;
-            padding: 8px 12px;
-            border-radius: 6px;
-            z-index: 5;
-            bottom: calc(100% + 5px);
+            background-color: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(8px);
+            color: #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 10px;
+            z-index: 20;
+            bottom: calc(100% + 10px);
             left: 50%;
             transform: translateX(-50%);
-            width: 220px;
-            font-size: 0.9em;
-            transition: opacity 0.3s, visibility 0.3s;
+            width: 260px;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            transition: all 0.25s ease;
             pointer-events: none;
-            font-family: 'Meiryo', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
         }
 
         .list-item-wrapper:hover .tooltip-text {
             visibility: visible;
             opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
         }
 
         .list-item-wrapper.tooltip-active .tooltip-text {
             visibility: visible;
             opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
         }
 
+        /* Pathword フォーム */
+        .pathword-section {
+            max-width: 480px;
+            margin: 20px auto 0;
+            width: 100%;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .pathword-section p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .password-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .input-wrapper {
+            position: relative;
+            flex-grow: 1;
+            max-width: 280px;
+        }
+
+        .password-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .password-input:focus {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 0 0 2px rgba(74, 143, 223, 0.25);
+        }
+
+        .fake-placeholder {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 0.9rem;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .password-input:focus + .fake-placeholder,
+        .password-input:not(:placeholder-shown) + .fake-placeholder {
+            opacity: 0;
+        }
+
+        .submit-arrow {
+            width: 38px;
+            height: 38px;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .submit-arrow:hover {
+            background: #5b9ee7;
+            transform: scale(1.03);
+        }
+
+        .submit-arrow svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .hint-button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .hint-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* フッター */
+        .footer-container {
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 30px 20px;
+            background: rgba(8, 11, 17, 0.8);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+            margin-top: auto;
+        }
+
+        .footer {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-right a:hover {
+            color: white;
+        }
+
+        /* アニメーション */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* レスポンシブ */
         @media (max-width: 768px) {
-            .login-container {
+            .instagram-banner {
                 flex-direction: column;
-                gap: 40px;
+                align-items: flex-start;
+                padding: 24px;
             }
 
-            .login-container::before {
-                display: none;
-            }
-
-            .welcome-panel {
-                text-align: center;
-                width: 90%;
-                padding-right: 0;
-            }
-
-            .password-form {
+            .btn-instagram {
+                width: 100%;
                 justify-content: center;
             }
 
-            /* コンテンツが増えたので下部の余白を少し広げる */
             .user-list {
-                width: 90%;
-                padding-left: 0;
-                margin-bottom: 50px;
-                align-items: center;
-            }
-
-            .list-item-wrapper {
-                width: 100%;
-                max-width: 320px;
-                box-sizing: border-box;
-            }
-
-            .user-account {
-                width: 100%;
-                box-sizing: border-box;
+                grid-template-columns: 1fr;
             }
 
             .footer {
                 flex-direction: column;
-                gap: 20px;
-                padding: 15px 10px;
-                font-size: 0.8em;
+                gap: 16px;
                 text-align: center;
             }
 
             .footer-right {
                 flex-direction: column;
-                gap: 8px;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .login-container {
-                gap: 30px;
-            }
-
-            .user-account {
-                padding: 8px;
-            }
-
-            .avatar {
-                width: 40px;
-                height: 40px;
-                margin-right: 10px;
-            }
-
-            .footer {
-                font-size: 0.7em;
+                gap: 10px;
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="login-container">
-        <div class="welcome-panel">
-            <h1>ようこそ</h1>
-            <p style="font-size:0.85em; opacity:0.8; margin-top:-6px;">コンテンツ名をクリックするか、Pathwordを入力してください。</p>
+    <!-- 背景オーロラ -->
+    <div class="aurora-bg">
+        <div class="aurora-1"></div>
+        <div class="aurora-2"></div>
+        <div class="aurora-3"></div>
+    </div>
+
+    <header>
+        <div class="logo">dim7.jp</div>
+        <a href="/index-en.html" class="lang-switch">🌐 English</a>
+    </header>
+
+    <div class="container">
+        <!-- ヒーローセクション -->
+        <section class="hero">
+            <h1>See the Sound,<br>Hear the Time.</h1>
+            <p class="tagline">音楽理論とWebテクノロジーの交差点で生まれる、実験的インタラクティブ・アート。</p>
+            
+            <!-- Instagram 連携バナー -->
+            <div class="instagram-banner">
+                <div class="instagram-info">
+                    <div class="instagram-icon-wrapper">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                        </svg>
+                    </div>
+                    <div class="instagram-text" style="text-align: left;">
+                        <h2>Instagram @1984dim7 <span class="badge-follower">20K Followers</span></h2>
+                        <p>音楽を可視化するアートプロジェクト。最新の可視化動画をInstagramで公開中。</p>
+                    </div>
+                </div>
+                <a href="https://www.instagram.com/1984dim7/" class="btn-instagram" target="_blank" rel="noopener">
+                    動画を見る
+                </a>
+            </div>
+        </section>
+
+        <!-- ツール一覧セクション -->
+        <section>
+            <h2 class="tools-title">EXPERIMENTS</h2>
+            <div class="user-list">
+                <!-- Clock Harmonizer -->
+                <div class="list-item-wrapper">
+                    <a href="https://dim7.jp/clock/" class="user-link" target="_blank" rel="noopener">
+                        <div class="user-account">
+                            <img class="avatar" src="images/icon_clock.png" alt="Clock Harmonizer">
+                            <div class="user-info">
+                                <span class="username">Clock Harmonizer</span>
+                                <span class="user-desc">アナログ時計の3本の針が、12音盤上で連続的なハーモニーを奏でる時計。</span>
+                            </div>
+                        </div>
+                    </a>
+                    <span class="info-icon" role="button" tabindex="0">?</span>
+                    <span class="tooltip-text">アナログ時計の文字盤に12音を対応させました。時・分・秒の3本の針が動くことで、連続的なコード（和音）の移り変わりが生まれます。</span>
+                </div>
+
+                <!-- Digital Clock Synthesizer -->
+                <div class="list-item-wrapper">
+                    <a href="https://dim7.jp/Digital/" class="user-link" target="_blank" rel="noopener">
+                        <div class="user-account">
+                            <img class="avatar" src="images/icon_digital.png" alt="Digital Clock Synthesizer">
+                            <div class="user-info">
+                                <span class="username">Digital Clock Synthesizer</span>
+                                <span class="user-desc">デジタル時計の「時間:分:秒」の比率を純正律の周波数に変換するシンセ。</span>
+                            </div>
+                        </div>
+                    </a>
+                    <span class="info-icon" role="button" tabindex="0">?</span>
+                    <span class="tooltip-text">デジタル時計の hh:mm:ss 表示がそのまま整数比（周波数）に変換され、純正律（Just Intonation）によるハーモニーをリアルタイムで生成します。</span>
+                </div>
+
+                <!-- Circle of Fifths Visualizer -->
+                <div class="list-item-wrapper">
+                    <a href="https://dim7.jp/c5vis/" class="user-link" target="_blank" rel="noopener">
+                        <div class="user-account">
+                            <img class="avatar" src="images/icon_c5vis.png" alt="Circle of Fifths Visualizer">
+                            <div class="user-info">
+                                <span class="username">Circle of Fifths Visualizer</span>
+                                <span class="user-desc">アップロードした音声の周波数成分に応じて、五度圏の調性盤が光るビジュアライザ。</span>
+                            </div>
+                        </div>
+                    </a>
+                    <span class="info-icon" role="button" tabindex="0">?</span>
+                    <span class="tooltip-text">音楽ファイルをアップロードすると、音の成分をリアルタイム解析し、対応する五度圏（Circle of Fifths）の音が発光します。</span>
+                </div>
+
+                <!-- ユーモア16タイプ診断 -->
+                <div class="list-item-wrapper">
+                    <a href="https://dim7.jp/owarai/" class="user-link" target="_blank" rel="noopener">
+                        <div class="user-account">
+                            <img class="avatar" src="images/icon_humor.png" alt="ユーモア16タイプ診断">
+                            <div class="user-info">
+                                <span class="username">ユーモア16タイプ診断</span>
+                                <span class="user-desc">あなたの「笑いのツボ」を分析し、16タイプに分類する診断コンテンツ。</span>
+                            </div>
+                        </div>
+                    </a>
+                    <span class="info-icon" role="button" tabindex="0">?</span>
+                    <span class="tooltip-text">いくつかの質問に答えることで、あなたの笑いのパターンやツボを16種類で診断・可視化します。友達と一緒に結果をシェアして遊べます。</span>
+                </div>
+
+                <!-- 考察：調とそれが持つイメージ -->
+                <div class="list-item-wrapper">
+                    <a href="https://dim7.jp/key-image/" class="user-link" target="_blank" rel="noopener">
+                        <div class="user-account">
+                            <img class="avatar" src="images/icon_theory.png" alt="考察：調とそれが持つイメージ">
+                            <div class="user-info">
+                                <span class="username">考察：調とそれが持つイメージ</span>
+                                <span class="user-desc">各調性（キー）が持つ固有の色彩や感覚的なイメージについての音楽理論的考察。</span>
+                            </div>
+                        </div>
+                    </a>
+                    <span class="info-icon" role="button" tabindex="0">?</span>
+                    <span class="tooltip-text">長調・短調や特定の調性が聴き手や作曲家に対して抱かせる固有のイメージについて、歴史的背景や音楽理論の両面から考察するコラムです。</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pathword 隠しセクション -->
+        <section class="pathword-section">
+            <p>シークレットキーをお持ちですか？（Pathwordを入力）</p>
             <form id="redirect-form" class="password-form">
                 <div class="input-wrapper">
                     <input type="text" id="directory-input" class="password-input" placeholder=" ">
-                    <span class="fake-placeholder"> ...or enter <strong>Path</strong>word</span>
+                    <span class="fake-placeholder">Enter path...</span>
                 </div>
-                <button type="submit" class="submit-arrow"></button>
-                <a href="/hint/" class="hint-button">?</a>
+                <button type="submit" class="submit-arrow" aria-label="送信">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <a href="/hint/" class="hint-button" aria-label="ヒント">?</a>
             </form>
-        </div>
-
-        <div class="user-list">
-            <div class="list-item-wrapper">
-                <a href="https://dim7.jp/clock/" class="user-link" target="_blank" rel="noopener">
-                    <div class="user-account">
-                        <img class="avatar" src="images/icon_clock.png" alt="Clock Harmonizer">
-                        <div class="user-info">
-                            <span class="username">Clock Harmonizer</span>
-                        </div>
-                    </div>
-                </a>
-                <span class="info-icon" role="button" tabindex="0">?</span>
-                <span class="tooltip-text">アナログ時計の文字盤に12音を対応させました。3本の針が連続的なハーモニーを奏でます。</span>
-            </div>
-
-            <div class="list-item-wrapper">
-                <a href="https://dim7.jp/Digital/" class="user-link" target="_blank" rel="noopener">
-                    <div class="user-account">
-                        <img class="avatar" src="images/icon_digital.png" alt="Digital Clock Synthesizer">
-                        <div class="user-info">
-                            <span class="username">Digital Clock Synthesizer</span>
-                        </div>
-                    </div>
-                </a>
-                <span class="info-icon" role="button" tabindex="0">?</span>
-                <span class="tooltip-text">デジタル時計の hh:mm:ss 表示がそのまま整数比に変換され、Just
-                    Intonationを奏でるというシンセサイザーです。マイナス100倍速で再生するとファミコンみたいで面白いですよ。</span>
-            </div>
-
-            <div class="list-item-wrapper">
-                <a href="https://dim7.jp/c5vis/" class="user-link" target="_blank" rel="noopener">
-                    <div class="user-account">
-                        <img class="avatar" src="images/icon_c5vis.png" alt="Circle of Fifths Visualizer">
-                        <div class="user-info">
-                            <span class="username">Circle of Fifths Visualizer</span>
-                        </div>
-                    </div>
-                </a>
-                <span class="info-icon" role="button" tabindex="0">?</span>
-                <span
-                    class="tooltip-text">音楽ファイルをアップロードすると、音の大きさに応じて五度圏が光ります。楽曲を入れると打楽器の倍音をたくさん拾って面白くないので、単旋律の音声などを入れてみると良いかもしれません。</span>
-            </div>
-
-            <div class="list-item-wrapper">
-                <a href="https://dim7.jp/owarai/" class="user-link" target="_blank" rel="noopener">
-                    <div class="user-account">
-                        <img class="avatar" src="images/icon_humor.png" alt="ユーモア16タイプ診断">
-                        <div class="user-info">
-                            <span class="username">ユーモア16タイプ診断</span>
-                        </div>
-                    </div>
-                </a>
-                <span class="info-icon" role="button" tabindex="0">?</span>
-                <span class="tooltip-text">あなたの笑いのツボを16タイプで診断！友達と結果をシェアして盛り上がろう。</span>
-            </div>
-
-            <div class="list-item-wrapper">
-                <a href="https://dim7.jp/key-image/" class="user-link" target="_blank" rel="noopener">
-                    <div class="user-account">
-                        <img class="avatar" src="images/icon_theory.png" alt="考察：調とそれが持つイメージ">
-                        <div class="user-info">
-                            <span class="username">考察：調とそれが持つイメージ</span>
-                        </div>
-                    </div>
-                </a>
-                <span class="info-icon" role="button" tabindex="0">?</span>
-                <span class="tooltip-text">長調・短調や各調性に対して抱かれやすい印象を、音楽理論と感覚の両面から考察する読み物です。</span>
-            </div>
-        </div>
+        </section>
     </div>
 
     <div class="footer-container">
-        <div class="footer-line-top"></div>
         <div class="footer">
+            <div>© 2026 dim7.jp / 1984dim7. All rights reserved.</div>
             <div class="footer-right">
                 <a href="/about-ja.html" target="_blank">このサイトについて</a>
                 <a href="/contact.html" target="_blank">お問い合わせ</a>
@@ -551,11 +749,8 @@
         </div>
     </div>
 
-    <!-- admax -->
-    <script src="https://adm.shinobi.jp/s/cd7ff93afa593e1456254f63c233fbfe"></script>
-    <!-- admax -->
-
     <script>
+        // パスワード遷移ロジック
         const form = document.getElementById('redirect-form');
         form.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -567,6 +762,7 @@
             }
         });
 
+        // モバイル向けツールチップ制御
         document.querySelectorAll('.info-icon').forEach(icon => {
             icon.addEventListener('click', function (e) {
                 e.preventDefault();
