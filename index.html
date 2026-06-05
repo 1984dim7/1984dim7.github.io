@@ -33,11 +33,13 @@
             --bg-bottom: #92fe9d;
             --text-color: #ffffff;
             --text-shadow-color: rgba(0, 0, 0, 0.25);
-            --aero-border-outer: rgba(255, 255, 255, 0.25);
-            --aero-border-inner: rgba(255, 255, 255, 0.45);
-            --aero-border-inner-top: rgba(255, 255, 255, 0.7);
-            --aero-bg: rgba(255, 255, 255, 0.15);
-            --aero-bg-hover: rgba(255, 255, 255, 0.28);
+            --aero-border-outer: rgba(255, 255, 255, 0.35);
+            --aero-border-inner: rgba(255, 255, 255, 0.6);
+            --aero-border-inner-top: rgba(255, 255, 255, 0.85);
+            --aero-bg: rgba(255, 255, 255, 0.78); /* More opaque white for readability */
+            --aero-bg-hover: rgba(255, 255, 255, 0.9);
+            --card-text: #082135; /* Dark color for glass card text */
+            --card-text-muted: #3a5366; /* Dark muted color for description text */
         }
 
         * {
@@ -364,6 +366,8 @@
             transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
             overflow: hidden;
             position: relative;
+            color: var(--card-text);
+            text-shadow: none;
         }
 
         .avatar {
@@ -392,13 +396,16 @@
         .username {
             font-size: 1.15rem;
             font-weight: 700;
-            color: var(--text-color);
+            color: var(--card-text);
+            text-shadow: none;
         }
 
         .user-desc {
             font-size: 0.85rem;
-            opacity: 0.95;
+            color: var(--card-text-muted);
+            opacity: 1;
             line-height: 1.4;
+            text-shadow: none;
         }
 
         /* ツールチップ（?） */
@@ -557,11 +564,11 @@
                             </svg>
                         </div>
                         <div class="instagram-text">
-                            <h2>Instagram @1984dim7 <span class="badge-follower">2万フォロワー</span></h2>
+                            <h2>Instagram @music_blue_print</h2>
                             <p>音楽可視化アートプロジェクト。最新の可視化動画をインスタグラムで公開中。</p>
                         </div>
                     </div>
-                    <a href="https://www.instagram.com/1984dim7/" class="btn-instagram" target="_blank" rel="noopener">
+                    <a href="https://www.instagram.com/music_blue_print/" class="btn-instagram" target="_blank" rel="noopener">
                         動画を見る
                     </a>
                 </div>
