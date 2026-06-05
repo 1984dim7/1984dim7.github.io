@@ -6,28 +6,29 @@
         crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dim7.jp - Interactive Visual Music Lab</title>
-    <meta name="description" content="Experimental interactive art born at the intersection of music theory and web technology. Official companion website for the 1984dim7 music visualization project (20K followers on Instagram).">
-    <meta property="og:title" content="dim7.jp - Interactive Visual Music Lab">
-    <meta property="og:description" content="Experimental interactive art born at the intersection of music theory and web technology.">
+    <title>dim7.jp - Visual Music Lab</title>
+    <meta name="description" content="Experimental web tools born at the intersection of music theory and web technology. Official companion website for the 1984dim7 music visualization project (20K followers on Instagram).">
+    <meta property="og:title" content="dim7.jp - Visual Music Lab">
+    <meta property="og:description" content="Experimental web tools born at the intersection of music theory and web technology.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dim7.jp/">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #080b11;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --primary: #4a8fdf;
-            --primary-glow: rgba(74, 143, 223, 0.2);
-            --card-bg: rgba(255, 255, 255, 0.03);
-            --card-border: rgba(255, 255, 255, 0.08);
-            --card-hover-bg: rgba(255, 255, 255, 0.06);
-            --card-hover-border: rgba(255, 255, 255, 0.15);
+            --bg-top: #0082c8;
+            --bg-middle: #00c9ff;
+            --bg-bottom: #92fe9d;
+            --text-color: #ffffff;
+            --text-shadow-color: rgba(0, 0, 0, 0.25);
+            --aero-border-outer: rgba(255, 255, 255, 0.25);
+            --aero-border-inner: rgba(255, 255, 255, 0.45);
+            --aero-border-inner-top: rgba(255, 255, 255, 0.7);
+            --aero-bg: rgba(255, 255, 255, 0.15);
+            --aero-bg-hover: rgba(255, 255, 255, 0.28);
         }
 
         * {
@@ -38,68 +39,72 @@
 
         body, html {
             min-height: 100vh;
-            background-color: var(--bg-color);
             color: var(--text-color);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', sans-serif;
+            text-shadow: 0 1px 2px var(--text-shadow-color);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
+            background: linear-gradient(135deg, var(--bg-top) 0%, var(--bg-middle) 45%, var(--bg-bottom) 100%);
+            background-attachment: fixed;
         }
 
-        /* Background Aurora */
-        .aurora-bg {
+        /* Floating Bubbles */
+        .bubble-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
             overflow: hidden;
         }
 
-        .aurora-1 {
+        .bubble {
             position: absolute;
-            top: -10%;
-            left: -10%;
-            width: 50%;
-            height: 50%;
-            background: radial-gradient(circle, rgba(58, 123, 213, 0.15) 0%, rgba(58, 123, 213, 0) 70%);
-            filter: blur(80px);
+            bottom: -100px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(0, 180, 216, 0.02) 60%, rgba(255, 255, 255, 0.25) 80%, transparent 100%);
+            box-shadow: 
+                inset 0 0 12px rgba(255, 255, 255, 0.5),
+                inset -3px -3px 8px rgba(0, 180, 216, 0.15),
+                0 5px 15px rgba(0, 0, 0, 0.06);
+            animation: floatUp 18s infinite linear;
         }
 
-        .aurora-2 {
-            position: absolute;
-            top: 40%;
-            right: -10%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(circle, rgba(94, 23, 235, 0.12) 0%, rgba(94, 23, 235, 0) 70%);
-            filter: blur(100px);
-        }
+        .bubble-1 { width: 70px; height: 70px; left: 10%; animation-duration: 20s; animation-delay: 0s; }
+        .bubble-2 { width: 45px; height: 45px; left: 25%; animation-duration: 16s; animation-delay: 3s; }
+        .bubble-3 { width: 110px; height: 110px; left: 45%; animation-duration: 25s; animation-delay: 1s; }
+        .bubble-4 { width: 35px; height: 35px; left: 65%; animation-duration: 14s; animation-delay: 5s; }
+        .bubble-5 { width: 85px; height: 85px; left: 80%; animation-duration: 22s; animation-delay: 2s; }
+        .bubble-6 { width: 60px; height: 60px; left: 90%; animation-duration: 18s; animation-delay: 7s; }
 
-        .aurora-3 {
-            position: absolute;
-            bottom: -10%;
-            left: 20%;
-            width: 50%;
-            height: 50%;
-            background: radial-gradient(circle, rgba(226, 88, 34, 0.06) 0%, rgba(226, 88, 34, 0) 70%);
-            filter: blur(80px);
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            5% { opacity: 0.8; }
+            95% { opacity: 0.8; }
+            100% {
+                transform: translateY(-120vh) translateX(60px) rotate(360deg);
+                opacity: 0;
+            }
         }
 
         a {
             color: var(--text-color);
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        /* Layout */
+        /* Header */
         header {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 30px 20px;
             display: flex;
@@ -110,30 +115,35 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
-            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.05em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-family: 'Inter', sans-serif;
         }
 
         .lang-switch {
             font-size: 0.85rem;
-            padding: 6px 16px;
+            font-weight: 600;
+            padding: 6px 18px;
             border-radius: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
         }
 
         .lang-switch:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
         }
 
         .container {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 0 20px 80px;
             position: relative;
@@ -141,77 +151,88 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            gap: 40px;
         }
 
         /* Hero */
         .hero {
-            text-align: center;
-            max-width: 750px;
-            margin: 40px auto 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            animation: fadeInUp 0.8s ease-out;
+            width: 100%;
+            max-width: 960px;
+            margin: 20px auto 10px;
         }
 
-        .hero h1 {
-            font-size: clamp(2rem, 5vw, 3.2rem);
-            font-weight: 700;
-            line-height: 1.25;
-            letter-spacing: -0.02em;
-            background: linear-gradient(to right, #ffffff, #e2e8f0, #cbd5e1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p.tagline {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            color: var(--text-muted);
-            font-weight: 300;
-            line-height: 1.6;
+        /* Double Glass Borders */
+        .glass-borders {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid var(--aero-border-outer);
+            border-radius: 22px;
+            padding: 4px;
+            box-shadow: 
+                0 10px 30px rgba(8, 26, 54, 0.18),
+                inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         /* Instagram Banner */
         .instagram-banner {
             width: 100%;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 24px 32px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.1) 100%);
+            border: 1px solid var(--aero-border-inner);
+            border-top: 1px solid var(--aero-border-inner-top);
+            border-left: 1px solid var(--aero-border-inner-top);
+            border-radius: 18px;
+            padding: 22px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 24px;
-            margin-top: 10px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            overflow: hidden;
+            position: relative;
         }
 
-        .instagram-banner:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+        .instagram-banner::before,
+        .user-account::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -50%; width: 200%; height: 100%;
+            background: linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.18) 45%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 55%, rgba(255,255,255,0) 100%);
+            transform: rotate(-15deg);
+            transition: all 0.6s ease;
+            pointer-events: none;
+        }
+
+        .glass-borders:hover {
+            border-color: rgba(255, 255, 255, 0.35);
+            box-shadow: 
+                0 15px 35px rgba(8, 26, 54, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.45);
+            transform: translateY(-2px);
+        }
+
+        .glass-borders:hover .instagram-banner::before {
+            left: 100%;
         }
 
         .instagram-info {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 18px;
         }
 
         .instagram-icon-wrapper {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(220, 39, 67, 0.3);
+            box-shadow: 0 4px 12px rgba(220, 39, 67, 0.3), inset 0 1px 0 rgba(255,255,255,0.4);
+            border: 1px solid rgba(255,255,255,0.25);
         }
 
         .instagram-icon-wrapper svg {
@@ -221,27 +242,28 @@
         }
 
         .instagram-text h2 {
-            font-size: 1.15rem;
-            font-weight: 600;
+            font-size: 1.2rem;
+            font-weight: 700;
             margin-bottom: 4px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .badge-follower {
             font-size: 0.75rem;
-            background: rgba(230, 104, 60, 0.15);
-            color: #ff9e7d;
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
             padding: 2px 10px;
             border-radius: 12px;
-            border: 1px solid rgba(230, 104, 60, 0.3);
-            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         .instagram-text p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
+            font-size: 0.9rem;
+            opacity: 0.9;
             line-height: 1.4;
         }
 
@@ -249,37 +271,45 @@
             display: inline-flex;
             align-items: center;
             padding: 10px 24px;
-            background: white;
-            color: #0f172a;
-            font-weight: 600;
+            background: linear-gradient(to bottom, #ffffff 0%, #d8e5eb 100%);
+            color: #005682;
+            font-weight: 700;
             font-size: 0.9rem;
             border-radius: 30px;
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 #ffffff,
+                inset 0 -2px 0 rgba(0, 0, 0, 0.05);
+            text-shadow: 0 1px 0 #ffffff;
+            position: relative;
+            z-index: 10;
         }
 
         .btn-instagram:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.25);
-            background: #f1f5f9;
+            background: linear-gradient(to bottom, #ffffff 0%, #e2eff3 100%);
+            box-shadow: 
+                0 6px 18px rgba(0, 0, 0, 0.15),
+                0 0 10px rgba(255, 255, 255, 0.5),
+                inset 0 1px 0 #ffffff;
         }
 
         /* Experiments Section */
         .tools-title {
-            font-size: 1.5rem;
-            font-weight: 600;
+            font-size: 1.4rem;
+            font-weight: 700;
             letter-spacing: 0.05em;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 10px;
-            opacity: 0.9;
+            gap: 12px;
         }
 
         .tools-title::after {
             content: '';
             flex-grow: 1;
             height: 1px;
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.1), transparent);
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.35), transparent);
         }
 
         .user-list {
@@ -294,38 +324,49 @@
             height: 100%;
         }
 
+        .list-item-wrapper:hover .glass-borders {
+            border-color: rgba(255, 255, 255, 0.35);
+            box-shadow: 
+                0 15px 32px rgba(8, 26, 54, 0.22),
+                inset 0 1px 0 rgba(255, 255, 255, 0.45);
+            transform: translateY(-3px);
+        }
+
+        .list-item-wrapper:hover .user-account::before {
+            left: 100%;
+        }
+
         .user-account {
             display: flex;
             align-items: center;
             gap: 16px;
-            padding: 20px;
+            padding: 18px;
             height: 100%;
-            background: var(--card-bg);
-            border-radius: 16px;
-            border: 1px solid var(--card-border);
+            background: var(--aero-bg);
+            border-radius: 18px;
+            border: 1px solid var(--aero-border-inner);
+            border-top: 1px solid var(--aero-border-inner-top);
+            border-left: 1px solid var(--aero-border-inner-top);
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .user-link:hover .user-account {
-            background: var(--card-hover-bg);
-            border-color: var(--card-hover-border);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3), 0 0 20px var(--primary-glow);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            overflow: hidden;
+            position: relative;
         }
 
         .avatar {
             width: 58px;
             height: 58px;
             border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid white;
+            box-shadow: 0 4px 10px rgba(8, 26, 54, 0.15);
             object-fit: cover;
             flex-shrink: 0;
             transition: transform 0.3s ease;
         }
 
-        .user-link:hover .avatar {
-            transform: scale(1.05);
+        .list-item-wrapper:hover .avatar {
+            transform: scale(1.04);
         }
 
         .user-info {
@@ -333,68 +374,71 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            text-align: left;
         }
 
         .username {
-            font-size: 1.1rem;
-            font-weight: 600;
+            font-size: 1.15rem;
+            font-weight: 700;
             color: var(--text-color);
         }
 
         .user-desc {
             font-size: 0.85rem;
-            color: var(--text-muted);
+            opacity: 0.95;
             line-height: 1.4;
         }
 
         /* Tooltips */
         .info-icon {
             position: absolute;
-            top: 14px;
-            right: 14px;
+            top: 18px;
+            right: 18px;
             width: 20px;
             height: 20px;
-            background-color: rgba(255, 255, 255, 0.08);
-            color: var(--text-muted);
+            background-color: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: inherit;
             font-size: 11px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             z-index: 12;
             transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .info-icon:hover {
-            background-color: var(--primary);
-            color: white;
+            background-color: #ffffff;
+            color: #005682;
             border-color: transparent;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
         }
 
         .tooltip-text {
             visibility: hidden;
             opacity: 0;
             position: absolute;
-            background-color: rgba(15, 23, 42, 0.95);
+            background-color: rgba(0, 48, 80, 0.95);
             backdrop-filter: blur(8px);
-            color: #e2e8f0;
-            padding: 12px 16px;
-            border-radius: 10px;
+            color: #ffffff;
+            padding: 14px 18px;
+            border-radius: 12px;
             z-index: 20;
             bottom: calc(100% + 10px);
             left: 50%;
             transform: translateX(-50%);
-            width: 260px;
-            font-size: 0.8rem;
-            line-height: 1.5;
+            width: 280px;
+            font-size: 0.82rem;
+            line-height: 1.55;
             transition: all 0.25s ease;
             pointer-events: none;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 10px 25px rgba(0, 26, 45, 0.3);
         }
 
         .list-item-wrapper:hover .tooltip-text {
@@ -409,135 +453,28 @@
             transform: translateX(-50%) translateY(-5px);
         }
 
-        /* Pathword Form */
-        .pathword-section {
-            max-width: 480px;
-            margin: 20px auto 0;
-            width: 100%;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 24px;
-        }
-
-        .pathword-section p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
-
-        .password-form {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .input-wrapper {
-            position: relative;
-            flex-grow: 1;
-            max-width: 280px;
-        }
-
-        .password-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 10px 14px;
-            color: white;
-            font-size: 0.9rem;
-            outline: none;
-            transition: all 0.2s ease;
-        }
-
-        .password-input:focus {
-            border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.07);
-            box-shadow: 0 0 0 2px rgba(74, 143, 223, 0.25);
-        }
-
-        .fake-placeholder {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #64748b;
-            font-size: 0.9rem;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-        }
-
-        .password-input:focus + .fake-placeholder,
-        .password-input:not(:placeholder-shown) + .fake-placeholder {
-            opacity: 0;
-        }
-
-        .submit-arrow {
-            width: 38px;
-            height: 38px;
-            border: none;
-            border-radius: 8px;
-            background: var(--primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-        }
-
-        .submit-arrow:hover {
-            background: #5b9ee7;
-            transform: scale(1.03);
-        }
-
-        .submit-arrow svg {
-            width: 18px;
-            height: 18px;
-            fill: white;
-        }
-
-        .hint-button {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 38px;
-            height: 38px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            font-weight: 500;
-        }
-
-        .hint-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
         /* Footer */
         .footer-container {
             width: 100%;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             padding: 30px 20px;
-            background: rgba(8, 11, 17, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 75, 120, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             position: relative;
             z-index: 10;
             margin-top: auto;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
         }
 
         .footer {
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.85rem;
-            color: var(--text-muted);
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .footer-right {
@@ -546,19 +483,7 @@
         }
 
         .footer-right a:hover {
-            color: white;
-        }
-
-        /* Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            text-decoration: underline;
         }
 
         /* Responsive */
@@ -593,11 +518,14 @@
 </head>
 
 <body>
-    <!-- Background Aurora -->
-    <div class="aurora-bg">
-        <div class="aurora-1"></div>
-        <div class="aurora-2"></div>
-        <div class="aurora-3"></div>
+    <!-- Floating Bubbles -->
+    <div class="bubble-container">
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+        <div class="bubble bubble-4"></div>
+        <div class="bubble bubble-5"></div>
+        <div class="bubble bubble-6"></div>
     </div>
 
     <header>
@@ -606,27 +534,25 @@
     </header>
 
     <div class="container">
-        <!-- Hero Section -->
+        <!-- Hero Section (Instagram Banner only, no text headers) -->
         <section class="hero">
-            <h1>See the Sound,<br>Hear the Time.</h1>
-            <p class="tagline">Experimental interactive art born at the intersection of music theory and web technology.</p>
-            
-            <!-- Instagram Banner -->
-            <div class="instagram-banner">
-                <div class="instagram-info">
-                    <div class="instagram-icon-wrapper">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-                        </svg>
+            <div class="glass-borders">
+                <div class="instagram-banner">
+                    <div class="instagram-info">
+                        <div class="instagram-icon-wrapper">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                            </svg>
+                        </div>
+                        <div class="instagram-text" style="text-align: left;">
+                            <h2>Instagram @1984dim7 <span class="badge-follower">20K Followers</span></h2>
+                            <p>Visualizing music through creative coding. Watch the latest video works on Instagram.</p>
+                        </div>
                     </div>
-                    <div class="instagram-text" style="text-align: left;">
-                        <h2>Instagram @1984dim7 <span class="badge-follower">20K Followers</span></h2>
-                        <p>Visualizing music through creative coding. Watch the latest video works on Instagram.</p>
-                    </div>
+                    <a href="https://www.instagram.com/1984dim7/" class="btn-instagram" target="_blank" rel="noopener">
+                        Watch Reels
+                    </a>
                 </div>
-                <a href="https://www.instagram.com/1984dim7/" class="btn-instagram" target="_blank" rel="noopener">
-                    Watch Reels
-                </a>
             </div>
         </section>
 
@@ -636,81 +562,72 @@
             <div class="user-list">
                 <!-- Clock Harmonizer -->
                 <div class="list-item-wrapper">
-                    <a href="https://dim7.jp/clock/" class="user-link" target="_blank" rel="noopener">
-                        <div class="user-account">
-                            <img class="avatar" src="images/icon_clock.png" alt="Clock Harmonizer">
-                            <div class="user-info">
-                                <span class="username">Clock Harmonizer</span>
-                                <span class="user-desc">A clock where three hands play continuous harmony on a 12-tone circle.</span>
+                    <div class="glass-borders">
+                        <a href="https://dim7.jp/clock/" class="user-link" target="_blank" rel="noopener">
+                            <div class="user-account">
+                                <img class="avatar" src="images/icon_clock.png" alt="Clock Harmonizer">
+                                <div class="user-info">
+                                    <span class="username">Clock Harmonizer</span>
+                                    <span class="user-desc">A clock where three hands play continuous harmony on a 12-tone circle.</span>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
                     <span class="tooltip-text">Twelve tones of the chromatic scale are mapped to the positions of a clock face. The three hands (hour, minute, second) move continuously to weave ever-changing harmonic flows.</span>
                 </div>
 
                 <!-- Digital Clock Synthesizer -->
                 <div class="list-item-wrapper">
-                    <a href="https://dim7.jp/Digital/" class="user-link" target="_blank" rel="noopener">
-                        <div class="user-account">
-                            <img class="avatar" src="images/icon_digital.png" alt="Digital Clock Synthesizer">
-                            <div class="user-info">
-                                <span class="username">Digital Clock Synthesizer</span>
-                                <span class="user-desc">A synth that converts clock numbers (hh:mm:ss) into real-time Just Intonation frequencies.</span>
+                    <div class="glass-borders">
+                        <a href="https://dim7.jp/Digital/" class="user-link" target="_blank" rel="noopener">
+                            <div class="user-account">
+                                <img class="avatar" src="images/icon_digital.png" alt="Digital Clock Synthesizer">
+                                <div class="user-info">
+                                    <span class="username">Digital Clock Synthesizer</span>
+                                    <span class="user-desc">A synth that converts clock numbers (hh:mm:ss) into real-time Just Intonation frequencies.</span>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
                     <span class="tooltip-text">The active digital clock display (hh:mm:ss) is converted into integer ratio frequencies, generating chords based on Just Intonation in real time. Try playing at -100x speed!</span>
                 </div>
 
                 <!-- Circle of Fifths Visualizer -->
                 <div class="list-item-wrapper">
-                    <a href="https://dim7.jp/c5vis/" class="user-link" target="_blank" rel="noopener">
-                        <div class="user-account">
-                            <img class="avatar" src="images/icon_c5vis.png" alt="Circle of Fifths Visualizer">
-                            <div class="user-info">
-                                <span class="username">Circle of Fifths Visualizer</span>
-                                <span class="user-desc">A visualizer where the Circle of Fifths scale glows based on analyzed frequencies of uploaded audio.</span>
+                    <div class="glass-borders">
+                        <a href="https://dim7.jp/c5vis/" class="user-link" target="_blank" rel="noopener">
+                            <div class="user-account">
+                                <img class="avatar" src="images/icon_c5vis.png" alt="Circle of Fifths Visualizer">
+                                <div class="user-info">
+                                    <span class="username">Circle of Fifths Visualizer</span>
+                                    <span class="user-desc">A visualizer where the Circle of Fifths scale glows based on analyzed frequencies of uploaded audio.</span>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
                     <span class="tooltip-text">Upload an audio file to analyze its frequency components in real time, lighting up the corresponding keys on the Circle of Fifths dial. Works best with monophonic audio.</span>
                 </div>
 
                 <!-- Essay: Keys and Their Images -->
                 <div class="list-item-wrapper">
-                    <a href="https://dim7.jp/key-image/" class="user-link" target="_blank" rel="noopener">
-                        <div class="user-account">
-                            <img class="avatar" src="images/icon_theory.png" alt="Essay: Keys and Their Images">
-                            <div class="user-info">
-                                <span class="username">Essay: Keys and Their Images</span>
-                                <span class="user-desc">Music theory columns exploring the specific color and imagery evoked by different keys and scales.</span>
+                    <div class="glass-borders">
+                        <a href="https://dim7.jp/key-image/" class="user-link" target="_blank" rel="noopener">
+                            <div class="user-account">
+                                <img class="avatar" src="images/icon_theory.png" alt="Essay: Keys and Their Images">
+                                <div class="user-info">
+                                    <span class="username">Essay: Keys and Their Images</span>
+                                    <span class="user-desc">Music theory columns exploring the specific color and imagery evoked by different keys and scales.</span>
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
                     <span class="tooltip-text">An essay examining the historical and sensory qualities associated with major/minor scales and keys, analyzing why they evoke specific feelings.</span>
                 </div>
             </div>
-        </section>
-
-        <!-- Pathword Section -->
-        <section class="pathword-section">
-            <p>Do you have a secret key? (Enter Pathword)</p>
-            <form id="redirect-form" class="password-form">
-                <div class="input-wrapper">
-                    <input type="text" id="directory-input" class="password-input" placeholder=" ">
-                    <span class="fake-placeholder">Enter path...</span>
-                </div>
-                <button type="submit" class="submit-arrow" aria-label="Submit">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                <a href="/hint/" class="hint-button" aria-label="Hint">?</a>
-            </form>
         </section>
     </div>
 
@@ -726,18 +643,6 @@
     </div>
 
     <script>
-        // Password redirect logic
-        const form = document.getElementById('redirect-form');
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            const input = document.getElementById('directory-input');
-            const directoryName = input.value.trim();
-            if (directoryName) {
-                const destinationUrl = window.location.origin + '/' + directoryName + '/';
-                window.location.href = destinationUrl;
-            }
-        });
-
         // Mobile tooltip toggle
         document.querySelectorAll('.info-icon').forEach(icon => {
             icon.addEventListener('click', function (e) {
