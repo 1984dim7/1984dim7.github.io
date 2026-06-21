@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6469478872018956"
+        crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイ ピクチャ - dim7.jp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- XPらしいTahomaとPixelMplus12のブレンド -->
+    <link href="https://fonts.googleapis.com/css2?family=Tahoma&display=swap" rel="stylesheet">
+    <link rel="icon" href="../images/favicon_xp.png">
+    <style>
+        @font-face {
+            font-family: 'PixelMplus12';
+            src: url('../fonts/PixelMplus12-Regular.ttf') format('truetype');
+            font-display: swap;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body, html {
+            height: 100%;
+            background-color: #5a7edc; /* XPデスクトップのクラシックブルー */
+            font-family: 'PixelMplus12', 'Tahoma', 'MS UI Gothic', sans-serif;
+            -webkit-font-smoothing: none;
+            -moz-osx-font-smoothing: grayscale;
+            overflow: hidden;
+        }
+
+        /* Windows XP フォルダウィンドウ */
+        .xp-window {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 3px solid #0054e3;
+            background-color: #ffffff;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        /* タイトルバー (Lunaブルー) */
+        .title-bar {
+            background: linear-gradient(to right, #0054e3 0%, #298cff 60%, #0054e3 100%);
+            height: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+            color: #ffffff;
+            font-weight: bold;
+            text-shadow: 1px 1px 1px #002d80;
+            flex-shrink: 0;
+        }
+
+        .title-text {
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .title-icon {
+            width: 16px;
+            height: 16px;
+            background: url('../images/favicon_xp.png') no-repeat center center / 100%;
+        }
+
+        /* ウィンドウの右上ボタン */
+        .window-buttons {
+            display: flex;
+            gap: 2px;
+        }
+
+        .win-btn {
+            width: 21px;
+            height: 21px;
+            border: 1px solid #ffffff;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.75rem;
+            box-shadow: inset 1px 1px 2px rgba(255,255,255,0.5);
+            cursor: pointer;
+        }
+
+        .btn-minimize { background: linear-gradient(to bottom, #3a75ff, #0045df); }
+        .btn-maximize { background: linear-gradient(to bottom, #3a75ff, #0045df); }
+        .btn-close { 
+            background: linear-gradient(to bottom, #ff7b5a, #df2000); 
+            border-color: #ff9d85;
+        }
+        .btn-close:hover {
+            background: linear-gradient(to bottom, #ff4d20, #b00000);
+        }
+
+        /* メニューバー */
+        .menu-bar {
+            background-color: #f0f0e8;
+            border-bottom: 1px solid #dcdcdc;
+            padding: 4px 8px;
+            display: flex;
+            gap: 12px;
+            font-size: 0.82rem;
+            color: #000000;
+            flex-shrink: 0;
+        }
+
+        .menu-item {
+            padding: 2px 6px;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background-color: #316ac5;
+            color: #ffffff;
+            border-radius: 2px;
+        }
+
+        /* ツールバー */
+        .tool-bar {
+            background-color: #f0f0e8;
+            border-bottom: 1px solid #b5b5ab;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .tool-btn {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            color: #333;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .tool-btn:hover {
+            border-color: #b5b5ab;
+            background-color: #fafafa;
+        }
+
+        .tool-btn-icon {
+            font-size: 1.1rem;
+        }
+
+        /* アドレスバー */
+        .address-bar {
+            background-color: #f0f0e8;
+            border-bottom: 1px solid #dcdcdc;
+            padding: 4px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: #555;
+            flex-shrink: 0;
+        }
+
+        .address-input {
+            flex-grow: 1;
+            border: 1px solid #7f9db9;
+            padding: 3px 6px;
+            font-size: 0.8rem;
+            background-color: #ffffff;
+            color: #000000;
+            font-family: 'Tahoma', sans-serif;
+        }
+
+        /* メインコンテンツレイアウト */
+        .window-content {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        /* 左側：フォルダタスクサイドバー */
+        .sidebar {
+            width: 240px;
+            background: linear-gradient(to bottom, #7497e4 0%, #4c68c1 100%);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            overflow-y: auto;
+            flex-shrink: 0;
+            border-right: 1px solid #3c569c;
+        }
+
+        /* タスクグループボックス */
+        .task-box {
+            background-color: #ffffff;
+            border-radius: 4px;
+            border: 1px solid #ffffff;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        .task-box-title {
+            background: linear-gradient(to right, #2151c5 0%, #7497e4 100%);
+            color: #ffffff;
+            padding: 5px 8px;
+            font-size: 0.82rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .task-box-content {
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 0.78rem;
+        }
+
+        .task-link {
+            color: #2151c5;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .task-link:hover {
+            color: #ff6600;
+            text-decoration: underline;
+        }
+
+        /* 右側：画像グリッドエリア */
+        .gallery-area {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #ffffff;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            grid-auto-rows: max-content;
+            gap: 20px;
+            align-content: start;
+        }
+
+        /* ファイル（画像）アイテム */
+        .photo-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            padding: 8px;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            text-align: center;
+        }
+
+        .photo-item:hover {
+            background-color: #e8f0fe;
+            border-color: #aecffc;
+        }
+
+        .thumbnail-frame {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #cccccc;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .thumbnail {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .photo-name {
+            font-size: 0.75rem;
+            color: #000000;
+            word-break: break-all;
+            max-width: 110px;
+            font-family: 'Tahoma', sans-serif;
+        }
+
+        /* ステータスバー */
+        .status-bar {
+            background-color: #f0f0e8;
+            border-top: 1px solid #dcdcdc;
+            padding: 4px 10px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: #555;
+            flex-shrink: 0;
+        }
+
+        /* ----------------------------------
+           Windows 画像とFAXビューア (ライトボックス)
+        ----------------------------------- */
+        .viewer-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .viewer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .viewer-window {
+            width: min(800px, 92%);
+            max-height: 85vh;
+            background-color: #f0f0e8;
+            border: 3px solid #0054e3;
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transform: scale(0.95);
+            transition: transform 0.2s ease;
+        }
+
+        .viewer-overlay.active .viewer-window {
+            transform: scale(1);
+        }
+
+        .viewer-content {
+            flex-grow: 1;
+            background-color: #ffffff; /* ビューアの背景 */
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            overflow: hidden;
+        }
+
+        .viewer-image {
+            max-width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border: 1px solid #999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* ビューアの下部ツールバー */
+        .viewer-toolbar {
+            background-color: #f0f0e8;
+            border-top: 1px solid #dcdcdc;
+            padding: 8px;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .viewer-btn {
+            padding: 4px 12px;
+            background: linear-gradient(to bottom, #ffffff 0%, #eceff2 100%);
+            border: 1px solid #7f9db9;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .viewer-btn:hover {
+            background: #e8f0fe;
+            border-color: #316ac5;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { display: none; } /* モバイル時はサイドバーを非表示 */
+            .win-btn.btn-minimize, .win-btn.btn-maximize { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="xp-window">
+        <!-- タイトルバー -->
+        <div class="title-bar">
+            <div class="title-text">
+                <div class="title-icon"></div>
+                マイ ピクチャ
+            </div>
+            <div class="window-buttons">
+                <div class="win-btn btn-minimize" onclick="location.href='../index.html'" title="最小化 (ホームに戻る)"></div>
+                <div class="win-btn btn-maximize" title="最大化"></div>
+                <div class="win-btn btn-close" onclick="location.href='../index.html'" title="閉じる (ホームに戻る)"></div>
+            </div>
+        </div>
+
+        <!-- メニューバー -->
+        <div class="menu-bar">
+            <div class="menu-item">ファイル(F)</div>
+            <div class="menu-item">編集(E)</div>
+            <div class="menu-item">表示(V)</div>
+            <div class="menu-item">お気に入り(A)</div>
+            <div class="menu-item">ツール(T)</div>
+            <div class="menu-item">ヘルプ(H)</div>
+        </div>
+
+        <!-- ツールバー -->
+        <div class="tool-bar">
+            <a href="../index.html" class="tool-btn" title="ホームへ戻る">
+                <span class="tool-btn-icon">⬅</span>
+                戻る
+            </a>
+            <div class="tool-btn" style="opacity: 0.5; cursor: default;">
+                <span class="tool-btn-icon">➡</span>
+                進む
+            </a>
+            <div class="tool-btn" onclick="location.reload()">
+                <span class="tool-btn-icon">🔄</span>
+                更新
+            </div>
+        </div>
+
+        <!-- アドレスバー -->
+        <div class="address-bar">
+            アドレス(D)
+            <input type="text" class="address-input" value="C:\Documents and Settings\Administrator\My Documents\My Pictures\Astronomy" readonly>
+        </div>
+
+        <!-- メインコンテンツ -->
+        <div class="window-content">
+            <!-- 左側：タスクサイドバー -->
+            <div class="sidebar">
+                <!-- 写真のタスク -->
+                <div class="task-box">
+                    <div class="task-box-title">
+                        写真のタスク
+                    </div>
+                    <div class="task-box-content">
+                        <a href="#" class="task-link" id="slide-show-trigger">
+                            <span>▶</span> スライドショーを表示する
+                        </a>
+                        <a href="https://www.instagram.com/music_blue_print/" target="_blank" class="task-link">
+                            <span>📱</span> Instagramで最新作を見る
+                        </a>
+                    </div>
+                </div>
+
+                <!-- フォルダのタスク -->
+                <div class="task-box">
+                    <div class="task-box-title">
+                        その他
+                    </div>
+                    <div class="task-box-content">
+                        <a href="../index.html" class="task-link">
+                            <span>🏠</span> ホームに戻る
+                        </a>
+                        <a href="../key-image/" class="task-link">
+                            <span>📖</span> 調性コラムを読む
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 詳細 -->
+                <div class="task-box">
+                    <div class="task-box-title">
+                        詳細
+                    </div>
+                    <div class="task-box-content" style="color: #444; line-height: 1.4;">
+                        <strong>天体写真置き場</strong><br>
+                        望遠鏡・カメラで撮影した星空のアーカイブ。<br><br>
+                        項目数: 1
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右側：写真一覧ギャラリー -->
+            <div class="gallery-area" id="gallery">
+                <!-- 天体写真 1枚目 -->
+                <div class="photo-item" onclick="openViewer('../images/starry_sky_01.jpg', 'starry_sky_01.jpg')">
+                    <div class="thumbnail-frame">
+                        <img class="thumbnail" src="../images/starry_sky_01.jpg" alt="starry_sky_01.jpg">
+                    </div>
+                    <div class="photo-name">starry_sky_01.jpg</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ステータスバー -->
+        <div class="status-bar">
+            <div>1 個のオブジェクト</div>
+            <div style="font-family: 'Tahoma', sans-serif;">My Computer</div>
+        </div>
+    </div>
+
+    <!-- Windows 画像とFAXビューア (ライトボックス) -->
+    <div id="fax-viewer" class="viewer-overlay">
+        <div class="viewer-window">
+            <!-- ビューアのタイトルバー -->
+            <div class="title-bar">
+                <div class="title-text">
+                    <div class="title-icon"></div>
+                    <span id="viewer-title-text">starry_sky_01.jpg - Windows 画像とFAXビューア</span>
+                </div>
+                <div class="window-buttons">
+                    <div class="win-btn btn-close" onclick="closeViewer()" title="閉じる"></div>
+                </div>
+            </div>
+            <!-- ビューアのメインエリア -->
+            <div class="viewer-content">
+                <img id="viewer-img" class="viewer-image" src="" alt="preview">
+            </div>
+            <!-- ビューアのツールバー -->
+            <div class="viewer-toolbar">
+                <button class="viewer-btn" onclick="closeViewer()">閉じる(C)</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const viewer = document.getElementById('fax-viewer');
+        const viewerImg = document.getElementById('viewer-img');
+        const viewerTitle = document.getElementById('viewer-title-text');
+
+        function openViewer(imgSrc, fileName) {
+            viewerImg.src = imgSrc;
+            viewerTitle.textContent = fileName + ' - Windows 画像とFAXビューア';
+            viewer.classList.add('active');
+        }
+
+        function closeViewer() {
+            viewer.classList.remove('active');
+        }
+
+        // オーバーレイクイッククローズ
+        viewer.addEventListener('click', (e) => {
+            if (e.target === viewer) {
+                closeViewer();
+            }
+        });
+
+        // スライドショー簡易トリガー
+        document.getElementById('slide-show-trigger').addEventListener('click', (e) => {
+            e.preventDefault();
+            const firstItem = document.querySelector('.photo-item');
+            if (firstItem) {
+                firstItem.click();
+            }
+        });
+    </script>
+</body>
+
+</html>
