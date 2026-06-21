@@ -34,7 +34,7 @@
             --text-color: #3b3e44;
             --text-muted: #70757f;
             --wii-blue: #00b0ff;
-            --wii-blue-glow: rgba(0, 176, 255, 0.4);
+            --wii-blue-glow: rgba(0, 176, 255, 0.45);
             --wii-gray: #e6e9ed;
             --wii-border: #ccd1d9;
             --channel-bg: linear-gradient(180deg, #ffffff 0%, #f5f7fa 100%);
@@ -61,6 +61,36 @@
             display: flex;
             flex-direction: column;
             position: relative;
+        }
+
+        /* PC環境においてデフォルトカーソルを無効化（Wiiリモコンカーソルを使用するため） */
+        @media (pointer: fine) {
+            body, a, button, [role="button"], input, select, textarea {
+                cursor: none !important;
+            }
+        }
+
+        /* Wiiリモコンポインター（マウスストーカー） */
+        #wii-pointer {
+            position: fixed;
+            width: 44px;
+            height: 44px;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-10px, -8px); /* 指先に合わせる調整 */
+            display: none;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.15));
+            transition: transform 0.05s ease-out;
+        }
+
+        #wii-pointer img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        #wii-pointer.clicking {
+            transform: translate(-10px, -8px) scale(0.85); /* クリック時にポコッと縮小 */
         }
 
         /* Wiiメニュー風ドットパターン */
@@ -107,18 +137,12 @@
             50% { transform: translateY(-30px) translateX(20px); }
         }
 
-        a {
-            color: var(--text-color);
-            text-decoration: none;
-            transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-        }
-
         /* ヘッダー */
         header {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1050px;
             margin: 0 auto;
-            padding: 30px 20px 15px;
+            padding: 30px 25px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -152,7 +176,7 @@
             transform: translateY(-50%);
         }
 
-        /* 言語スイッチ（Wiiメニューのボタン風） */
+        /* 言語スイッチ */
         .lang-switch {
             font-size: 0.8rem;
             font-weight: 700;
@@ -176,9 +200,9 @@
 
         .container {
             width: 100%;
-            max-width: 1000px;
+            max-width: 1050px;
             margin: 0 auto;
-            padding: 0 20px 80px;
+            padding: 0 25px 120px; /* 下部システムバーの余白 */
             position: relative;
             z-index: 10;
             flex-grow: 1;
@@ -190,8 +214,7 @@
         /* ヒーローセクション */
         .hero {
             width: 100%;
-            max-width: 960px;
-            margin: 10px auto;
+            margin: 10px 0 0;
         }
 
         /* Wiiチャンネル風の二重角丸枠線 */
@@ -204,6 +227,7 @@
                 0 6px 14px rgba(0, 0, 0, 0.05),
                 0 1px 3px rgba(0, 0, 0, 0.03);
             transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            height: 100%;
         }
 
         .channel-border:hover {
@@ -217,6 +241,7 @@
         /* Instagramバナー（Wii Fitのような幅広チャンネル） */
         .instagram-banner {
             width: 100%;
+            height: 100%;
             background: var(--channel-bg);
             border: 1px solid var(--wii-border);
             border-radius: 15px;
@@ -331,97 +356,108 @@
             background: linear-gradient(to right, var(--wii-border), transparent);
         }
 
+        /* Wiiメニュー風 4列グリッド */
         .user-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
             width: 100%;
         }
 
         .list-item-wrapper {
             position: relative;
-            height: 100%;
+            aspect-ratio: 4 / 3; /* Wiiチャンネル比率 */
+            min-height: 160px;
         }
 
         /* Wiiメニューチャンネルカード */
         .user-account {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 16px;
-            padding: 20px 18px;
+            justify-content: center;
+            gap: 12px;
+            padding: 16px;
             height: 100%;
             background: var(--channel-bg);
             border-radius: 15px;
             border: 1px solid var(--wii-border);
             cursor: pointer;
             box-shadow: inset 0 1px 0 #ffffff;
-            transition: background 0.2s ease;
             overflow: hidden;
             position: relative;
+            text-align: center;
         }
 
         /* チャンネルアイコン */
         .avatar {
-            width: 60px;
-            height: 60px;
+            width: 54px;
+            height: 54px;
             border-radius: 10px;
             border: 1px solid var(--wii-border);
             background: #ffffff;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             object-fit: cover;
-            flex-shrink: 0;
             transition: transform 0.2s ease;
         }
 
         .list-item-wrapper:hover .avatar {
-            transform: scale(1.04);
+            transform: scale(1.06);
         }
 
         .user-info {
-            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 6px;
-            text-align: left;
+            align-items: center;
+            gap: 4px;
         }
 
         .username {
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             font-weight: 700;
             color: var(--text-color);
             font-family: 'Comfortaa', 'Noto Sans JP', sans-serif;
             letter-spacing: 0.01em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
         }
 
-        /* Wiiチャンネル風のミニタグ */
-        .username::after {
-            content: 'CH';
-            font-size: 0.55rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            border: 1px solid var(--wii-border);
-            padding: 1px 4px;
-            border-radius: 3px;
-            background: #ffffff;
-        }
-
+        /* Wiiチャンネル説明文（トップでは非表示にしてスッキリさせ、ポップアップでしっかり見せる） */
         .user-desc {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            line-height: 1.45;
-            font-family: 'Noto Sans JP', sans-serif;
+            display: none;
         }
 
-        /* ヘルプアイコン（Wiiのインフォマーク風） */
+        /* 空のチャンネルスロット（凹んだ枠線） */
+        .empty-slot {
+            pointer-events: none;
+        }
+
+        .empty-slot .channel-border {
+            box-shadow: none;
+            border-color: transparent;
+            background: transparent;
+        }
+
+        .empty-account {
+            background: rgba(0, 0, 0, 0.02) !important;
+            border: 2px dashed rgba(0, 0, 0, 0.08) !important;
+            box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.04) !important;
+            cursor: default !important;
+        }
+        
+        .empty-account::before {
+            display: none;
+        }
+
+        /* インフォアイコン（チャンネル上部右端に控えめに配置） */
         .info-icon {
             position: absolute;
-            top: 14px;
-            right: 14px;
-            width: 18px;
-            height: 18px;
+            top: 10px;
+            right: 10px;
+            width: 16px;
+            height: 16px;
             background-color: #ffffff;
             color: var(--text-muted);
             border-radius: 50%;
@@ -429,7 +465,7 @@
             align-items: center;
             justify-content: center;
             font-family: inherit;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
             cursor: pointer;
             border: 1px solid var(--wii-border);
@@ -451,18 +487,18 @@
             background-color: rgba(255, 255, 255, 0.98);
             border: 2px solid var(--wii-blue);
             color: var(--text-color);
-            padding: 14px 18px;
+            padding: 10px 14px;
             border-radius: 12px;
             z-index: 20;
-            bottom: calc(100% + 10px);
+            bottom: calc(100% - 5px);
             left: 50%;
             transform: translateX(-50%);
-            width: 280px;
-            font-size: 0.8rem;
-            line-height: 1.55;
+            width: 220px;
+            font-size: 0.76rem;
+            line-height: 1.45;
             transition: all 0.25s ease;
             pointer-events: none;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
             font-family: 'Noto Sans JP', sans-serif;
         }
 
@@ -472,54 +508,285 @@
             transform: translateX(-50%) translateY(-5px);
         }
 
-        .list-item-wrapper.tooltip-active .tooltip-text {
-            visibility: visible;
+        /* ----------------------------------
+           Wii チャンネル起動ダイアログ
+        ----------------------------------- */
+        .wii-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .wii-overlay.active {
             opacity: 1;
-            transform: translateX(-50%) translateY(-5px);
+            visibility: visible;
         }
 
-        footer {
-            margin-top: auto;
-            padding: 40px 20px;
+        .wii-dialog {
+            background: radial-gradient(circle, #ffffff 0%, #eceef1 100%);
+            border: 6px solid #ffffff;
+            outline: 2px solid var(--wii-border);
+            border-radius: 30px;
+            width: min(480px, 90%);
+            padding: 30px 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
             text-align: center;
-            position: relative;
-            z-index: 10;
-            border-top: 1px solid var(--wii-border);
-            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0.9);
+            transition: transform 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
         }
 
-        .footer-logo {
-            font-family: 'Comfortaa', sans-serif;
-            font-size: 1.1rem;
+        .wii-overlay.active .wii-dialog {
+            transform: scale(1);
+        }
+
+        .wii-dialog-banner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .wii-dialog-banner img {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            border: 2px solid var(--wii-border);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            background: #ffffff;
+        }
+
+        .wii-dialog-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-color);
+            font-family: 'Comfortaa', 'Noto Sans JP', sans-serif;
+        }
+
+        .wii-dialog-desc {
+            font-size: 0.88rem;
             color: var(--text-muted);
-            margin-bottom: 8px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-family: 'Noto Sans JP', sans-serif;
+            padding: 0 10px;
         }
 
-        .footer-logo span {
+        .wii-dialog-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Wiiの立体ボタン */
+        .wii-dialog-btn {
+            flex: 1;
+            max-width: 160px;
+            height: 48px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Comfortaa', 'Noto Sans JP', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 24px;
+            border: 3px solid var(--wii-border);
+            background: linear-gradient(to bottom, #ffffff 0%, #eceff2 100%);
+            color: var(--text-color);
+            box-shadow: 
+                0 4px 10px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 #ffffff;
+            transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            text-decoration: none;
+        }
+
+        .wii-dialog-btn:hover {
+            border-color: var(--wii-blue);
+            box-shadow: 
+                0 6px 14px rgba(0, 176, 255, 0.2),
+                0 0 8px var(--wii-blue-glow);
+            transform: scale(1.05);
+        }
+
+        .btn-start {
+            background: linear-gradient(to bottom, #ffffff 0%, #e3faf2 100%);
+            border-color: #a3e9d4;
+            color: #0ca678;
+        }
+
+        .btn-start:hover {
+            border-color: #0ca678;
+            box-shadow: 
+                0 6px 14px rgba(12, 166, 120, 0.15),
+                0 0 8px rgba(12, 166, 120, 0.3);
+        }
+
+        /* ----------------------------------
+           Wii 下部システムバー
+        ----------------------------------- */
+        .wii-system-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1100px;
+            height: 70px;
+            background: linear-gradient(to bottom, #eceef1 0%, #d8dee4 100%);
+            border-top: 2px solid var(--wii-border);
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+            z-index: 99;
+        }
+
+        /* 左：Wiiボタン */
+        .wii-system-btn {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(to bottom, #ffffff 0%, #eceff2 100%);
+            border: 2px solid var(--wii-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 3px 6px rgba(0,0,0,0.06),
+                inset 0 1px 0 #ffffff;
+            transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        .wii-system-btn:hover {
+            border-color: var(--wii-blue);
+            box-shadow: 
+                0 5px 12px rgba(0, 176, 255, 0.15),
+                0 0 6px var(--wii-blue-glow);
+            transform: scale(1.08);
+        }
+
+        .wii-logo-btn {
+            font-family: 'Comfortaa', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .wii-system-btn:hover .wii-logo-btn {
             color: var(--wii-blue);
         }
 
-        footer p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+        /* 中央：時間表示 */
+        .wii-time-container {
+            background: #ffffff;
+            border: 2px solid var(--wii-border);
+            border-radius: 15px;
+            padding: 6px 30px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #wii-time {
+            font-family: 'Share Tech Mono', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-color);
+            letter-spacing: 0.05em;
+        }
+
+        /* 右：手紙（Wii掲示板）ボタン */
+        .wii-mail-icon {
+            width: 22px;
+            height: 16px;
+            border: 2px solid var(--text-color);
+            border-radius: 2px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .wii-mail-icon::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 0; height: 0;
+            border-style: solid;
+            border-width: 6px 9px 0 9px;
+            border-color: var(--text-color) transparent transparent transparent;
+        }
+
+        .wii-system-btn:hover .wii-mail-icon {
+            border-color: var(--wii-blue);
+        }
+
+        .wii-system-btn:hover .wii-mail-icon::before {
+            border-top-color: var(--wii-blue);
+        }
+
+        /* レスポンシブ調整 */
+        @media (max-width: 960px) {
+            .user-list {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .empty-slot {
+                display: none; /* スマホやタブレットでは空スロットを隠して整理 */
+            }
         }
 
         @media (max-width: 720px) {
-            .hero, .instagram-banner, .user-account {
-                padding: 20px 16px;
+            .user-list {
+                grid-template-columns: repeat(2, 1fr);
             }
-
-            .instagram-banner {
-                flex-direction: column;
-                align-items: flex-start;
+            .wii-system-bar {
+                height: 60px;
+                padding: 0 20px;
             }
-
-            .btn-instagram {
-                width: 100%;
+            .wii-system-btn {
+                width: 40px;
+                height: 40px;
             }
+            .wii-logo-btn {
+                font-size: 0.7rem;
+            }
+            .wii-time-container {
+                padding: 4px 20px;
+            }
+            #wii-time {
+                font-size: 1.15rem;
+            }
+            .container {
+                padding-bottom: 90px;
+            }
+        }
 
+        @media (max-width: 480px) {
             .user-list {
                 grid-template-columns: 1fr;
+            }
+            .list-item-wrapper {
+                aspect-ratio: auto;
+                min-height: auto;
+            }
+            .user-account {
+                flex-direction: row;
+                text-align: left;
+                padding: 16px;
+                align-items: center;
+                gap: 16px;
+            }
+            .avatar {
+                width: 50px;
+                height: 50px;
             }
         }
     </style>
@@ -531,6 +798,11 @@
         <div class="wii-orb wii-orb-1"></div>
         <div class="wii-orb wii-orb-2"></div>
         <div class="wii-orb wii-orb-3"></div>
+    </div>
+
+    <!-- Wiiリモコンカーソル (PC環境のみ動作) -->
+    <div id="wii-pointer">
+        <img src="images/wii_cursor.png" alt="Wii Pointer">
     </div>
 
     <header>
@@ -568,114 +840,229 @@
                 <!-- Clock Harmonizer -->
                 <div class="list-item-wrapper">
                     <div class="channel-border">
-                        <a href="https://dim7.jp/clock/" class="user-link" target="_blank" rel="noopener">
+                        <a href="https://dim7.jp/clock/" class="user-link" data-desc="時計の針の位置がメジャーセブンスコードなどの和音を紡ぎ出す、時間とハーモニーのシンクロナイザー。">
                             <div class="user-account">
                                 <img class="avatar" src="images/icon_clock.png" alt="Clock Harmonizer">
                                 <div class="user-info">
                                     <span class="username">Clock Harmonizer</span>
-                                    <span class="user-desc">アナログ時計の3本の針が、12音盤上で連続的なハーモニーを奏でる時計。</span>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
-                    <span class="tooltip-text">時計の針の位置がメジャーセブンスコードなどの和音を紡ぎ出す、時間とハーモニーのシンクロナイザー。</span>
+                    <span class="tooltip-text">アナログ時計の3本の針が、12音盤上で連続的なハーモニーを奏でる時計。</span>
                 </div>
 
                 <!-- Digital Clock Synthesizer -->
                 <div class="list-item-wrapper">
                     <div class="channel-border">
-                        <a href="https://dim7.jp/digital-clock/" class="user-link" target="_blank" rel="noopener">
+                        <a href="https://dim7.jp/digital-clock/" class="user-link" data-desc="時間を示す数字（12:34:56など）の比率がそのまま和音の周波数比になり、刻一刻と変化するドローン音を生成するシンセサイザー。">
                             <div class="user-account">
                                 <img class="avatar" src="images/icon_digital.png" alt="Digital Clock Synthesizer">
                                 <div class="user-info">
-                                    <span class="username">Digital Clock Synthesizer</span>
-                                    <span class="user-desc">デジタル時計の「時:分:秒」の比率を純正律の周波数に変換するシンセ。</span>
+                                    <span class="username">Digital Clock Synth</span>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
-                    <span class="tooltip-text">時間を示す数字（12:34:56など）の比率がそのまま和音の周波数比になり、刻一刻と変化するドローン音を生成するシンセサイザー。</span>
+                    <span class="tooltip-text">デジタル時計の「時:分:秒」の比率を純正律の周波数に変換するシンセ。</span>
                 </div>
 
                 <!-- Circle of Fifths Visualizer -->
                 <div class="list-item-wrapper">
                     <div class="channel-border">
-                        <a href="https://dim7.jp/midi-circle-of-fifths/" class="user-link" target="_blank" rel="noopener">
+                        <a href="https://dim7.jp/midi-circle-of-fifths/" class="user-link" data-desc="音声ファイルやマイク入力のピッチをリアルタイムで解析し、五度圏（Circle of Fifths）上に光として音楽構造をマッピングするツール。">
                             <div class="user-account">
                                 <img class="avatar" src="images/icon_fifths.png" alt="Circle of Fifths Visualizer">
                                 <div class="user-info">
-                                    <span class="username">Circle of Fifths Visualizer</span>
-                                    <span class="user-desc">アップロードした音声の周波数成分に応じて、五度圏の調性盤が光るビジュアライザ。</span>
+                                    <span class="username">Fifths Visualizer</span>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
-                    <span class="tooltip-text">音声ファイルやマイク入力のピッチをリアルタイムで解析し、五度圏（Circle of Fifths）上に光として音楽構造をマッピングするツール。</span>
+                    <span class="tooltip-text">アップロードした音声の周波数成分に応じて、五度圏の調性盤が光るビジュアライザ。</span>
                 </div>
 
                 <!-- ユーモア16タイプ診断 -->
                 <div class="list-item-wrapper">
                     <div class="channel-border">
-                        <a href="https://dim7.jp/humor/" class="user-link" target="_blank" rel="noopener">
+                        <a href="https://dim7.jp/humor/" class="user-link" data-desc="独自の質問群を通して、あなたがどのようなユーモアの構造やセンスを好んでいるかを多角的に診断します。">
                             <div class="user-account">
                                 <img class="avatar" src="images/icon_humor_xp.png" alt="ユーモア16タイプ診断">
                                 <div class="user-info">
-                                    <span class="username">ユーモア16タイプ診断</span>
-                                    <span class="user-desc">あなたの「笑いのツボ」を分析し、16タイプに分類する診断コンテンツ。</span>
+                                    <span class="username">ユーモア16診断</span>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
-                    <span class="tooltip-text">独自の質問群を通して、あなたがどのようなユーモアの構造やセンスを好んでいるかを多角的に診断します。</span>
+                    <span class="tooltip-text">あなたの「笑いのツボ」を分析し、16タイプに分類する診断コンテンツ。</span>
                 </div>
 
                 <!-- 考察：調とそれが持つイメージ -->
                 <div class="list-item-wrapper">
                     <div class="channel-border">
-                        <a href="https://dim7.jp/key-image/" class="user-link" target="_blank" rel="noopener">
+                        <a href="https://dim7.jp/key-image/" class="user-link" data-desc="特定のキーが人々に与える印象について、歴史的文脈や音程関係の観点から深く考察した読み物コラムです。">
                             <div class="user-account">
                                 <img class="avatar" src="images/icon_theory_xp.png" alt="考察：調とそれが持つイメージ">
                                 <div class="user-info">
-                                    <span class="username">考察：調とそれが持つイメージ</span>
-                                    <span class="user-desc">各調性（キー）が持つ固有の色彩や感覚的なイメージについての音楽理論的考察。</span>
+                                    <span class="username">調とイメージの考察</span>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
-                    <span class="tooltip-text">特定のキーが人々に与える印象について、歴史的文脈や音程関係の観点から深く考察した読み物コラムです。</span>
+                    <span class="tooltip-text">各調性（キー）が持つ固有の色彩や感覚的なイメージについての音楽理論的考察。</span>
                 </div>
 
                 <!-- PICS (天体写真置き場) -->
                 <div class="list-item-wrapper">
                     <div class="channel-border">
-                        <a href="https://dim7.jp/pics/" class="user-link pics-card" target="_blank" rel="noopener">
+                        <a href="https://dim7.jp/pics/" class="user-link pics-card" data-desc="1984dim7プロジェクトに関連する、美しく撮影された星空、星雲、月などの天体画像のアーカイブ閲覧ページです。">
                             <div class="user-account">
                                 <img class="avatar" src="images/icon_astronomy.png" alt="PICS 天体写真置き場">
                                 <div class="user-info">
-                                    <span class="username">PICS (天体写真置き場)</span>
-                                    <span class="user-desc">天体望遠鏡やカメラで撮影した、星空、星雲、月などの写真アーカイブ。</span>
+                                    <span class="username">天体写真置き場</span>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
-                    <span class="tooltip-text">1984dim7プロジェクトに関連する、美しく撮影された星々や天体画像のアーカイブ閲覧ページです。</span>
+                    <span class="tooltip-text">天体望遠鏡やカメラで撮影した、星空、星雲、月などの写真アーカイブ。</span>
+                </div>
+
+                <!-- 以下、グリッドを埋めるためのWiiメニュー空きスロット -->
+                <div class="list-item-wrapper empty-slot">
+                    <div class="channel-border">
+                        <div class="user-account empty-account"></div>
+                    </div>
+                </div>
+                <div class="list-item-wrapper empty-slot">
+                    <div class="channel-border">
+                        <div class="user-account empty-account"></div>
+                    </div>
+                </div>
+                <div class="list-item-wrapper empty-slot">
+                    <div class="channel-border">
+                        <div class="user-account empty-account"></div>
+                    </div>
+                </div>
+                <div class="list-item-wrapper empty-slot">
+                    <div class="channel-border">
+                        <div class="user-account empty-account"></div>
+                    </div>
+                </div>
+                <div class="list-item-wrapper empty-slot">
+                    <div class="channel-border">
+                        <div class="user-account empty-account"></div>
+                    </div>
+                </div>
+                <div class="list-item-wrapper empty-slot">
+                    <div class="channel-border">
+                        <div class="user-account empty-account"></div>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
 
-    <footer>
-        <div class="footer-logo">dim7<span>.</span>jp</div>
-        <p>&copy; 2026 dim7.jp All Rights Reserved.</p>
-    </footer>
+    <!-- Wii チャンネル起動ポップアップ -->
+    <div id="wii-dialog-overlay" class="wii-overlay">
+        <div class="wii-dialog">
+            <div class="wii-dialog-banner">
+                <img id="dialog-icon" src="" alt="icon">
+                <div id="dialog-title" class="wii-dialog-title"></div>
+            </div>
+            <div id="dialog-desc" class="wii-dialog-desc"></div>
+            <div class="wii-dialog-buttons">
+                <button id="dialog-back-btn" class="wii-dialog-btn btn-back">もどる</button>
+                <a id="dialog-start-btn" href="" class="wii-dialog-btn btn-start">はじめる</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wii 下部システムバー -->
+    <div class="wii-system-bar">
+        <button class="wii-system-btn" onclick="location.href='/'" title="Wiiホーム">
+            <span class="wii-logo-btn">Wii</span>
+        </button>
+        <div class="wii-time-container">
+            <span id="wii-time">--:--</span>
+        </div>
+        <button class="wii-system-btn" onclick="alert('Wii掲示板機能は準備中です。')" title="Wii掲示板">
+            <span class="wii-mail-icon"></span>
+        </button>
+    </div>
 
     <script>
+        // Wiiリモコンポインター（マウスストーカー）の処理
+        const wiiPointer = document.getElementById('wii-pointer');
+        
+        // タッチデバイス以外（マウスが使える環境）のみポインターを表示
+        if (window.matchMedia('(pointer: fine)').matches) {
+            wiiPointer.style.display = 'block';
+            
+            document.addEventListener('mousemove', (e) => {
+                wiiPointer.style.left = e.clientX + 'px';
+                wiiPointer.style.top = e.clientY + 'px';
+            });
+
+            document.addEventListener('mousedown', () => {
+                wiiPointer.classList.add('clicking');
+            });
+
+            document.addEventListener('mouseup', () => {
+                wiiPointer.classList.remove('clicking');
+            });
+        }
+
+        // Wiiチャンネル起動ポップアップの処理
+        const wiiOverlay = document.getElementById('wii-dialog-overlay');
+        const dialogIcon = document.getElementById('dialog-icon');
+        const dialogTitle = document.getElementById('dialog-title');
+        const dialogDesc = document.getElementById('dialog-desc');
+        const dialogStartBtn = document.getElementById('dialog-start-btn');
+        const dialogBackBtn = document.getElementById('dialog-back-btn');
+
+        document.querySelectorAll('.user-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const card = link.querySelector('.user-account');
+                const iconSrc = card.querySelector('.avatar').src;
+                const titleText = card.querySelector('.username').textContent.trim();
+                const descText = link.getAttribute('data-desc') || '';
+                const targetHref = link.getAttribute('href');
+                
+                dialogIcon.src = iconSrc;
+                dialogTitle.textContent = titleText;
+                dialogDesc.textContent = descText;
+                dialogStartBtn.setAttribute('href', targetHref);
+                
+                wiiOverlay.classList.add('active');
+            });
+        });
+
+        dialogBackBtn.addEventListener('click', () => {
+            wiiOverlay.classList.remove('active');
+        });
+
+        // 時計のリアルタイム更新
+        function updateClock() {
+            const clockEl = document.getElementById('wii-time');
+            if (!clockEl) return;
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            clockEl.textContent = `${hours}:${minutes}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
         // スマホなどのタッチデバイスでインフォボタンのツールチップ表示制御
         const infoIcons = document.querySelectorAll('.info-icon');
         infoIcons.forEach(icon => {
@@ -683,7 +1070,6 @@
                 e.stopPropagation();
                 const wrapper = icon.parentElement;
                 
-                // 他のすべてのアクティブを解除
                 document.querySelectorAll('.list-item-wrapper').forEach(item => {
                     if (item !== wrapper) {
                         item.classList.remove('tooltip-active');
@@ -694,7 +1080,6 @@
             });
         });
 
-        // 画面のどこかをタップしたらツールチップを閉じる
         document.addEventListener('click', () => {
             document.querySelectorAll('.list-item-wrapper').forEach(item => {
                 item.classList.remove('tooltip-active');
