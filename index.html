@@ -12,8 +12,8 @@
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- 極太斜体のタイトルと、デジタル/ストリート感あふれるフォントの組み合わせ -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@1,900&family=Share+Tech+Mono&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Wii風の丸っこいフレンドリーなフォントとデジタルフォントのブレンド -->
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&family=Share+Tech+Mono&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6469478872018956"
         crossorigin="anonymous"></script>
@@ -29,16 +29,18 @@
     <link rel="icon" href="images/favicon_xp.png">
     <style>
         :root {
-            --bg-color: #030306;
-            --text-color: #ffffff;
-            --text-muted: #8a8ca4;
-            --neon-purple: #a855f7;
-            --neon-purple-glow: rgba(168, 85, 247, 0.45);
-            --neon-cyan: #06b6d4;
-            --neon-cyan-glow: rgba(6, 182, 212, 0.3);
-            --chrome-silver: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 30%, #475569 50%, #94a3b8 70%, #f1f5f9 100%);
-            --aero-bg: rgba(255, 255, 255, 0.05);
-            --aero-bg-hover: rgba(255, 255, 255, 0.1);
+            --bg-color-center: #f0f3f6;
+            --bg-color-edge: #d8dee4;
+            --text-color: #3b3e44;
+            --text-muted: #70757f;
+            --wii-blue: #00b0ff;
+            --wii-blue-glow: rgba(0, 176, 255, 0.4);
+            --wii-gray: #e6e9ed;
+            --wii-border: #ccd1d9;
+            --channel-bg: linear-gradient(180deg, #ffffff 0%, #f5f7fa 100%);
+            --channel-shadow: 
+                0 6px 14px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 1);
         }
 
         * {
@@ -50,8 +52,9 @@
         body, html {
             min-height: 100vh;
             color: var(--text-color);
-            background-color: var(--bg-color);
-            font-family: 'Share Tech Mono', 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: radial-gradient(circle, var(--bg-color-center) 0%, var(--bg-color-edge) 100%);
+            background-attachment: fixed;
+            font-family: 'Comfortaa', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
@@ -60,7 +63,7 @@
             position: relative;
         }
 
-        /* サイバーグリッド背景 */
+        /* Wiiメニュー風ドットパターン */
         body::before {
             content: '';
             position: fixed;
@@ -68,48 +71,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 30px 30px;
+            background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 16px 16px;
             z-index: 0;
             pointer-events: none;
         }
 
-        /* 巨大ネオングロー */
-        .cyber-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .glow-purple {
-            position: absolute;
-            top: 15%;
-            left: -10%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(168, 85, 247, 0) 70%);
-            filter: blur(100px);
-        }
-
-        .glow-cyan {
-            position: absolute;
-            bottom: 10%;
-            right: -10%;
-            width: 70%;
-            height: 70%;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, rgba(6, 182, 212, 0) 70%);
-            filter: blur(120px);
-        }
-
-        /* ✦ キラキラ星の浮遊アニメーション */
-        .sparkle-container {
+        /* 浮遊するWii風オーブ */
+        .wii-orb-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -120,72 +89,22 @@
             overflow: hidden;
         }
 
-        .sparkle {
+        .wii-orb {
             position: absolute;
-            bottom: -50px;
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.3);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            animation: floatUp 15s infinite linear;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.35);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            animation: wiiFloat 20s infinite ease-in-out;
+            opacity: 0.5;
         }
 
-        .sparkle-1 { left: 15%; animation-duration: 18s; animation-delay: 0s; }
-        .sparkle-2 { left: 35%; animation-duration: 22s; animation-delay: 3s; }
-        .sparkle-3 { left: 60%; animation-duration: 14s; animation-delay: 1s; }
-        .sparkle-4 { left: 80%; animation-duration: 20s; animation-delay: 5s; }
+        .wii-orb-1 { width: 120px; height: 120px; left: 10%; top: 20%; animation-duration: 25s; }
+        .wii-orb-2 { width: 80px; height: 80px; right: 15%; top: 10%; animation-duration: 18s; }
+        .wii-orb-3 { width: 150px; height: 150px; left: 40%; bottom: 15%; animation-duration: 30s; }
 
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0) rotate(0deg) scale(0.6);
-                opacity: 0;
-            }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% {
-                transform: translateY(-110vh) rotate(180deg) scale(1.1);
-                opacity: 0;
-            }
-        }
-
-        /* 左右のサイバーポスター装飾サイドバー（PC版のみ表示） */
-        .side-decor {
-            position: fixed;
-            top: 0;
-            height: 100vh;
-            width: 60px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            padding: 40px 0;
-            z-index: 5;
-            color: rgba(255, 255, 255, 0.15);
-            font-size: 0.75rem;
-            letter-spacing: 0.2em;
-            pointer-events: none;
-        }
-
-        .side-decor-left {
-            left: 20px;
-            border-right: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .side-decor-right {
-            right: 20px;
-            border-left: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .side-vertical-text {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            text-transform: uppercase;
-        }
-
-        .side-cities span {
-            display: block;
-            margin: 15px 0;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
+        @keyframes wiiFloat {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-30px) translateX(20px); }
         }
 
         a {
@@ -199,7 +118,7 @@
             width: 100%;
             max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px 20px;
+            padding: 30px 20px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -207,47 +126,51 @@
             z-index: 10;
         }
 
-        /* メタリッククロームロゴ */
+        /* クリーンなWii風ロゴ */
         .logo {
             font-size: 2.2rem;
-            font-weight: 900;
-            font-style: italic;
-            letter-spacing: 0.05em;
-            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 35%, #475569 50%, #94a3b8 65%, #ffffff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+            font-weight: 700;
+            color: #585d68;
+            font-family: 'Comfortaa', 'Share Tech Mono', sans-serif;
+            letter-spacing: 0.02em;
+            text-shadow: 0 1px 1px #ffffff;
             position: relative;
+            display: inline-flex;
+            align-items: center;
         }
 
         .logo::after {
-            content: '✦';
+            content: '';
             position: absolute;
-            top: -5px;
-            right: -22px;
-            font-size: 0.9rem;
-            font-style: normal;
-            color: #ffffff;
-            -webkit-text-fill-color: #ffffff;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+            top: 50%;
+            right: -15px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--wii-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 6px var(--wii-blue-glow);
+            transform: translateY(-50%);
         }
 
+        /* 言語スイッチ（Wiiメニューのボタン風） */
         .lang-switch {
             font-size: 0.8rem;
-            font-weight: 600;
-            padding: 6px 18px;
-            border-radius: 4px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            font-weight: 700;
+            padding: 8px 22px;
+            border-radius: 20px;
+            background: #ffffff;
+            color: var(--text-color);
+            border: 2px solid var(--wii-border);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
         }
 
         .lang-switch:hover {
-            background: rgba(168, 85, 247, 0.1);
-            border-color: var(--neon-purple);
-            box-shadow: 0 0 10px var(--neon-purple-glow);
+            border-color: var(--wii-blue);
+            color: var(--wii-blue);
+            box-shadow: 
+                0 4px 10px rgba(0, 176, 255, 0.15),
+                0 0 8px var(--wii-blue-glow);
             transform: translateY(-1px);
         }
 
@@ -261,38 +184,42 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 30px;
         }
 
-        /* ヒーローセクション（バナーエリア） */
+        /* ヒーローセクション */
         .hero {
             width: 100%;
             max-width: 960px;
             margin: 10px auto;
         }
 
-        /* 液体金属（クローム）＆ネオンの境界枠 */
-        .glass-borders {
-            background: rgba(168, 85, 247, 0.03);
-            /* クローム枠を模した繊細なボーダーグラデーション */
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 12px;
+        /* Wiiチャンネル風の二重角丸枠線 */
+        .channel-border {
+            background: #ffffff;
+            border: 2px solid #ffffff;
+            border-radius: 20px;
             padding: 3px;
             box-shadow: 
-                0 10px 30px rgba(0, 0, 0, 0.5),
-                0 0 15px rgba(168, 85, 247, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+                0 6px 14px rgba(0, 0, 0, 0.05),
+                0 1px 3px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28);
         }
 
-        /* Instagramバナー */
+        .channel-border:hover {
+            border-color: var(--wii-blue);
+            box-shadow: 
+                0 10px 20px rgba(0, 176, 255, 0.15),
+                0 0 12px var(--wii-blue-glow);
+            transform: scale(1.03); /* Wiiリモコンでのポイントによる浮き上がり */
+        }
+
+        /* Instagramバナー（Wii Fitのような幅広チャンネル） */
         .instagram-banner {
             width: 100%;
-            background: linear-gradient(135deg, rgba(15, 10, 25, 0.8) 0%, rgba(5, 5, 10, 0.95) 100%);
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            border-radius: 9px;
+            background: var(--channel-bg);
+            border: 1px solid var(--wii-border);
+            border-radius: 15px;
             padding: 24px 32px;
             display: flex;
             justify-content: space-between;
@@ -300,32 +227,18 @@
             gap: 24px;
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1);
         }
 
-        /* ホバー時のスキャンラインと反射光 */
+        /* 光沢反射 */
         .instagram-banner::before,
         .user-account::before {
             content: '';
             position: absolute;
-            top: 0; left: -50%; width: 200%; height: 100%;
-            background: linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 42%, rgba(255, 255, 255, 0.08) 45%, rgba(168, 85, 247, 0.15) 50%, rgba(255,255,255,0) 55%, rgba(255,255,255,0) 100%);
-            transform: rotate(-15deg);
-            transition: all 0.5s ease;
+            top: 0; left: 0; width: 100%; height: 50%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 100%);
             pointer-events: none;
-        }
-
-        .glass-borders:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.6),
-                0 0 25px var(--neon-purple-glow),
-                0 0 5px rgba(6, 182, 212, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .glass-borders:hover .instagram-banner::before {
-            left: 100%;
+            z-index: 2;
         }
 
         .instagram-info {
@@ -337,32 +250,29 @@
         .instagram-icon-wrapper {
             width: 52px;
             height: 52px;
-            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #06b6d4 100%);
-            border-radius: 8px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid var(--wii-border);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 0 15px var(--neon-purple-glow);
-            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
         }
 
         .instagram-icon-wrapper svg {
-            width: 26px;
-            height: 26px;
-            fill: white;
+            width: 28px;
+            height: 28px;
+            fill: #585d68;
         }
 
         .instagram-text h2 {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             font-weight: 700;
-            letter-spacing: 0.05em;
+            letter-spacing: 0.02em;
             margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #ffffff;
-            font-family: 'Share Tech Mono', sans-serif;
+            color: var(--text-color);
+            font-family: 'Comfortaa', 'Noto Sans JP', sans-serif;
         }
 
         .instagram-text p {
@@ -372,53 +282,53 @@
             font-family: 'Noto Sans JP', sans-serif;
         }
 
-        /* サイバーチックなアクションボタン */
+        /* Wiiリモコンの丸いボタンを模したボタン */
         .btn-instagram {
             display: inline-flex;
             align-items: center;
-            padding: 12px 28px;
-            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-            color: #ffffff;
+            justify-content: center;
+            padding: 10px 26px;
+            background: #ffffff;
+            color: var(--text-color);
             font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 0.1em;
-            border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-size: 0.82rem;
+            letter-spacing: 0.05em;
+            border-radius: 25px;
+            border: 2px solid var(--wii-border);
             box-shadow: 
-                0 4px 15px rgba(124, 58, 237, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            text-shadow: 0 0 5px rgba(255,255,255,0.5);
-            font-family: 'Share Tech Mono', sans-serif;
+                0 3px 6px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 #ffffff;
+            transition: all 0.2s ease;
+            font-family: inherit;
         }
 
         .btn-instagram:hover {
-            background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
+            border-color: var(--wii-blue);
+            color: var(--wii-blue);
             box-shadow: 
-                0 0 20px var(--neon-purple-glow),
-                0 4px 20px rgba(168, 85, 247, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            transform: scale(1.02);
+                0 5px 12px rgba(0, 176, 255, 0.15),
+                0 0 8px var(--wii-blue-glow);
+            transform: translateY(-1px);
         }
 
         /* ツール一覧セクション */
         .tools-title {
-            font-size: 1.3rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            letter-spacing: 0.1em;
-            margin-bottom: 25px;
+            letter-spacing: 0.05em;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 12px;
-            font-family: 'Share Tech Mono', sans-serif;
-            color: var(--neon-cyan);
-            text-shadow: 0 0 10px var(--neon-cyan-glow);
+            font-family: 'Comfortaa', sans-serif;
+            color: var(--text-muted);
         }
 
         .tools-title::after {
             content: '';
             flex-grow: 1;
-            height: 1px;
-            background: linear-gradient(to right, rgba(6, 182, 212, 0.4), transparent);
+            height: 2px;
+            background: linear-gradient(to right, var(--wii-border), transparent);
         }
 
         .user-list {
@@ -433,50 +343,38 @@
             height: 100%;
         }
 
-        .list-item-wrapper:hover .glass-borders {
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 
-                0 15px 30px rgba(0, 0, 0, 0.6),
-                0 0 25px var(--neon-purple-glow),
-                0 0 5px rgba(6, 182, 212, 0.3);
-            transform: translateY(-4px);
-        }
-
-        .list-item-wrapper:hover .user-account::before {
-            left: 100%;
-        }
-
-        /* サイバーカートリッジ風カード */
+        /* Wiiメニューチャンネルカード */
         .user-account {
             display: flex;
             align-items: center;
             gap: 16px;
             padding: 20px 18px;
             height: 100%;
-            background: linear-gradient(135deg, rgba(10, 10, 18, 0.95) 0%, rgba(5, 5, 8, 0.98) 100%);
-            border-radius: 9px;
-            border: 1px solid rgba(168, 85, 247, 0.2);
+            background: var(--channel-bg);
+            border-radius: 15px;
+            border: 1px solid var(--wii-border);
             cursor: pointer;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: inset 0 1px 0 #ffffff;
+            transition: background 0.2s ease;
             overflow: hidden;
             position: relative;
         }
 
-        /* カートリッジの金属ラベル風のアイコン枠 */
+        /* チャンネルアイコン */
         .avatar {
             width: 60px;
             height: 60px;
-            border-radius: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            border: 1px solid var(--wii-border);
+            background: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             object-fit: cover;
             flex-shrink: 0;
-            transition: transform 0.3s ease;
+            transition: transform 0.2s ease;
         }
 
         .list-item-wrapper:hover .avatar {
-            transform: scale(1.05);
+            transform: scale(1.04);
         }
 
         .user-info {
@@ -488,33 +386,26 @@
         }
 
         .username {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 700;
-            color: #ffffff;
-            font-family: 'Share Tech Mono', sans-serif;
-            letter-spacing: 0.02em;
+            color: var(--text-color);
+            font-family: 'Comfortaa', 'Noto Sans JP', sans-serif;
+            letter-spacing: 0.01em;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        /* チートデバイス/カートリッジ風のステータス表示 */
+        /* Wiiチャンネル風のミニタグ */
         .username::after {
-            content: 'ROM-OK';
-            font-size: 0.6rem;
-            font-weight: normal;
-            color: var(--neon-cyan);
-            border: 1px solid rgba(6, 182, 212, 0.3);
+            content: 'CH';
+            font-size: 0.55rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            border: 1px solid var(--wii-border);
             padding: 1px 4px;
-            border-radius: 2px;
-            background: rgba(6, 182, 212, 0.05);
-        }
-
-        .pics-card .username::after {
-            content: 'SYS-PIC';
-            color: var(--neon-purple);
-            border-color: rgba(168, 85, 247, 0.3);
-            background: rgba(168, 85, 247, 0.05);
+            border-radius: 3px;
+            background: #ffffff;
         }
 
         .user-desc {
@@ -524,25 +415,14 @@
             font-family: 'Noto Sans JP', sans-serif;
         }
 
-        /* ミニマムなデジタルデコライン */
-        .card-footer-decor {
-            font-size: 0.55rem;
-            color: rgba(255, 255, 255, 0.15);
-            display: flex;
-            justify-content: space-between;
-            margin-top: 4px;
-            border-top: 1px solid rgba(255,255,255,0.03);
-            padding-top: 4px;
-        }
-
-        /* ツールチップ（?） */
+        /* ヘルプアイコン（Wiiのインフォマーク風） */
         .info-icon {
             position: absolute;
             top: 14px;
             right: 14px;
             width: 18px;
             height: 18px;
-            background-color: rgba(255, 255, 255, 0.03);
+            background-color: #ffffff;
             color: var(--text-muted);
             border-radius: 50%;
             display: flex;
@@ -552,27 +432,27 @@
             font-size: 10px;
             font-weight: 700;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--wii-border);
             z-index: 12;
             transition: all 0.2s ease;
         }
 
         .info-icon:hover {
-            background-color: var(--neon-purple);
+            background-color: var(--wii-blue);
             color: #ffffff;
             border-color: transparent;
-            box-shadow: 0 0 8px rgba(168, 85, 247, 0.8);
+            box-shadow: 0 0 6px var(--wii-blue-glow);
         }
 
         .tooltip-text {
             visibility: hidden;
             opacity: 0;
             position: absolute;
-            background-color: rgba(5, 5, 8, 0.98);
-            backdrop-filter: blur(8px);
-            color: #e2e8f0;
+            background-color: rgba(255, 255, 255, 0.98);
+            border: 2px solid var(--wii-blue);
+            color: var(--text-color);
             padding: 14px 18px;
-            border-radius: 8px;
+            border-radius: 12px;
             z-index: 20;
             bottom: calc(100% + 10px);
             left: 50%;
@@ -582,8 +462,7 @@
             line-height: 1.55;
             transition: all 0.25s ease;
             pointer-events: none;
-            border: 1px solid rgba(168, 85, 247, 0.3);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
             font-family: 'Noto Sans JP', sans-serif;
         }
 
@@ -599,117 +478,70 @@
             transform: translateX(-50%) translateY(-5px);
         }
 
-        /* フッター */
-        .footer-container {
-            width: 100%;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        footer {
+            margin-top: auto;
             padding: 40px 20px;
-            background: rgba(3, 3, 6, 0.95);
-            backdrop-filter: blur(10px);
+            text-align: center;
             position: relative;
             z-index: 10;
-            margin-top: auto;
+            border-top: 1px solid var(--wii-border);
+            background: rgba(255, 255, 255, 0.3);
         }
 
-        .footer {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
+        .footer-logo {
+            font-family: 'Comfortaa', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .footer-logo span {
+            color: var(--wii-blue);
+        }
+
+        footer p {
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
 
-        .footer-right {
-            display: flex;
-            gap: 24px;
-        }
-
-        .footer-right a:hover {
-            color: var(--neon-purple);
-            text-shadow: 0 0 5px var(--neon-purple-glow);
-        }
-
-        /* レスポンシブ */
-        @media (max-width: 1100px) {
-            .side-decor {
-                display: none; /* タブレット以下ではサイドのポスター装飾を非表示 */
+        @media (max-width: 720px) {
+            .hero, .instagram-banner, .user-account {
+                padding: 20px 16px;
             }
-        }
 
-        @media (max-width: 768px) {
             .instagram-banner {
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 24px;
             }
 
             .btn-instagram {
                 width: 100%;
-                justify-content: center;
             }
 
             .user-list {
                 grid-template-columns: 1fr;
-            }
-
-            .footer {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-
-            .footer-right {
-                flex-direction: column;
-                gap: 12px;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- 巨大ネオングロー背景 -->
-    <div class="cyber-glow">
-        <div class="glow-purple"></div>
-        <div class="glow-cyan"></div>
-    </div>
-
-    <!-- ✦ キラキラ星（Frutiger Aeroの泡からY2Kの星へ） -->
-    <div class="sparkle-container">
-        <div class="sparkle sparkle-1">✦</div>
-        <div class="sparkle sparkle-2">✦</div>
-        <div class="sparkle sparkle-3">✦</div>
-        <div class="sparkle sparkle-4">✦</div>
-    </div>
-
-    <!-- 左右のサイバーポスター装飾サイドバー（PC時） -->
-    <div class="side-decor side-decor-left">
-        <div class="side-vertical-text">SYS.STATUS // UNLOCKED</div>
-        <div class="side-cities">
-            <span>NYC</span>
-            <span>SEOUL</span>
-            <span>TOKYO</span>
-            <span>LONDON</span>
-        </div>
-        <div>EST.2004</div>
-    </div>
-    
-    <div class="side-decor side-decor-right">
-        <div>DATEL ENG.</div>
-        <div class="side-vertical-text">CHEAT THE GAME // OVER LIMITS</div>
-        <div>✦ ✦ ✦</div>
+    <!-- 浮遊するWii風オーブ -->
+    <div class="wii-orb-container">
+        <div class="wii-orb wii-orb-1"></div>
+        <div class="wii-orb wii-orb-2"></div>
+        <div class="wii-orb wii-orb-3"></div>
     </div>
 
     <header>
-        <div class="logo">dim7.jp</div>
-        <a href="/index-en.html" class="lang-switch">🌐 English</a>
+        <a href="/" class="logo">dim7.jp</a>
+        <a href="/index-en.html" class="lang-switch">English</a>
     </header>
 
     <div class="container">
-        <!-- ヒーロー（Instagram バナーのみ） -->
+        <!-- ヒーロー (Instagram バナー) -->
         <section class="hero">
-            <div class="glass-borders">
+            <div class="channel-border">
                 <div class="instagram-banner">
                     <div class="instagram-info">
                         <div class="instagram-icon-wrapper">
@@ -717,119 +549,99 @@
                                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
                             </svg>
                         </div>
-                        <div class="instagram-text" style="text-align: left;">
+                        <div class="instagram-text">
                             <h2>Instagram @music_blue_print</h2>
                             <p>音楽可視化アートプロジェクト。最新の可視化動画をインスタグラムで公開中。</p>
                         </div>
                     </div>
                     <a href="https://www.instagram.com/music_blue_print/" class="btn-instagram" target="_blank" rel="noopener">
-                        CONNECT SYSTEM
+                        動画を見る
                     </a>
                 </div>
             </div>
         </section>
 
         <!-- ツール一覧 -->
-        <section>
+        <section class="experiments">
             <h2 class="tools-title">EXPERIMENTS</h2>
             <div class="user-list">
                 <!-- Clock Harmonizer -->
                 <div class="list-item-wrapper">
-                    <div class="glass-borders">
+                    <div class="channel-border">
                         <a href="https://dim7.jp/clock/" class="user-link" target="_blank" rel="noopener">
                             <div class="user-account">
                                 <img class="avatar" src="images/icon_clock.png" alt="Clock Harmonizer">
                                 <div class="user-info">
                                     <span class="username">Clock Harmonizer</span>
                                     <span class="user-desc">アナログ時計の3本の針が、12音盤上で連続的なハーモニーを奏でる時計。</span>
-                                    <div class="card-footer-decor">
-                                        <span>SYSTEM // ACTIVE</span>
-                                        <span>FA-REPLAY // v1.0</span>
-                                    </div>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
-                    <span class="tooltip-text">アナログ時計の文字盤に12音を割り当てています。時・分・秒の3本の針が時計として動きながら、リアルタイムにコード（和声）を生成し奏で続けます。</span>
+                    <span class="tooltip-text">時計の針の位置がメジャーセブンスコードなどの和音を紡ぎ出す、時間とハーモニーのシンクロナイザー。</span>
                 </div>
 
                 <!-- Digital Clock Synthesizer -->
                 <div class="list-item-wrapper">
-                    <div class="glass-borders">
-                        <a href="https://dim7.jp/Digital/" class="user-link" target="_blank" rel="noopener">
+                    <div class="channel-border">
+                        <a href="https://dim7.jp/digital-clock/" class="user-link" target="_blank" rel="noopener">
                             <div class="user-account">
                                 <img class="avatar" src="images/icon_digital.png" alt="Digital Clock Synthesizer">
                                 <div class="user-info">
                                     <span class="username">Digital Clock Synthesizer</span>
                                     <span class="user-desc">デジタル時計の「時:分:秒」の比率を純正律の周波数に変換するシンセ。</span>
-                                    <div class="card-footer-decor">
-                                        <span>SYSTEM // ACTIVE</span>
-                                        <span>FA-REPLAY // v1.0</span>
-                                    </div>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
-                    <span class="tooltip-text">刻一刻と変化するデジタル時計 of hh:mm:ss 表示を、そのまま整数比の周波数に落とし込み、純正律（Just Intonation）によるハーモニーを生み出します。逆再生（-100倍速）サウンドもおすすめです。</span>
+                    <span class="tooltip-text">時間を示す数字（12:34:56など）の比率がそのまま和音の周波数比になり、刻一刻と変化するドローン音を生成するシンセサイザー。</span>
                 </div>
 
                 <!-- Circle of Fifths Visualizer -->
                 <div class="list-item-wrapper">
-                    <div class="glass-borders">
-                        <a href="https://dim7.jp/c5vis/" class="user-link" target="_blank" rel="noopener">
+                    <div class="channel-border">
+                        <a href="https://dim7.jp/midi-circle-of-fifths/" class="user-link" target="_blank" rel="noopener">
                             <div class="user-account">
-                                <img class="avatar" src="images/icon_c5vis.png" alt="Circle of Fifths Visualizer">
+                                <img class="avatar" src="images/icon_fifths.png" alt="Circle of Fifths Visualizer">
                                 <div class="user-info">
                                     <span class="username">Circle of Fifths Visualizer</span>
                                     <span class="user-desc">アップロードした音声の周波数成分に応じて、五度圏の調性盤が光るビジュアライザ。</span>
-                                    <div class="card-footer-decor">
-                                        <span>SYSTEM // ACTIVE</span>
-                                        <span>FA-REPLAY // v1.0</span>
-                                    </div>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
-                    <span class="tooltip-text">音声ファイルを解析し、どのキー（音）が強く鳴っているかを五度圏（Circle of Fifths）のグラフィック上にリアルタイムでマッピングして光らせます。</span>
+                    <span class="tooltip-text">音声ファイルやマイク入力のピッチをリアルタイムで解析し、五度圏（Circle of Fifths）上に光として音楽構造をマッピングするツール。</span>
                 </div>
 
                 <!-- ユーモア16タイプ診断 -->
                 <div class="list-item-wrapper">
-                    <div class="glass-borders">
-                        <a href="https://dim7.jp/owarai/" class="user-link" target="_blank" rel="noopener">
+                    <div class="channel-border">
+                        <a href="https://dim7.jp/humor/" class="user-link" target="_blank" rel="noopener">
                             <div class="user-account">
-                                <img class="avatar" src="images/icon_humor.png" alt="ユーモア16タイプ診断">
+                                <img class="avatar" src="images/icon_humor_xp.png" alt="ユーモア16タイプ診断">
                                 <div class="user-info">
                                     <span class="username">ユーモア16タイプ診断</span>
                                     <span class="user-desc">あなたの「笑いのツボ」を分析し、16タイプに分類する診断コンテンツ。</span>
-                                    <div class="card-footer-decor">
-                                        <span>SYSTEM // ACTIVE</span>
-                                        <span>FA-REPLAY // v1.0</span>
-                                    </div>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
-                    <span class="tooltip-text">簡単な質問を通じてあなたの笑いの特性（ツボ）を分析。どのようなお笑いに惹かれやすいかを可視化するポップな診断ツールです。</span>
+                    <span class="tooltip-text">独自の質問群を通して、あなたがどのようなユーモアの構造やセンスを好んでいるかを多角的に診断します。</span>
                 </div>
 
                 <!-- 考察：調とそれが持つイメージ -->
                 <div class="list-item-wrapper">
-                    <div class="glass-borders">
+                    <div class="channel-border">
                         <a href="https://dim7.jp/key-image/" class="user-link" target="_blank" rel="noopener">
                             <div class="user-account">
-                                <img class="avatar" src="images/icon_theory.png" alt="考察：調とそれが持つイメージ">
+                                <img class="avatar" src="images/icon_theory_xp.png" alt="考察：調とそれが持つイメージ">
                                 <div class="user-info">
                                     <span class="username">考察：調とそれが持つイメージ</span>
                                     <span class="user-desc">各調性（キー）が持つ固有の色彩や感覚的なイメージについての音楽理論的考察。</span>
-                                    <div class="card-footer-decor">
-                                        <span>SYSTEM // ACTIVE</span>
-                                        <span>FA-REPLAY // v1.0</span>
-                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -838,58 +650,54 @@
                     <span class="tooltip-text">特定のキーが人々に与える印象について、歴史的文脈や音程関係の観点から深く考察した読み物コラムです。</span>
                 </div>
 
-                <!-- PICS (写真置き場) [新規追加] -->
+                <!-- PICS (天体写真置き場) -->
                 <div class="list-item-wrapper">
-                    <div class="glass-borders">
+                    <div class="channel-border">
                         <a href="https://dim7.jp/pics/" class="user-link pics-card" target="_blank" rel="noopener">
                             <div class="user-account">
-                                <img class="avatar" src="images/icon_pics.png" alt="PICS 写真置き場">
+                                <img class="avatar" src="images/icon_astronomy.png" alt="PICS 天体写真置き場">
                                 <div class="user-info">
-                                    <span class="username">PICS (写真置き場)</span>
-                                    <span class="user-desc">アパレルや音楽可視化プロジェクトのアートワーク、写真などを収めたアーカイブ。</span>
-                                    <div class="card-footer-decor">
-                                        <span>SYSTEM // DATA-LOADED</span>
-                                        <span>FA-REPLAY // v1.0</span>
-                                    </div>
+                                    <span class="username">PICS (天体写真置き場)</span>
+                                    <span class="user-desc">天体望遠鏡やカメラで撮影した、星空、星雲、月などの写真アーカイブ。</span>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
-                    <span class="tooltip-text">1984dim7プロジェクトに関連するルックブック写真、グラフィック作品、ビジュアルアーカイブの閲覧ページです。</span>
+                    <span class="tooltip-text">1984dim7プロジェクトに関連する、美しく撮影された星々や天体画像のアーカイブ閲覧ページです。</span>
                 </div>
             </div>
         </section>
     </div>
 
-    <div class="footer-container">
-        <div class="footer">
-            <div>© 2026 dim7.jp / 1984dim7. All rights reserved.</div>
-            <div class="footer-right">
-                <a href="/about-ja.html" target="_blank">このサイトについて</a>
-                <a href="/contact.html" target="_blank">お問い合わせ</a>
-                <a href="/privacy.html" target="_blank">プライバシーポリシー</a>
-            </div>
-        </div>
-    </div>
+    <footer>
+        <div class="footer-logo">dim7<span>.</span>jp</div>
+        <p>&copy; 2026 dim7.jp All Rights Reserved.</p>
+    </footer>
 
     <script>
-        // モバイル向けツールチップ制御
-        document.querySelectorAll('.info-icon').forEach(icon => {
-            icon.addEventListener('click', function (e) {
-                e.preventDefault();
+        // スマホなどのタッチデバイスでインフォボタンのツールチップ表示制御
+        const infoIcons = document.querySelectorAll('.info-icon');
+        infoIcons.forEach(icon => {
+            icon.addEventListener('click', (e) => {
                 e.stopPropagation();
-                const wrapper = this.closest('.list-item-wrapper');
-                document.querySelectorAll('.list-item-wrapper').forEach(w => {
-                    if (w !== wrapper) w.classList.remove('tooltip-active');
+                const wrapper = icon.parentElement;
+                
+                // 他のすべてのアクティブを解除
+                document.querySelectorAll('.list-item-wrapper').forEach(item => {
+                    if (item !== wrapper) {
+                        item.classList.remove('tooltip-active');
+                    }
                 });
+                
                 wrapper.classList.toggle('tooltip-active');
             });
         });
 
-        document.addEventListener('click', function () {
-            document.querySelectorAll('.list-item-wrapper').forEach(w => {
-                w.classList.remove('tooltip-active');
+        // 画面のどこかをタップしたらツールチップを閉じる
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.list-item-wrapper').forEach(item => {
+                item.classList.remove('tooltip-active');
             });
         });
     </script>
