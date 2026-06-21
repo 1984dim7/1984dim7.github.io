@@ -6,9 +6,9 @@
         crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dim7.jp - Visual Music Lab</title>
-    <meta name="description" content="Experimental web tools born at the intersection of music theory and web technology. Official companion website for the 1984dim7 music visualization project (20K followers on Instagram).">
-    <meta property="og:title" content="dim7.jp - Visual Music Lab">
+    <title>dim7.jp - Interactive Visual Music Lab</title>
+    <meta name="description" content="Experimental web tools born at the intersection of music theory and web technology. Official companion website for the music_blue_print project.">
+    <meta property="og:title" content="dim7.jp - Interactive Visual Music Lab">
     <meta property="og:description" content="Experimental web tools born at the intersection of music theory and web technology.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://dim7.jp/">
@@ -16,21 +16,19 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@1,900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-top: #0082c8;
-            --bg-middle: #00c9ff;
-            --bg-bottom: #92fe9d;
+            --bg-color: #030306;
             --text-color: #ffffff;
-            --text-shadow-color: rgba(0, 0, 0, 0.25);
-            --aero-border-outer: rgba(255, 255, 255, 0.35);
-            --aero-border-inner: rgba(255, 255, 255, 0.6);
-            --aero-border-inner-top: rgba(255, 255, 255, 0.85);
-            --aero-bg: rgba(255, 255, 255, 0.78);
-            --aero-bg-hover: rgba(255, 255, 255, 0.9);
-            --card-text: #082135;
-            --card-text-muted: #3a5366;
+            --text-muted: #8a8ca4;
+            --neon-purple: #a855f7;
+            --neon-purple-glow: rgba(168, 85, 247, 0.45);
+            --neon-cyan: #06b6d4;
+            --neon-cyan-glow: rgba(6, 182, 212, 0.3);
+            --chrome-silver: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 30%, #475569 50%, #94a3b8 70%, #f1f5f9 100%);
+            --aero-bg: rgba(255, 255, 255, 0.05);
+            --aero-bg-hover: rgba(255, 255, 255, 0.1);
         }
 
         * {
@@ -42,19 +40,66 @@
         body, html {
             min-height: 100vh;
             color: var(--text-color);
-            font-family: 'Segoe UI', 'Lucida Grande', 'Helvetica Neue', sans-serif;
-            text-shadow: 0 1px 2px var(--text-shadow-color);
+            background-color: var(--bg-color);
+            font-family: 'Share Tech Mono', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
-            background: linear-gradient(135deg, var(--bg-top) 0%, var(--bg-middle) 45%, var(--bg-bottom) 100%);
-            background-attachment: fixed;
+            position: relative;
         }
 
-        /* Floating Bubbles */
-        .bubble-container {
+        /* Cyber grid background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Cyber background glows */
+        .cyber-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .glow-purple {
+            position: absolute;
+            top: 15%;
+            left: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(168, 85, 247, 0) 70%);
+            filter: blur(100px);
+        }
+
+        .glow-cyan {
+            position: absolute;
+            bottom: 10%;
+            right: -10%;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, rgba(6, 182, 212, 0) 70%);
+            filter: blur(120px);
+        }
+
+        /* ✦ Floating sparkles */
+        .sparkle-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -65,36 +110,72 @@
             overflow: hidden;
         }
 
-        .bubble {
+        .sparkle {
             position: absolute;
-            bottom: -100px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0.1) 40%, rgba(0, 180, 216, 0.02) 60%, rgba(255, 255, 255, 0.25) 80%, transparent 100%);
-            box-shadow: 
-                inset 0 0 12px rgba(255, 255, 255, 0.5),
-                inset -3px -3px 8px rgba(0, 180, 216, 0.15),
-                0 5px 15px rgba(0, 0, 0, 0.06);
-            animation: floatUp 18s infinite linear;
+            bottom: -50px;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            animation: floatUp 15s infinite linear;
         }
 
-        .bubble-1 { width: 70px; height: 70px; left: 10%; animation-duration: 20s; animation-delay: 0s; }
-        .bubble-2 { width: 45px; height: 45px; left: 25%; animation-duration: 16s; animation-delay: 3s; }
-        .bubble-3 { width: 110px; height: 110px; left: 45%; animation-duration: 25s; animation-delay: 1s; }
-        .bubble-4 { width: 35px; height: 35px; left: 65%; animation-duration: 14s; animation-delay: 5s; }
-        .bubble-5 { width: 85px; height: 85px; left: 80%; animation-duration: 22s; animation-delay: 2s; }
-        .bubble-6 { width: 60px; height: 60px; left: 90%; animation-duration: 18s; animation-delay: 7s; }
+        .sparkle-1 { left: 15%; animation-duration: 18s; animation-delay: 0s; }
+        .sparkle-2 { left: 35%; animation-duration: 22s; animation-delay: 3s; }
+        .sparkle-3 { left: 60%; animation-duration: 14s; animation-delay: 1s; }
+        .sparkle-4 { left: 80%; animation-duration: 20s; animation-delay: 5s; }
 
         @keyframes floatUp {
             0% {
-                transform: translateY(0) translateX(0) rotate(0deg);
+                transform: translateY(0) rotate(0deg) scale(0.6);
                 opacity: 0;
             }
-            5% { opacity: 0.8; }
-            95% { opacity: 0.8; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
             100% {
-                transform: translateY(-120vh) translateX(60px) rotate(360deg);
+                transform: translateY(-110vh) rotate(180deg) scale(1.1);
                 opacity: 0;
             }
+        }
+
+        /* Side Poster Decors (PC only) */
+        .side-decor {
+            position: fixed;
+            top: 0;
+            height: 100vh;
+            width: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 0;
+            z-index: 5;
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            pointer-events: none;
+        }
+
+        .side-decor-left {
+            left: 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .side-decor-right {
+            right: 20px;
+            border-left: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .side-vertical-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            text-transform: uppercase;
+        }
+
+        .side-cities span {
+            display: block;
+            margin: 15px 0;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
         }
 
         a {
@@ -108,7 +189,7 @@
             width: 100%;
             max-width: 1000px;
             margin: 0 auto;
-            padding: 30px 20px;
+            padding: 40px 20px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -116,30 +197,47 @@
             z-index: 10;
         }
 
+        /* Metallic chrome logo */
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
+            font-size: 2.2rem;
+            font-weight: 900;
+            font-style: italic;
             letter-spacing: 0.05em;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 35%, #475569 50%, #94a3b8 65%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+            position: relative;
+        }
+
+        .logo::after {
+            content: '✦';
+            position: absolute;
+            top: -5px;
+            right: -22px;
+            font-size: 0.9rem;
+            font-style: normal;
+            color: #ffffff;
+            -webkit-text-fill-color: #ffffff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
         }
 
         .lang-switch {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 600;
             padding: 6px 18px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.35);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         .lang-switch:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+            background: rgba(168, 85, 247, 0.1);
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 10px var(--neon-purple-glow);
             transform: translateY(-1px);
         }
 
@@ -160,39 +258,38 @@
         .hero {
             width: 100%;
             max-width: 960px;
-            margin: 20px auto 10px;
+            margin: 10px auto;
         }
 
-        /* Double Glass Borders */
+        /* Metallic & Neon borders */
         .glass-borders {
-            background: rgba(255, 255, 255, 0.12);
-            border: 1px solid var(--aero-border-outer);
-            border-radius: 22px;
-            padding: 4px;
+            background: rgba(168, 85, 247, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 3px;
             box-shadow: 
-                0 10px 30px rgba(8, 26, 54, 0.18),
-                inset 0 1px 0 rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                0 0 15px rgba(168, 85, 247, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         /* Instagram Banner */
         .instagram-banner {
             width: 100%;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.1) 100%);
-            border: 1px solid var(--aero-border-inner);
-            border-top: 1px solid var(--aero-border-inner-top);
-            border-left: 1px solid var(--aero-border-inner-top);
-            border-radius: 18px;
-            padding: 22px 30px;
+            background: linear-gradient(135deg, rgba(15, 10, 25, 0.8) 0%, rgba(5, 5, 10, 0.95) 100%);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 9px;
+            padding: 24px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 24px;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
             overflow: hidden;
             position: relative;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
         }
 
         .instagram-banner::before,
@@ -200,17 +297,18 @@
             content: '';
             position: absolute;
             top: 0; left: -50%; width: 200%; height: 100%;
-            background: linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 40%, rgba(255,255,255,0.18) 45%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 55%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 42%, rgba(255, 255, 255, 0.08) 45%, rgba(168, 85, 247, 0.15) 50%, rgba(255,255,255,0) 55%, rgba(255,255,255,0) 100%);
             transform: rotate(-15deg);
-            transition: all 0.6s ease;
+            transition: all 0.5s ease;
             pointer-events: none;
         }
 
         .glass-borders:hover {
-            border-color: rgba(255, 255, 255, 0.35);
+            border-color: rgba(255, 255, 255, 0.3);
             box-shadow: 
-                0 15px 35px rgba(8, 26, 54, 0.25),
-                inset 0 1px 0 rgba(255, 255, 255, 0.45);
+                0 15px 35px rgba(0, 0, 0, 0.6),
+                0 0 25px var(--neon-purple-glow),
+                0 0 5px rgba(6, 182, 212, 0.3);
             transform: translateY(-2px);
         }
 
@@ -221,20 +319,20 @@
         .instagram-info {
             display: flex;
             align-items: center;
-            gap: 18px;
+            gap: 20px;
         }
 
         .instagram-icon-wrapper {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #06b6d4 100%);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(220, 39, 67, 0.3), inset 0 1px 0 rgba(255,255,255,0.4);
-            border: 1px solid rgba(255,255,255,0.25);
+            box-shadow: 0 0 15px var(--neon-purple-glow);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .instagram-icon-wrapper svg {
@@ -244,80 +342,76 @@
         }
 
         .instagram-text h2 {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            margin-bottom: 4px;
+            letter-spacing: 0.05em;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .badge-follower {
-            font-size: 0.75rem;
-            background: rgba(255, 255, 255, 0.25);
+            gap: 12px;
             color: #ffffff;
-            padding: 2px 10px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            font-weight: 600;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-family: 'Share Tech Mono', sans-serif;
         }
 
         .instagram-text p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            line-height: 1.4;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.5;
         }
 
+        /* Glossy action button */
         .btn-instagram {
             display: inline-flex;
             align-items: center;
-            padding: 10px 24px;
-            background: linear-gradient(to bottom, #ffffff 0%, #d8e5eb 100%);
-            color: #005682;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            color: #ffffff;
             font-weight: 700;
-            font-size: 0.9rem;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 
-                0 4px 12px rgba(0, 0, 0, 0.1),
-                inset 0 1px 0 #ffffff,
-                inset 0 -2px 0 rgba(0, 0, 0, 0.05);
-            text-shadow: 0 1px 0 #ffffff;
-            position: relative;
-            z-index: 10;
+                0 4px 15px rgba(124, 58, 237, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+            font-family: 'Share Tech Mono', sans-serif;
         }
 
         .btn-instagram:hover {
-            background: linear-gradient(to bottom, #ffffff 0%, #e2eff3 100%);
+            background: linear-gradient(135deg, #a855f7 0%, #c084fc 100%);
             box-shadow: 
-                0 6px 18px rgba(0, 0, 0, 0.15),
-                0 0 10px rgba(255, 255, 255, 0.5),
-                inset 0 1px 0 #ffffff;
+                0 0 20px var(--neon-purple-glow),
+                0 4px 20px rgba(168, 85, 247, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            transform: scale(1.02);
         }
 
         /* Experiments Section */
         .tools-title {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            letter-spacing: 0.05em;
-            margin-bottom: 20px;
+            letter-spacing: 0.1em;
+            margin-bottom: 25px;
             display: flex;
             align-items: center;
             gap: 12px;
+            font-family: 'Share Tech Mono', sans-serif;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan-glow);
         }
 
         .tools-title::after {
             content: '';
             flex-grow: 1;
             height: 1px;
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.35), transparent);
+            background: linear-gradient(to right, rgba(6, 182, 212, 0.4), transparent);
         }
 
         .user-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 24px;
             width: 100%;
         }
 
@@ -327,125 +421,154 @@
         }
 
         .list-item-wrapper:hover .glass-borders {
-            border-color: rgba(255, 255, 255, 0.35);
+            border-color: rgba(255, 255, 255, 0.3);
             box-shadow: 
-                0 15px 32px rgba(8, 26, 54, 0.22),
-                inset 0 1px 0 rgba(255, 255, 255, 0.45);
-            transform: translateY(-3px);
+                0 15px 30px rgba(0, 0, 0, 0.6),
+                0 0 25px var(--neon-purple-glow),
+                0 0 5px rgba(6, 182, 212, 0.3);
+            transform: translateY(-4px);
         }
 
         .list-item-wrapper:hover .user-account::before {
             left: 100%;
         }
 
+        /* Cartridge Card styling */
         .user-account {
             display: flex;
             align-items: center;
             gap: 16px;
-            padding: 18px;
+            padding: 20px 18px;
             height: 100%;
-            background: var(--aero-bg);
-            border-radius: 18px;
-            border: 1px solid var(--aero-border-inner);
-            border-top: 1px solid var(--aero-border-inner-top);
-            border-left: 1px solid var(--aero-border-inner-top);
+            background: linear-gradient(135deg, rgba(10, 10, 18, 0.95) 0%, rgba(5, 5, 8, 0.98) 100%);
+            border-radius: 9px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
             cursor: pointer;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
             transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
             overflow: hidden;
             position: relative;
-            color: var(--card-text);
-            text-shadow: none;
         }
 
         .avatar {
-            width: 58px;
-            height: 58px;
-            border-radius: 14px;
-            border: 2px solid white;
-            box-shadow: 0 4px 10px rgba(8, 26, 54, 0.15);
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
             object-fit: cover;
             flex-shrink: 0;
             transition: transform 0.3s ease;
         }
 
         .list-item-wrapper:hover .avatar {
-            transform: scale(1.04);
+            transform: scale(1.05);
         }
 
         .user-info {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
             text-align: left;
         }
 
         .username {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            color: var(--card-text);
-            text-shadow: none;
+            color: #ffffff;
+            font-family: 'Share Tech Mono', sans-serif;
+            letter-spacing: 0.02em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Rom-OK Cartridge Status */
+        .username::after {
+            content: 'ROM-OK';
+            font-size: 0.6rem;
+            font-weight: normal;
+            color: var(--neon-cyan);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 1px 4px;
+            border-radius: 2px;
+            background: rgba(6, 182, 212, 0.05);
+        }
+
+        .pics-card .username::after {
+            content: 'SYS-PIC';
+            color: var(--neon-purple);
+            border-color: rgba(168, 85, 247, 0.3);
+            background: rgba(168, 85, 247, 0.05);
         }
 
         .user-desc {
-            font-size: 0.85rem;
-            color: var(--card-text-muted);
-            opacity: 1;
-            line-height: 1.4;
-            text-shadow: none;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.45;
+        }
+
+        /* Monospace footer line */
+        .card-footer-decor {
+            font-size: 0.55rem;
+            color: rgba(255, 255, 255, 0.15);
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4px;
+            border-top: 1px solid rgba(255,255,255,0.03);
+            padding-top: 4px;
         }
 
         /* Tooltips */
         .info-icon {
             position: absolute;
-            top: 18px;
-            right: 18px;
-            width: 20px;
-            height: 20px;
-            background-color: rgba(255, 255, 255, 0.25);
-            color: #ffffff;
+            top: 14px;
+            right: 14px;
+            width: 18px;
+            height: 18px;
+            background-color: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: inherit;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 12;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .info-icon:hover {
-            background-color: #ffffff;
-            color: #005682;
+            background-color: var(--neon-purple);
+            color: #ffffff;
             border-color: transparent;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 8px rgba(168, 85, 247, 0.8);
         }
 
         .tooltip-text {
             visibility: hidden;
             opacity: 0;
             position: absolute;
-            background-color: rgba(0, 48, 80, 0.95);
+            background-color: rgba(5, 5, 8, 0.98);
             backdrop-filter: blur(8px);
-            color: #ffffff;
+            color: #e2e8f0;
             padding: 14px 18px;
-            border-radius: 12px;
+            border-radius: 8px;
             z-index: 20;
             bottom: calc(100% + 10px);
             left: 50%;
             transform: translateX(-50%);
             width: 280px;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             line-height: 1.55;
             transition: all 0.25s ease;
             pointer-events: none;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 10px 25px rgba(0, 26, 45, 0.3);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
         }
 
         .list-item-wrapper:hover .tooltip-text {
@@ -463,15 +586,13 @@
         /* Footer */
         .footer-container {
             width: 100%;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 30px 20px;
-            background: rgba(0, 75, 120, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 20px;
+            background: rgba(3, 3, 6, 0.95);
+            backdrop-filter: blur(10px);
             position: relative;
             z-index: 10;
             margin-top: auto;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
         }
 
         .footer {
@@ -480,20 +601,27 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.8rem;
+            color: var(--text-muted);
         }
 
         .footer-right {
             display: flex;
-            gap: 20px;
+            gap: 24px;
         }
 
         .footer-right a:hover {
-            text-decoration: underline;
+            color: var(--neon-purple);
+            text-shadow: 0 0 5px var(--neon-purple-glow);
         }
 
         /* Responsive */
+        @media (max-width: 1100px) {
+            .side-decor {
+                display: none;
+            }
+        }
+
         @media (max-width: 768px) {
             .instagram-banner {
                 flex-direction: column;
@@ -512,27 +640,49 @@
 
             .footer {
                 flex-direction: column;
-                gap: 16px;
+                gap: 20px;
                 text-align: center;
             }
 
             .footer-right {
                 flex-direction: column;
-                gap: 10px;
+                gap: 12px;
             }
         }
     </style>
 </head>
 
 <body>
-    <!-- Floating Bubbles -->
-    <div class="bubble-container">
-        <div class="bubble bubble-1"></div>
-        <div class="bubble bubble-2"></div>
-        <div class="bubble bubble-3"></div>
-        <div class="bubble bubble-4"></div>
-        <div class="bubble bubble-5"></div>
-        <div class="bubble bubble-6"></div>
+    <!-- Background glows -->
+    <div class="cyber-glow">
+        <div class="glow-purple"></div>
+        <div class="glow-cyan"></div>
+    </div>
+
+    <!-- Floating sparkles -->
+    <div class="sparkle-container">
+        <div class="sparkle sparkle-1">✦</div>
+        <div class="sparkle sparkle-2">✦</div>
+        <div class="sparkle sparkle-3">✦</div>
+        <div class="sparkle sparkle-4">✦</div>
+    </div>
+
+    <!-- Side Poster Decors (PC only) -->
+    <div class="side-decor side-decor-left">
+        <div class="side-vertical-text">SYS.STATUS // UNLOCKED</div>
+        <div class="side-cities">
+            <span>NYC</span>
+            <span>SEOUL</span>
+            <span>TOKYO</span>
+            <span>LONDON</span>
+        </div>
+        <div>EST.2004</div>
+    </div>
+    
+    <div class="side-decor side-decor-right">
+        <div>DATEL ENG.</div>
+        <div class="side-vertical-text">CHEAT THE GAME // OVER LIMITS</div>
+        <div>✦ ✦ ✦</div>
     </div>
 
     <header>
@@ -541,7 +691,7 @@
     </header>
 
     <div class="container">
-        <!-- Hero Section (Instagram Banner only, no text headers) -->
+        <!-- Hero (Instagram Banner only) -->
         <section class="hero">
             <div class="glass-borders">
                 <div class="instagram-banner">
@@ -553,17 +703,17 @@
                         </div>
                         <div class="instagram-text" style="text-align: left;">
                             <h2>Instagram @music_blue_print</h2>
-                            <p>Visualizing music through creative coding. Watch the latest video works on Instagram.</p>
+                            <p>Music visualization art project. Catch the latest video works and lookbooks on Instagram.</p>
                         </div>
                     </div>
                     <a href="https://www.instagram.com/music_blue_print/" class="btn-instagram" target="_blank" rel="noopener">
-                        Watch Reels
+                        CONNECT SYSTEM
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Experiments Section -->
+        <!-- Experiments Grid -->
         <section>
             <h2 class="tools-title">EXPERIMENTS</h2>
             <div class="user-list">
@@ -576,6 +726,10 @@
                                 <div class="user-info">
                                     <span class="username">Clock Harmonizer</span>
                                     <span class="user-desc">A clock where three hands play continuous harmony on a 12-tone circle.</span>
+                                    <div class="card-footer-decor">
+                                        <span>SYSTEM // ACTIVE</span>
+                                        <span>FA-REPLAY // v1.0</span>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -593,6 +747,10 @@
                                 <div class="user-info">
                                     <span class="username">Digital Clock Synthesizer</span>
                                     <span class="user-desc">A synth that converts clock numbers (hh:mm:ss) into real-time Just Intonation frequencies.</span>
+                                    <div class="card-footer-decor">
+                                        <span>SYSTEM // ACTIVE</span>
+                                        <span>FA-REPLAY // v1.0</span>
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -610,12 +768,37 @@
                                 <div class="user-info">
                                     <span class="username">Circle of Fifths Visualizer</span>
                                     <span class="user-desc">A visualizer where the Circle of Fifths scale glows based on analyzed frequencies of uploaded audio.</span>
+                                    <div class="card-footer-decor">
+                                        <span>SYSTEM // ACTIVE</span>
+                                        <span>FA-REPLAY // v1.0</span>
+                                    </div>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
                     <span class="tooltip-text">Upload an audio file to analyze its frequency components in real time, lighting up the corresponding keys on the Circle of Fifths dial. Works best with monophonic audio.</span>
+                </div>
+
+                <!-- Humor 16 Diagnostic (Japanese link) -->
+                <div class="list-item-wrapper">
+                    <div class="glass-borders">
+                        <a href="https://dim7.jp/owarai/" class="user-link" target="_blank" rel="noopener">
+                            <div class="user-account">
+                                <img class="avatar" src="images/icon_humor.png" alt="Humor 16 Types Diagnostic">
+                                <div class="user-info">
+                                    <span class="username">Humor 16 Types</span>
+                                    <span class="user-desc">A personality quiz that analyzes your sense of humor into one of 16 types. (Japanese only)</span>
+                                    <div class="card-footer-decor">
+                                        <span>SYSTEM // ACTIVE</span>
+                                        <span>FA-REPLAY // v1.0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <span class="info-icon" role="button" tabindex="0">?</span>
+                    <span class="tooltip-text">A fun questionnaire diagnostic to categorize your sense of humor. Great for sharing and comparing results with friends.</span>
                 </div>
 
                 <!-- Essay: Keys and Their Images -->
@@ -625,14 +808,39 @@
                             <div class="user-account">
                                 <img class="avatar" src="images/icon_theory.png" alt="Essay: Keys and Their Images">
                                 <div class="user-info">
-                                    <span class="username">Essay: Keys and Their Images</span>
+                                    <span class="username">Essay: Keys &amp; Images</span>
                                     <span class="user-desc">Music theory columns exploring the specific color and imagery evoked by different keys and scales.</span>
+                                    <div class="card-footer-decor">
+                                        <span>SYSTEM // ACTIVE</span>
+                                        <span>FA-REPLAY // v1.0</span>
+                                    </div>
                                 </div>
                             </div>
                         </a>
                     </div>
                     <span class="info-icon" role="button" tabindex="0">?</span>
                     <span class="tooltip-text">An essay examining the historical and sensory qualities associated with major/minor scales and keys, analyzing why they evoke specific feelings.</span>
+                </div>
+
+                <!-- PICS (Photo Archive) -->
+                <div class="list-item-wrapper">
+                    <div class="glass-borders">
+                        <a href="https://dim7.jp/pics/" class="user-link pics-card" target="_blank" rel="noopener">
+                            <div class="user-account">
+                                <img class="avatar" src="images/icon_pics.png" alt="PICS Photo Archive">
+                                <div class="user-info">
+                                    <span class="username">PICS (Photo Archive)</span>
+                                    <span class="user-desc">Visual archive containing lookbook photos, art assets, and project visuals.</span>
+                                    <div class="card-footer-decor">
+                                        <span>SYSTEM // DATA-LOADED</span>
+                                        <span>FA-REPLAY // v1.0</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <span class="info-icon" role="button" tabindex="0">?</span>
+                    <span class="tooltip-text">A photo gallery showcasing apparel lookbooks, art assets, and project visuals related to 1984dim7.</span>
                 </div>
             </div>
         </section>
